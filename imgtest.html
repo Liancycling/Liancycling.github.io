@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Sliding Image Effect</title>
+    <style>
+        .img_c {
+            overflow: hidden;
+        }
+        .gold {
+            display: block;
+            margin-left: -50px;
+            transition: transform 0.5s ease-in-out;
+        }
+        .img_c:hover .gold {
+            transform: translateX(6%);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <img class="image" src="/img/A003.png" alt="Sliding Image">
+    </div>
+</body>
+
+</html>

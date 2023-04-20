@@ -1,0 +1,68 @@
+body {
+    background-color: #d1d1d1;
+}
+
+.s_logo {
+    height: 50px;
+    width: 50px;
+    background-color: rgb(53, 53, 53);
+}
+/* 側邊菜單底色 */
+.add001 {
+    background-color: #B5893A;
+}
+
+.img_c {
+    overflow: hidden;
+}
+
+.gold {
+    display: block;
+    margin-left: -20%;
+    filter: drop-shadow(5px 8px 4px rgba(0, 0, 0, 0.5));
+    /* transition: transform 0.5s ease-in-out; */
+    transition: all 0.5s ease;
+}
+
+.img_c:hover .gold {
+    /* transform: translateX(10%); */
+    transform: scale(0.9);
+    margin-left: 5%;
+
+}
+/* 左右錢幣 */
+.A001 {
+    display: block;
+    transform: scale(0.8);
+    margin-left: -30%;
+    /* transition: transform 0.5s ease-in-out; */
+    transition: all 0.5s ease;
+}
+
+.A001_c:hover .A001 {
+    /* transform: translateX(10%); */
+    transform: scale(1.3);
+    margin-left: -5%;
+}
+
+.A002 {
+    display: block;
+    transform: scale(0.8);
+    margin-right: -30%;
+    /* transition: transform 0.5s ease-in-out; */
+    transition: all 0.5s ease;
+}
+
+.A002_c:hover .A002 {
+    /* transform: translateX(10%); */
+    transform: scale(1.3);
+    margin-right: -5%;
+}
+/* ---------以上錢幣-------------- */
+.img_foot {
+    background-image: url(./img/57.jpg);
+    justify-content: center;
+    width: 1200px;
+    height: 400px;
+
+}

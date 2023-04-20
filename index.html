@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+
+<head>
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=1.0, maximum-scale=3.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link href="favicon.ico" type="image/x-icon" rel="icon" />
+  <link href="favicon.ico" type="image/x-icon" rel="shortcut icon" />
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
+    crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <link rel="stylesheet" href="./js.css">
+</head>
+
+<body>
+  <header class="container-fluid fixed-top bg-dark p-0 text-dark bg-opacity-75 ">
+    <div class="row justify-content-center">
+      <!-- 語言切換區域 -->
+      <div class="col m-4">
+        <div class="btn-group">
+          <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"
+            data-bs-display="static" aria-expanded="false">
+            <!-- 語言切換 (暫無功能因為沒做分頁) -->
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start">
+            <li><button class="dropdown-item" type="button">Tw 中文版</button></li>
+            <li><button class="dropdown-item" type="button">En 英文版</button></li>
+          </ul>
+        </div>
+      </div>
+      <!-- 中間LOGO區域 -->
+      <div class="col nav justify-content-center"><img class="mt-1" src="./img/LOGO_TEXT.svg" alt=""></div>
+      <!-- Maue+社群logo X 3  -->
+      <div class="col  nav justify-content-end">
+        <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
+          aria-controls="offcanvasRight"><img src="./img/MENU.svg" alt=""></button>
+
+        <div class="offcanvas offcanvas-end add001" tabindex="-1" id="offcanvasRight"
+          aria-labelledby="offcanvasRightLabel">
+          <div class="offcanvas-header ">
+            <!-- 內部設計結構處理 -->
+            <h5 class="text-end" id="offcanvasRightLabel">側邊導航地圖 產品&服務資訊</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <ul class="list-group list-group-flush">
+              <div class="row  border-bottom">
+                <img class="col m-3 p-2 w-25 g-0" src="./img/443e668.svg" alt="">
+                <h5 class="col pt-4 g-0">關於我們</h5>
+              </div>
+
+              <div class="row ">
+                <img class="col m-3 p-2 w-25 g-0" src="./img/b720f79.svg" alt="">
+                <p class="col pt-4 g-0">產品連結</p>
+              </div>
+              <!-- 產品區域 (未優化) -->
+              <div class="item">
+                <div class="col-lg-3 bg-dark">空白區域</div>
+                <div class="row row-cols-4">
+                  <a class="col href=" #">戒指</a>
+                  <a class="col href=" #">項鍊</a>
+                  <a class="col href=" #">手環</a>
+                  <a class="col href=" #">等等之類</a>
+                  <a class="col href=" #">獎牌</a>
+                  <a class="col href=" #">講座</a>
+                  <a class="col href=" #">加工區域</a>
+                </div>
+              </div>
+
+              <div class="row  border-bottom">
+                <img class="col m-3 p-2 w-25 g-0" src="./img/473ad14.svg" alt="">
+                <h5 class="col pt-4 g-0">專業知識</h5>
+              </div>
+
+              <div class="row  border-bottom">
+                <img class="col m-3 p-2 w-25 g-0" src="./img/473ad14.svg" alt="">
+                <h5 class="col pt-4 g-0">問與答</h5>
+              </div>
+
+              <div class="row  border-bottom">
+                <img class="col m-3 p-2 w-25 g-0" src="./img/473ad14.svg" alt="">
+                <h5 class="col pt-4 g-0">聯絡我們</h5>
+              </div>
+              <!-- logo+社群svg -->
+              <div class="logoimg row-cols-1 ">
+                <img class="col p-2 w-50" src="./img/LOGO_TEXT.svg" alt="">
+                <img class="col p-2 w-100" src="./img/3b1c909.svg" alt="">
+                <img class="col p-2 w-100" src="./img/fd21704.svg" alt="">
+                <img class="col  p-2 w-100" src="./img/b720f79.svg" alt="">
+              </div>
+            </ul>
+          </div>
+        </div>
+        <!-- 社群小圖 -->
+        <a class="mt-4" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+            class="bi bi-line" viewBox="0 0 16 16">
+            <path
+              d="M8 0c4.411 0 8 2.912 8 6.492 0 1.433-.555 2.723-1.715 3.994-1.678 1.932-5.431 4.285-6.285 4.645-.83.35-.734-.197-.696-.413l.003-.018.114-.685c.027-.204.055-.521-.026-.723-.09-.223-.444-.339-.704-.395C2.846 12.39 0 9.701 0 6.492 0 2.912 3.59 0 8 0ZM5.022 7.686H3.497V4.918a.156.156 0 0 0-.155-.156H2.78a.156.156 0 0 0-.156.156v3.486c0 .041.017.08.044.107v.001l.002.002.002.002a.154.154 0 0 0 .108.043h2.242c.086 0 .155-.07.155-.156v-.56a.156.156 0 0 0-.155-.157Zm.791-2.924a.156.156 0 0 0-.156.156v3.486c0 .086.07.155.156.155h.562c.086 0 .155-.07.155-.155V4.918a.156.156 0 0 0-.155-.156h-.562Zm3.863 0a.156.156 0 0 0-.156.156v2.07L7.923 4.832a.17.17 0 0 0-.013-.015v-.001a.139.139 0 0 0-.01-.01l-.003-.003a.092.092 0 0 0-.011-.009h-.001L7.88 4.79l-.003-.002a.029.029 0 0 0-.005-.003l-.008-.005h-.002l-.003-.002-.01-.004-.004-.002a.093.093 0 0 0-.01-.003h-.002l-.003-.001-.009-.002h-.006l-.003-.001h-.004l-.002-.001h-.574a.156.156 0 0 0-.156.155v3.486c0 .086.07.155.156.155h.56c.087 0 .157-.07.157-.155v-2.07l1.6 2.16a.154.154 0 0 0 .039.038l.001.001.01.006.004.002a.066.066 0 0 0 .008.004l.007.003.005.002a.168.168 0 0 0 .01.003h.003a.155.155 0 0 0 .04.006h.56c.087 0 .157-.07.157-.155V4.918a.156.156 0 0 0-.156-.156h-.561Zm3.815.717v-.56a.156.156 0 0 0-.155-.157h-2.242a.155.155 0 0 0-.108.044h-.001l-.001.002-.002.003a.155.155 0 0 0-.044.107v3.486c0 .041.017.08.044.107l.002.003.002.002a.155.155 0 0 0 .108.043h2.242c.086 0 .155-.07.155-.156v-.56a.156.156 0 0 0-.155-.157H11.81v-.589h1.525c.086 0 .155-.07.155-.156v-.56a.156.156 0 0 0-.155-.157H11.81v-.589h1.525c.086 0 .155-.07.155-.156Z" />
+          </svg></a>
+        <a class="mt-4" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+            class="bi bi-messenger" viewBox="0 0 16 16">
+            <path
+              d="M0 7.76C0 3.301 3.493 0 8 0s8 3.301 8 7.76-3.493 7.76-8 7.76c-.81 0-1.586-.107-2.316-.307a.639.639 0 0 0-.427.03l-1.588.702a.64.64 0 0 1-.898-.566l-.044-1.423a.639.639 0 0 0-.215-.456C.956 12.108 0 10.092 0 7.76zm5.546-1.459-2.35 3.728c-.225.358.214.761.551.506l2.525-1.916a.48.48 0 0 1 .578-.002l1.869 1.402a1.2 1.2 0 0 0 1.735-.32l2.35-3.728c.226-.358-.214-.761-.551-.506L9.728 7.381a.48.48 0 0 1-.578.002L7.281 5.98a1.2 1.2 0 0 0-1.735.32z" />
+          </svg></a>
+        <a class="mt-4" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+            class="bi bi-instagram" viewBox="0 0 16 16">
+            <path
+              d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.916 3.916 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.926 3.926 0 0 0-.923-1.417A3.911 3.911 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0h.003zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599.28.28.453.546.598.92.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.47 2.47 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.478 2.478 0 0 1-.92-.598 2.48 2.48 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233 0-2.136.008-2.388.046-3.231.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92.28-.28.546-.453.92-.598.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045v.002zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92zm-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217zm0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334z" />
+          </svg></a>
+  </header>
+  <!-- 輪播設置 -->
+  <div id="carouselExampleControls" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-in>
+    <div class="carousel-inner">
+      <div class="carousel-item active" data-bs-interval="1500">
+        <img src="/img/B1.jpg" class="d-block w-100" alt="...">
+      </div>
+      <div class="carousel-item" data-bs-interval="1500">
+        <img src="/img/B2.jpg" class="d-block w-100" alt="...">
+      </div>
+      <div class="carousel-item" data-bs-interval="1500">
+        <img src="/img/B3.jpg" class="d-block w-100" alt="...">
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+      <!-- 左邊圖 -->
+      <span class="nav justify-content-start A001_c" aria-hidden="true"><img class="w-50 A001 opacity-50"
+          src="/img/A001.png" alt=""></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <!-- 右邊圖 -->
+    <button class="carousel-control-next overflow-hidden" type="button" data-bs-target="#carouselExampleControls"
+      data-bs-slide="next">
+      <span class="nav justify-content-end A002_c " aria-hidden="true"><img class="w-50 A002 opacity-50"
+          src="/img/A002.png" alt=""></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+  <!-- 內容區域 -->
+  <!-- 左邊文字區 -->
+  <div class="container-lg">
+    <div class="row justify-content-center">
+      <div class="col-3 p-5 m-5 border border-dark rounded rounded-3">
+        <img class="mb-5" src="./img/ABOUT US.svg" alt="">
+        <h5>品質沒有灰色地帶 政達超乎您的期待
+          政達相信「好產品自己會說話」，品質不只是我們對客戶的承諾，也是政達每一位夥伴的驕傲與成就。</h5>
+        <div class="bnt btn-lg btn-outline-dark">more</div>
+      </div>
+
+
+      <div class="col m-3 g-0 justify-content-end">
+        <img class="w-100 " src="/img/CC01.jpg" alt="">
+      </div>
+
+      <div class="col m-3 g-0">
+        <img class="w100" src="/img/CC02.jpg" alt="">
+        <img class="w100" src="/img/CC03.jpg" alt="">
+      </div>
+    </div>
+    <div class="star d-flex justify-content-center mb-5"><img src="./img/473ad14.svg" alt=""></div>
+    <!-- 產品區域 (未做連結) -->
+    <div class="container-lg row row-cols-xs-1 row-cols-sm-2 row-cols-md-4 row-cols-lg-5 ">
+
+
+      <div class="col-12 text-center">
+        <a href="#">
+          <div class="photo border-start">
+            <div class="img_c">
+              <img class="gold w-100 " src="/img/A001.png" alt="">
+            </div>
+            <h4>台積電紀念幣</h4>
+            <h6>銅質鍍金&銀</h6>
+          </div>
+        </a>
+      </div>
+
+
+      <div class="col-12 text-center">
+        <a href="#">
+          <div class="photo border-start">
+            <div class="img_c">
+              <img class="gold w-100 " src="/img/A002.png" alt="">
+            </div>
+            <h4>台積電紀念幣</h4>
+            <h6>銅質鍍金&銀</h6>
+          </div>
+        </a>
+      </div>
+
+      <div class="col-12 text-center">
+        <a href="#">
+          <div class="photo border-start">
+            <div class="img_c">
+              <img class="gold w-100 " src="/img/A003.png" alt="">
+            </div>
+            <h4>台積電紀念幣</h4>
+            <h6>銅質鍍金&銀</h6>
+          </div>
+        </a>
+      </div>
+
+      <div class="col-12 text-center">
+        <a href="#">
+          <div class="photo border-start">
+            <div class="img_c">
+              <img class="gold w-100 " src="/img/A004.png" alt="">
+            </div>
+            <h4>台積電紀念幣</h4>
+            <h6>銅質鍍金&銀</h6>
+          </div>
+        </a>
+      </div>
+
+      <div class="col-12 text-center">
+        <a href="#">
+          <div class="photo border-start">
+            <div class="img_c">
+              <img class="gold w-100 " src="/img/A005.png" alt="">
+            </div>
+            <h4>台積電紀念幣</h4>
+            <h6>銅質鍍金&銀</h6>
+          </div>
+        </a>
+      </div>
+
+      <div class="col-12 text-center">
+        <a href="#">
+          <div class="photo border-start">
+            <div class="img_c">
+              <img class="gold w-100 " src="/img/A006.png" alt="">
+            </div>
+            <h4>台積電紀念幣</h4>
+            <h6>銅質鍍金&銀</h6>
+          </div>
+        </a>
+      </div>
+
+      <div class="col-12 text-center">
+        <a href="#">
+          <div class="photo border-start">
+            <div class="img_c">
+              <img class="gold w-100 " src="/img/A007.png" alt="">
+            </div>
+            <h4>台積電紀念幣</h4>
+            <h6>銅質鍍金&銀</h6>
+          </div>
+        </a>
+      </div>
+
+      <div class="col-12 text-center">
+        <a href="#">
+          <div class="photo border-start">
+            <div class="img_c">
+              <img class="gold w-100 " src="/img/A008.png" alt="">
+            </div>
+            <h4>台積電紀念幣</h4>
+            <h6>銅質鍍金&銀</h6>
+          </div>
+        </a>
+      </div>
+
+      <div class="col-12 text-center">
+        <a href="#">
+          <div class="photo border-start">
+            <div class="img_c">
+              <img class="gold w-100 " src="/img/A009.png" alt="">
+            </div>
+            <h4>台積電紀念幣</h4>
+            <h6>銅質鍍金&銀</h6>
+          </div>
+        </a>
+      </div>
+
+      <div class="col-12 text-center">
+        <a href="#">
+          <div class="photo border-start">
+            <div class="img_c">
+              <img class="gold w-100 " src="/img/A010.png" alt="">
+            </div>
+            <h4>台積電紀念幣</h4>
+            <h6>銅質鍍金&銀</h6>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="foot">
+      <div class="img_foot">
+        <div class="nav ">
+          <img class="w-25" src="./img/logo.png" alt="">
+          <div class="col">
+            <P>政達五金企業有限公司</P>
+            <P>JEN TA BADGE WORKS.CO., LTD</P>
+            <div class="add"><samp> 地址：</samp>
+              <p>新北市中和區中山路二段568巷8號</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <iframe src="" frameborder="0"></iframe>
+
+    <iframe src="https://embed.lottiefiles.com/animation/142271">123</iframe>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="./script.js"></script>
+</body>
+
+</html>
