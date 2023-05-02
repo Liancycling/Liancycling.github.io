@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>展開側邊選單</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        #logo {
+            background-image: url(logo.png);
+            background-size: contain;
+            background-repeat: no-repeat;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+        }
+        #menu {
+            background-color: #000;
+            color: #fff;
+            width: 0;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            transition: width 0.5s;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        #menu.active {
+            width: 250px;
+        }
+    </style>
+</head>
+<body onclick="hideMenu()">
+    <div id="logo" onclick="toggleMenu()">123</div>
+    <div id="menu">
+        <ul>
+            <li>選單項目 1</li>
+            <li>選單項目 2</li>
+            <li>選單項目 3</li>
+        </ul>
+    </div>
+    <script>
+        function toggleMenu(event) {
+            event.stopPropagation();
+            document.getElementById("menu").classList.toggle("active");
+        }
+        function hideMenu() {
+            document.getElementById("menu").classList.remove("active");
+        }
+    </script>
+</body>
+</html>
