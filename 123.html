@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<!-- Chosen Palette: Calm Neutrals -->
+<!-- Application Structure Plan: The application is structured as an interactive spreadsheet or calculation sheet. The primary user interface consists of two main parts: a "Control Panel" at the top for all user inputs (season, year, cycle days) and a "Data Table" below that displays the calculated results. This structure was chosen because the user requested a "spreadsheet," which implies a data-centric, tabular layout. It separates inputs from outputs, a common and intuitive pattern in spreadsheet applications, allowing users to clearly see how their parameter changes in the control panel directly affect the calculated dates in the table. -->
+<!-- Visualization & Content Choices: 
+- Report Info: Production schedule data (stages, responsible units, durations). Goal: Organize/Inform in a tabular format. Viz/Method: HTML `<table>`. Interaction: The table cells are not directly interactive but are dynamically updated by the control panel. Justification: Directly fulfills the user's request for a "spreadsheet" (試算表). A table is the most effective way to display precise, structured data like dates and responsibilities.
+- Report Info: Adjustable cycle days (Development, Production). Goal: Allow dynamic calculation. Viz/Method: HTML `<input type="number">`. Interaction: User types in a number, triggering a full recalculation of the schedule. Justification: Provides a direct and powerful way for users to simulate schedule changes, turning the static report into a planning tool.
+- Report Info: Season selection and year dependency. Goal: Compare/Show Change. Viz/Method: HTML Radio Buttons & Dropdown. Interaction: User selection triggers recalculation. Justification: Maintains the core interactive logic from the previous dashboard but integrates it into a spreadsheet-like control panel for a cohesive experience.
+-->
+<!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>互動式生產排程試算表</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/date-fns@3.6.0/cdn.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #f8fafc; /* slate-50 */
+        }
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        .radio-label {
+            transition: all 0.2s ease-in-out;
+        }
+        input[type="radio"]:checked + .radio-label {
+            background-color: #0891b2; /* cyan-600 */
+            color: white;
+            border-color: #0e7490; /* cyan-700 */
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+        }
+    </style>
+</head>
+<body class="text-slate-800">
+    <div class="container mx-auto p-4 md:p-8 max-w-5xl">
+
+        <header class="text-center mb-8">
+            <h1 class="text-3xl md:text-4xl font-bold text-slate-800">互動式生產排程試算表</h1>
+            <p class="text-slate-500 mt-2">調整參數即可即時更新所有排程日期</p>
+        </header>
+
+        <main class="bg-white p-6 md:p-8 rounded-2xl shadow-lg border border-slate-200">
+            
+            <section id="control-panel" class="bg-slate-50 border border-slate-200 p-5 rounded-xl mb-8">
+                <h2 class="text-lg font-bold text-slate-700 mb-4">🗓️ 規劃參數設定</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1">生產季節</label>
+                        <div class="flex rounded-md" role="group">
+                            <input type="radio" name="season" id="ss-radio" value="ss" class="hidden" checked>
+                            <label for="ss-radio" class="radio-label cursor-pointer py-2 px-4 w-full text-center border border-slate-300 rounded-l-md bg-white text-slate-600">春夏</label>
+                            
+                            <input type="radio" name="season" id="aw-radio" value="aw" class="hidden">
+                            <label for="aw-radio" class="radio-label cursor-pointer py-2 px-4 w-full text-center border-t border-b border-r border-slate-300 rounded-r-md bg-white text-slate-600">秋冬</label>
+                        </div>
+                    </div>
+
+                    <div id="year-selector-container" class="hidden">
+                        <label for="year-selector" class="block text-sm font-medium text-slate-700 mb-1">交貨年份 (建議)</label>
+                        <select id="year-selector" class="w-full bg-white border border-slate-300 rounded-md py-2 px-3 text-slate-700 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500">
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="dev-days-input" class="block text-sm font-medium text-slate-700 mb-1">開發調整期 (天)</label>
+                        <input type="number" id="dev-days-input" value="30" class="w-full rounded-md border-slate-300 shadow-sm focus:border-cyan-500 focus:ring-cyan-500 sm:text-sm p-2">
+                    </div>
+
+                    <div>
+                        <label for="prod-days-input" class="block text-sm font-medium text-slate-700 mb-1">大貨生產期 (天)</label>
+                        <input type="number" id="prod-days-input" value="45" class="w-full rounded-md border-slate-300 shadow-sm focus:border-cyan-500 focus:ring-cyan-500 sm:text-sm p-2">
+                    </div>
+
+                    <div class="md:col-span-2">
+                        <label for="delivery-date-input" class="block text-sm font-medium text-slate-700 mb-1">目標到貨日 (可修改)</label>
+                        <input type="date" id="delivery-date-input" class="w-full rounded-md border-slate-300 shadow-sm focus:border-cyan-500 focus:ring-cyan-500 sm:text-sm p-2">
+                    </div>
+                </div>
+            </section>
+            
+            <section id="spreadsheet-container">
+                <h2 class="text-lg font-bold text-slate-700 mb-4">📊 生產排程明細</h2>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-slate-200 border">
+                        <thead class="bg-slate-100">
+                            <tr>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-bold text-slate-600 uppercase tracking-wider">階段</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-bold text-slate-600 uppercase tracking-wider">負責單位</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-bold text-slate-600 uppercase tracking-wider">持續天數</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-bold text-slate-600 uppercase tracking-wider">開始日期</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-bold text-slate-600 uppercase tracking-wider">結束日期 (最晚)</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-slate-200">
+                            <tr class="hover:bg-slate-50">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900">開發調整</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500">設計部 / 採購部</td>
+                                <td id="dev-days-cell" class="px-6 py-4 whitespace-nowrap text-sm text-slate-500">-</td>
+                                <td id="dev-start-cell" class="px-6 py-4 whitespace-nowrap text-sm font-mono text-sky-700">-</td>
+                                <td id="dev-end-cell" class="px-6 py-4 whitespace-nowrap text-sm font-mono text-sky-700">-</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900">下單</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500">業務部 / 生管部</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500">1</td>
+                                <td id="order-date-cell" class="px-6 py-4 whitespace-nowrap text-sm font-mono font-bold text-amber-600">-</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-mono font-bold text-amber-600">(即下單日)</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900">大貨生產</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500">生管部 / 工廠</td>
+                                <td id="prod-days-cell" class="px-6 py-4 whitespace-nowrap text-sm text-slate-500">-</td>
+                                <td id="prod-start-cell" class="px-6 py-4 whitespace-nowrap text-sm font-mono text-cyan-700">-</td>
+                                <td id="prod-end-cell" class="px-6 py-4 whitespace-nowrap text-sm font-mono text-cyan-700">-</td>
+                            </tr>
+                             <tr class="bg-emerald-50 hover:bg-emerald-100">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-emerald-800">目標到貨</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-emerald-700">倉儲部</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-emerald-700">-</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-mono">-</td>
+                                <td id="delivery-date-cell" class="px-6 py-4 whitespace-nowrap text-sm font-mono font-bold text-emerald-800">-</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const seasonRadios = document.querySelectorAll('input[name="season"]');
+            const yearSelectorContainer = document.getElementById('year-selector-container');
+            const yearSelector = document.getElementById('year-selector');
+            const devDaysInput = document.getElementById('dev-days-input');
+            const prodDaysInput = document.getElementById('prod-days-input');
+            const deliveryDateInput = document.getElementById('delivery-date-input');
+            
+            const devDaysCell = document.getElementById('dev-days-cell');
+            const devStartCell = document.getElementById('dev-start-cell');
+            const devEndCell = document.getElementById('dev-end-cell');
+            const orderDateCell = document.getElementById('order-date-cell');
+            const prodDaysCell = document.getElementById('prod-days-cell');
+            const prodStartCell = document.getElementById('prod-start-cell');
+            const prodEndCell = document.getElementById('prod-end-cell');
+            const deliveryDateCell = document.getElementById('delivery-date-cell');
+
+            const { format, subDays, parseISO } = dateFns;
+
+            const CNY_DATES = {
+                2025: '2025-01-29', 2026: '2026-02-17', 2027: '2027-02-06',
+                2028: '2028-01-26', 2029: '2029-02-13',
+            };
+
+            function populateYearSelector() {
+                const startYear = new Date().getFullYear();
+                for (let i = 0; i < 5; i++) {
+                    const year = startYear + i;
+                    if (CNY_DATES[year + 1]) {
+                        const option = document.createElement('option');
+                        option.value = year + 1;
+                        option.textContent = `${year + 1} 年前交貨`;
+                        yearSelector.appendChild(option);
+                    }
+                }
+                yearSelector.value = startYear + 1;
+            }
+
+            function updateDefaultDeliveryDate() {
+                const season = document.querySelector('input[name="season"]:checked').value;
+                const selectedYear = yearSelector.value;
+                let defaultDate;
+
+                if (season === 'ss') {
+                    yearSelectorContainer.classList.add('hidden');
+                    defaultDate = parseISO(`${new Date().getFullYear()}-09-30`);
+                } else {
+                    yearSelectorContainer.classList.remove('hidden');
+                    const cnyEve = parseISO(CNY_DATES[selectedYear]);
+                    defaultDate = subDays(cnyEve, 10);
+                }
+                deliveryDateInput.value = format(defaultDate, 'yyyy-MM-dd');
+            }
+
+            function updateSpreadsheet() {
+                if (!deliveryDateInput.value) return;
+
+                const devDays = parseInt(devDaysInput.value) || 0;
+                const prodDays = parseInt(prodDaysInput.value) || 0;
+                
+                const deliveryDate = parseISO(deliveryDateInput.value);
+                const prodStartDate = subDays(deliveryDate, prodDays);
+                const orderDate = prodStartDate;
+                const devStartDate = subDays(orderDate, devDays);
+                
+                const formatDate = (date) => format(date, 'yyyy-MM-dd');
+
+                devDaysCell.textContent = devDays;
+                devStartCell.textContent = formatDate(devStartDate);
+                devEndCell.textContent = formatDate(subDays(orderDate, 1));
+                
+                orderDateCell.textContent = formatDate(orderDate);
+
+                prodDaysCell.textContent = prodDays;
+                prodStartCell.textContent = formatDate(prodStartDate);
+                prodEndCell.textContent = formatDate(subDays(deliveryDate, 1));
+                
+                deliveryDateCell.textContent = formatDate(deliveryDate);
+            }
+
+            function handleControlChange() {
+                updateDefaultDeliveryDate();
+                updateSpreadsheet();
+            }
+
+            seasonRadios.forEach(radio => radio.addEventListener('change', handleControlChange));
+            yearSelector.addEventListener('change', handleControlChange);
+            
+            devDaysInput.addEventListener('input', updateSpreadsheet);
+            prodDaysInput.addEventListener('input', updateSpreadsheet);
+            deliveryDateInput.addEventListener('input', updateSpreadsheet);
+
+            populateYearSelector();
+            handleControlChange();
+        });
+    </script>
+</body>
+</html>
