@@ -1,344 +1,702 @@
 <!DOCTYPE html>
-<html lang="zh-Hant-TW">
-
+<html lang="zh-Hant">
 <head>
-  <meta name="viewport"
-    content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=1.0, maximum-scale=3.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link href="favicon.ico" type="image/x-icon" rel="icon" />
-  <link href="favicon.ico" type="image/x-icon" rel="shortcut icon" />
-  <meta charset="UTF-8">
-  <title>手刻網站範例</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
-    crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-  <link rel="stylesheet" href="./js.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FPV穿越機與攝影 | 分享與教學</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#165DFF',
+                        secondary: '#FF6B00',
+                        dark: '#1E293B',
+                        light: '#F8FAFC'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .text-shadow {
+                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .text-shadow-lg {
+                text-shadow: 0 4px 8px rgba(0,0,0,0.25);
+            }
+            .transition-custom {
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+            .case-card-hover {
+                transform: translateY(-8px);
+                box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            }
+        }
+    </style>
 </head>
-
-<body>
-  <header class="container-fluid fixed-top bg-dark p-0 text-dark bg-opacity-75 ">
-    <div class="row justify-content-center 123">
-      <!-- 語言切換區域 -->
-      <div class="col m-4">
-        <div class="btn-group">
-          <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"
-            data-bs-display="static" aria-expanded="false">
-            <!-- 語言切換 (暫無功能因為沒做分頁) -->
-          </button>
-          <ul class="dropdown-menu dropdown-menu-start dropdown-menu-lg-start">
-            <li><button class="dropdown-item" type="button">Tw</button></li>
-            <li><button class="dropdown-item" type="button">En</button></li>
-          </ul>
-        </div>
-      </div>
-      <!-- 中間LOGO區域 -->
-      <div class="col nav justify-content-center"><img class="mt-1" src="./img/LOGO_TEXT.svg" alt=""></div>
-      <!-- Maue+社群logo X 3  -->
-      <div class="col  nav justify-content-end">
-        <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
-          aria-controls="offcanvasRight"><img src="./img/MENU.svg" alt=""></button>
-
-        <div class="offcanvas offcanvas-end add001" tabindex="-1" id="offcanvasRight"
-          aria-labelledby="offcanvasRightLabel">
-          <div class="offcanvas-header ">
-            <!-- 內部設計結構處理 -->
-            <h5 class="text-end" id="offcanvasRightLabel">側邊導航地圖 產品&服務資訊</h5>
-            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-          </div>
-          <div class="offcanvas-body">
-            <ul class="list-group list-group-flush">
-              <div class="row  border-bottom">
-                <img class="col m-3 p-2 w-25 g-0" src="./img/443e668.svg" alt="">
-                <h5 class="col pt-4 g-0">關於我們</h5>
-              </div>
-
-              <div class="row ">
-                <img class="col m-3 p-2 w-25 g-0" src="./img/b720f79.svg" alt="">
-                <p class="col pt-4 g-0">產品連結</p>
-              </div>
-              <!-- 產品區域 (未優化) -->
-              <div class="item">
-                <div class="col-lg-3 bg-dark">空白區域</div>
-                <div class="row row-cols-4">
-                  <a class="col href=" #">戒指</a>
-                  <a class="col href=" #">項鍊</a>
-                  <a class="col href=" #">手環</a>
-                  <a class="col href=" #">等等之類</a>
-                  <a class="col href=" #">獎牌</a>
-                  <a class="col href=" #">講座</a>
-                  <a class="col href=" #">加工區域</a>
+    <body class="bg-black text-white antialiased">
+    <!-- 導航欄 -->
+        <header id="navbar" class="fixed w-full top-0 z-50 transition-custom bg-black/80 backdrop-blur-sm shadow-sm">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center space-x-2">
+                    <img src="JPG/LOGO2.png" alt="FPV LOGO" class="h-8 w-auto mr-2">
+                    <span class="text-xl font-bold text-white">FPV<span class="text-gray-400">攝影</span></span>
                 </div>
-              </div>
-
-              <div class="row  border-bottom">
-                <img class="col m-3 p-2 w-25 g-0" src="./img/473ad14.svg" alt="">
-                <h5 class="col pt-4 g-0">專業知識</h5>
-              </div>
-
-              <div class="row  border-bottom">
-                <img class="col m-3 p-2 w-25 g-0" src="./img/473ad14.svg" alt="">
-                <h5 class="col pt-4 g-0">問與答</h5>
-              </div>
-
-              <div class="row  border-bottom">
-                <img class="col m-3 p-2 w-25 g-0" src="./img/473ad14.svg" alt="">
-                <h5 class="col pt-4 g-0">聯絡我們</h5>
-              </div>
-              <!-- logo+社群svg -->
-              <div class="logoimg row-cols-1 ">
-                <img class="col p-2 w-50" src="./img/LOGO_TEXT.svg" alt="">
-                <img class="col p-2 w-100" src="./img/3b1c909.svg" alt="">
-                <img class="col p-2 w-100" src="./img/fd21704.svg" alt="">
-                <img class="col  p-2 w-100" src="./img/b720f79.svg" alt="">
-              </div>
-            </ul>
-          </div>
+                
+                <!-- 桌面導航 -->
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#home" class="font-medium hover:text-white/80 transition-custom">首頁</a>
+                    <a href="2.html" target="_blank" rel="noopener noreferrer" class="font-medium hover:text-white/80 transition-custom">教學</a>
+                    <a href="#gallery" class="font-medium hover:text-white/80 transition-custom">作品展示</a>
+                    <a href="#cases" class="font-medium hover:text-white/80 transition-custom">拍攝案例</a>
+                    <a href="#equipment" class="font-medium hover:text-white/80 transition-custom">裝備介紹</a>
+                    <a href="#about" class="font-medium hover:text-white/80 transition-custom">關於我們</a>
+                </nav>
+                
+                <!-- 社交媒體連結 -->
+                <div class="flex items-center space-x-4">
+                    <a href="#" class="text-white hover:text-[#3b5998] transition-custom" aria-label="Facebook">
+                        <i class="fa fa-facebook fa-2x"></i>
+                    </a>
+                    <a href="#" class="text-white hover:text-[#FF0000] transition-custom" aria-label="YouTube">
+                        <i class="fa fa-youtube-play fa-2x"></i>
+                    </a>
+                    <a href="#" class="text-white hover:text-[#E1306C] transition-custom" aria-label="Instagram">
+                        <i class="fa fa-instagram fa-2x"></i>
+                    </a>
+                    
+                    <!-- 移動端菜單按鈕 -->
+                    <button id="menuBtn" class="md:hidden text-white hover:text-primary transition-custom" aria-label="菜單">
+                        <i class="fa fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
         </div>
-        <!-- 社群小圖 -->
-        <a class="mt-4" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
-            class="bi bi-line" viewBox="0 0 16 16">
-            <path
-              d="M8 0c4.411 0 8 2.912 8 6.492 0 1.433-.555 2.723-1.715 3.994-1.678 1.932-5.431 4.285-6.285 4.645-.83.35-.734-.197-.696-.413l.003-.018.114-.685c.027-.204.055-.521-.026-.723-.09-.223-.444-.339-.704-.395C2.846 12.39 0 9.701 0 6.492 0 2.912 3.59 0 8 0ZM5.022 7.686H3.497V4.918a.156.156 0 0 0-.155-.156H2.78a.156.156 0 0 0-.156.156v3.486c0 .041.017.08.044.107v.001l.002.002.002.002a.154.154 0 0 0 .108.043h2.242c.086 0 .155-.07.155-.156v-.56a.156.156 0 0 0-.155-.157Zm.791-2.924a.156.156 0 0 0-.156.156v3.486c0 .086.07.155.156.155h.562c.086 0 .155-.07.155-.155V4.918a.156.156 0 0 0-.155-.156h-.562Zm3.863 0a.156.156 0 0 0-.156.156v2.07L7.923 4.832a.17.17 0 0 0-.013-.015v-.001a.139.139 0 0 0-.01-.01l-.003-.003a.092.092 0 0 0-.011-.009h-.001L7.88 4.79l-.003-.002a.029.029 0 0 0-.005-.003l-.008-.005h-.002l-.003-.002-.01-.004-.004-.002a.093.093 0 0 0-.01-.003h-.002l-.003-.001-.009-.002h-.006l-.003-.001h-.004l-.002-.001h-.574a.156.156 0 0 0-.156.155v3.486c0 .086.07.155.156.155h.56c.087 0 .157-.07.157-.155v-2.07l1.6 2.16a.154.154 0 0 0 .039.038l.001.001.01.006.004.002a.066.066 0 0 0 .008.004l.007.003.005.002a.168.168 0 0 0 .01.003h.003a.155.155 0 0 0 .04.006h.56c.087 0 .157-.07.157-.155V4.918a.156.156 0 0 0-.156-.156h-.561Zm3.815.717v-.56a.156.156 0 0 0-.155-.157h-2.242a.155.155 0 0 0-.108.044h-.001l-.001.002-.002.003a.155.155 0 0 0-.044.107v3.486c0 .041.017.08.044.107l.002.003.002.002a.155.155 0 0 0 .108.043h2.242c.086 0 .155-.07.155-.156v-.56a.156.156 0 0 0-.155-.157H11.81v-.589h1.525c.086 0 .155-.07.155-.156v-.56a.156.156 0 0 0-.155-.157H11.81v-.589h1.525c.086 0 .155-.07.155-.156Z" />
-          </svg></a>
-        <a class="mt-4" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
-            class="bi bi-messenger" viewBox="0 0 16 16">
-            <path
-              d="M0 7.76C0 3.301 3.493 0 8 0s8 3.301 8 7.76-3.493 7.76-8 7.76c-.81 0-1.586-.107-2.316-.307a.639.639 0 0 0-.427.03l-1.588.702a.64.64 0 0 1-.898-.566l-.044-1.423a.639.639 0 0 0-.215-.456C.956 12.108 0 10.092 0 7.76zm5.546-1.459-2.35 3.728c-.225.358.214.761.551.506l2.525-1.916a.48.48 0 0 1 .578-.002l1.869 1.402a1.2 1.2 0 0 0 1.735-.32l2.35-3.728c.226-.358-.214-.761-.551-.506L9.728 7.381a.48.48 0 0 1-.578.002L7.281 5.98a1.2 1.2 0 0 0-1.735.32z" />
-          </svg></a>
-        <a class="mt-4" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
-            class="bi bi-instagram" viewBox="0 0 16 16">
-            <path
-              d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.916 3.916 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.926 3.926 0 0 0-.923-1.417A3.911 3.911 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0h.003zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599.28.28.453.546.598.92.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.47 2.47 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.478 2.478 0 0 1-.92-.598 2.48 2.48 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233 0-2.136.008-2.388.046-3.231.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92.28-.28.546-.453.92-.598.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045v.002zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92zm-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217zm0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334z" />
-          </svg></a>
-  </header>
-  <!-- 輪播設置 -->
-  <div id="carouselExampleControls" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-in>
-    <div class="carousel-inner">
-      <div class="carousel-item active" data-bs-interval="1500">
-        <img src="/img/B1.jpg" class="d-block w-100" alt="...">
-      </div>
-      <div class="carousel-item" data-bs-interval="1500">
-        <img src="/img/B2.jpg" class="d-block w-100" alt="...">
-      </div>
-      <div class="carousel-item" data-bs-interval="1500">
-        <img src="/img/B3.jpg" class="d-block w-100" alt="...">
-      </div>
-    </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-      <!-- 左邊圖 -->
-      <span class="nav justify-content-start A001_c" aria-hidden="true"><img class="w-50 A001 opacity-50"
-          src="/img/A001.png" alt=""></span>
-      <span class="visually-hidden">Previous</span>
-    </button>
-    <!-- 右邊圖 -->
-    <button class="carousel-control-next overflow-hidden" type="button" data-bs-target="#carouselExampleControls"
-      data-bs-slide="next">
-      <span class="nav justify-content-end A002_c " aria-hidden="true"><img class="w-50 A002 opacity-50"
-          src="/img/A002.png" alt=""></span>
-      <span class="visually-hidden">Next</span>
-    </button>
-  </div>
-  <!-- 內容區域 -->
-  <!-- 左邊文字區 -->
-  <div class="container-lg">
-    <div class="row justify-content-center">
-      <div class="col-3 p-5 m-5 border border-dark rounded rounded-3">
-        <img class="mb-5" src="./img/ABOUT US.svg" alt="">
-        <h5>品質沒有灰色地帶 政達超乎您的期待
-          政達相信「好產品自己會說話」，品質不只是我們對客戶的承諾，也是政達每一位夥伴的驕傲與成就。</h5>
-        <div class="bnt btn-lg btn-outline-dark">more</div>
-      </div>
-
-
-      <div class="col m-3 g-0 justify-content-end">
-        <img class="w-100 " src="/img/CC01.jpg" alt="">
-      </div>
-
-      <div class="col m-3 g-0">
-        <img class="w100" src="/img/CC02.jpg" alt="">
-        <img class="w100" src="/img/CC03.jpg" alt="">
-      </div>
-    </div>
-    <div class="star d-flex justify-content-center mb-5"><img src="./img/473ad14.svg" alt=""></div>
-    <!-- 產品區域 (未做連結) -->
-    <div class="container-lg row row-cols-xs-1 row-cols-sm-2 row-cols-md-4 row-cols-lg-5 ">
-
-
-      <div class="col-6 text-center">
-        <a href="https://g.co/gemini/share/7ef1db18451b">
-          <div class="photo border-start">
-            <div class="img_c">
-              <img class="gold w-100 " src="/img/A001.png" alt="">
+        
+        <!-- 移動端導航菜單 -->
+        <div id="mobileMenu" class="md:hidden hidden bg-black border-t border-white/10">
+            <div class="container mx-auto px-4 py-3 space-y-3">
+                <a href="#home" class="block py-2 font-medium hover:text-white/80 transition-custom">首頁</a>
+                <a href="2.html" target="_blank" rel="noopener noreferrer" class="block py-2 font-medium hover:text-white/80 transition-custom">教學</a>
+                <a href="#gallery" class="block py-2 font-medium hover:text-white/80 transition-custom">作品展示</a>
+                <a href="#cases" class="block py-2 font-medium hover:text-white/80 transition-custom">拍攝案例</a>
+                <a href="#equipment" class="block py-2 font-medium hover:text-white/80 transition-custom">裝備介紹</a>
+                <a href="#about" class="block py-2 font-medium hover:text-white/80 transition-custom">關於我們</a>
             </div>
-            <h4>台積電紀念幣</h4>
-            <h6>銅質鍍金&銀</h6>
-          </div>
-        </a>
-      </div>
+        </div>
+    </header>
 
-
-      <div class="col-6 text-center">
-        <a href="#">
-          <div class="photo border-start">
-            <div class="img_c">
-              <img class="gold w-100 " src="/img/A002.png" alt="">
+    <!-- 主頁英雄區 -->
+    <section id="home" class="pt-24 md:pt-0 min-h-screen flex items-center relative overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <img src="https://picsum.photos/id/1035/1920/1080" alt="FPV穿越機飛行視角" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-dark/50"></div>
+        </div>
+        
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-16 md:py-24">
+            <div class="max-w-3xl">
+                <h1 class="text-[clamp(2.5rem,5vw,4rem)] font-bold text-white leading-tight text-shadow-lg mb-6">
+                    探索FPV穿越機<br>的精彩世界
+                </h1>
+                <p class="text-[clamp(1rem,2vw,1.25rem)] text-white/90 mb-8 max-w-2xl text-shadow">
+                    無論你是初學者還是有經驗的飛手，這裡提供最詳細的教學、裝備指南和令人驚嘆的FPV攝影作品分享。
+                </p>
+                <div class="flex flex-wrap gap-4">
+                    <a href="2.html" target="_blank" rel="noopener noreferrer" class="px-8 py-3 bg-primary hover:bg-primary/90 text-white font-medium rounded-lg shadow-lg hover:shadow-xl transition-custom transform hover:-translate-y-1">
+                        開始學習
+                    </a>
+                    <a href="#cases" class="px-8 py-3 bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white font-medium rounded-lg border border-white/30 shadow-lg hover:shadow-xl transition-custom transform hover:-translate-y-1">
+                        查看案例
+                    </a>
+                </div>
             </div>
-            <h4>台積電紀念幣</h4>
-            <h6>銅質鍍金&銀</h6>
-          </div>
-        </a>
-      </div>
+        </div>
+        
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white animate-bounce">
+            <a href="2.html" aria-label="向下滾動" target="_blank" rel="noopener noreferrer">
+                <i class="fa fa-angle-down text-3xl"></i>
+            </a>
+        </div>
+    </section>
 
-      <div class="col-6 text-center">
-        <a href="#">
-          <div class="photo border-start">
-            <div class="img_c">
-              <img class="gold w-100 " src="/img/A003.png" alt="">
+    <!-- 教學部分 -->
+    <section id="tutorials" class="py-20 bg-gray-900">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold mb-4">FPV教學指南</h2>
+                <p class="text-gray-300 max-w-2xl mx-auto">從入門到精通，我們提供一系列詳細的教學內容，幫助你掌握FPV穿越機的飛行技巧和攝影技術。</p>
             </div>
-            <h4>台積電紀念幣</h4>
-            <h6>銅質鍍金&銀</h6>
-          </div>
-        </a>
-      </div>
-
-      <div class="col-6 text-center">
-        <a href="#">
-          <div class="photo border-start">
-            <div class="img_c">
-              <img class="gold w-100 " src="/img/A004.png" alt="">
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- 教學卡片1 -->
+                <div class="bg-gray-800 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-custom group">
+                    <div class="relative overflow-hidden h-56">
+                        <img src="https://picsum.photos/id/1018/600/400" alt="FPV入門教學" class="w-full h-full object-cover transition-custom group-hover:scale-105">
+                        <div class="absolute top-4 right-4 bg-secondary text-white text-sm font-medium px-3 py-1 rounded-full">
+                            入門
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2 group-hover:text-primary transition-custom">FPV穿越機入門指南</h3>
+                        <p class="text-gray-300 mb-4">適合新手的完整入門教學，從認識裝備到第一次飛行，讓你快速掌握基礎知識。</p>
+                        <a href="#" class="inline-flex items-center text-primary font-medium hover:underline">
+                            閱讀更多 <i class="fa fa-arrow-right ml-2 text-sm"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- 教學卡片2 -->
+                <div class="bg-gray-800 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-custom group">
+                    <div class="relative overflow-hidden h-56">
+                        <img src="https://picsum.photos/id/1039/600/400" alt="FPV攝影技巧" class="w-full h-full object-cover transition-custom group-hover:scale-105">
+                        <div class="absolute top-4 right-4 bg-primary text-white text-sm font-medium px-3 py-1 rounded-full">
+                            技巧
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2 group-hover:text-primary transition-custom">FPV攝影構圖技巧</h3>
+                        <p class="text-gray-300 mb-4">學習如何使用FPV穿越機拍攝出令人驚嘆的畫面，掌握各種構圖技巧和拍攝角度。</p>
+                        <a href="#" class="inline-flex items-center text-primary font-medium hover:underline">
+                            閱讀更多 <i class="fa fa-arrow-right ml-2 text-sm"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- 教學卡片3 -->
+                <div class="bg-gray-800 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-custom group">
+                    <div class="relative overflow-hidden h-56">
+                        <img src="https://picsum.photos/id/1059/600/400" alt="FPV裝備維修" class="w-full h-full object-cover transition-custom group-hover:scale-105">
+                        <div class="absolute top-4 right-4 bg-dark text-white text-sm font-medium px-3 py-1 rounded-full">
+                            維修
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2 group-hover:text-primary transition-custom">FPV裝備保養與維修</h3>
+                        <p class="text-gray-300 mb-4">學習如何保養你的FPV設備，以及常見故障的診斷和修理方法，延長設備使用壽命。</p>
+                        <a href="#" class="inline-flex items-center text-primary font-medium hover:underline">
+                            閱讀更多 <i class="fa fa-arrow-right ml-2 text-sm"></i>
+                        </a>
+                    </div>
+                </div>
             </div>
-            <h4>台積電紀念幣</h4>
-            <h6>銅質鍍金&銀</h6>
-          </div>
-        </a>
-      </div>
-
-      <div class="col-6 text-center">
-        <a href="#">
-          <div class="photo border-start">
-            <div class="img_c">
-              <img class="gold w-100 " src="/img/A005.png" alt="">
+            
+            <div class="text-center mt-12">
+                <a href="2.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-6 py-3 border border-primary text-primary font-medium rounded-lg hover:bg-primary hover:text-white transition-custom">
+                    查看全部教學 <i class="fa fa-long-arrow-right ml-2"></i>
+                </a>
             </div>
-            <h4>台積電紀念幣</h4>
-            <h6>銅質鍍金&銀</h6>
-          </div>
-        </a>
-      </div>
+        </div>
+    </section>
 
-      <div class="col-6 text-center">
-        <a href="#">
-          <div class="photo border-start">
-            <div class="img_c">
-              <img class="gold w-100 " src="/img/A006.png" alt="">
+    <!-- 作品展示 -->
+    <section id="gallery" class="py-20 bg-gray-900">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold mb-4">FPV攝影作品</h2>
+                <p class="text-gray-300 max-w-2xl mx-auto">欣賞來自世界各地FPV愛好者的精彩作品，感受第一視角飛行的獨特魅力。</p>
             </div>
-            <h4>台積電紀念幣</h4>
-            <h6>銅質鍍金&銀</h6>
-          </div>
-        </a>
-      </div>
-
-      <div class="col-6 text-center">
-        <a href="#">
-          <div class="photo border-start">
-            <div class="img_c">
-              <img class="gold w-100 " src="/img/A007.png" alt="">
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+                <div class="aspect-w-1 aspect-h-1 overflow-hidden rounded-lg group relative cursor-pointer">
+                    <img src="https://picsum.photos/id/1015/600/600" alt="山脈FPV拍攝" class="w-full h-full object-cover transition-custom group-hover:scale-110">
+                    <div class="absolute inset-0 bg-primary/40 opacity-0 group-hover:opacity-100 transition-custom flex items-center justify-center">
+                        <i class="fa fa-play-circle text-white text-4xl"></i>
+                    </div>
+                </div>
+                <div class="aspect-w-1 aspect-h-1 overflow-hidden rounded-lg group relative cursor-pointer">
+                    <img src="https://picsum.photos/id/1016/600/600" alt="峽谷FPV拍攝" class="w-full h-full object-cover transition-custom group-hover:scale-110">
+                    <div class="absolute inset-0 bg-primary/40 opacity-0 group-hover:opacity-100 transition-custom flex items-center justify-center">
+                        <i class="fa fa-play-circle text-white text-4xl"></i>
+                    </div>
+                </div>
+                <div class="aspect-w-1 aspect-h-1 overflow-hidden rounded-lg group relative cursor-pointer">
+                    <img src="https://picsum.photos/id/1019/600/600" alt="森林FPV拍攝" class="w-full h-full object-cover transition-custom group-hover:scale-110">
+                    <div class="absolute inset-0 bg-primary/40 opacity-0 group-hover:opacity-100 transition-custom flex items-center justify-center">
+                        <i class="fa fa-play-circle text-white text-4xl"></i>
+                    </div>
+                </div>
+                <div class="aspect-w-1 aspect-h-1 overflow-hidden rounded-lg group relative cursor-pointer">
+                    <img src="https://picsum.photos/id/1036/600/600" alt="海灘FPV拍攝" class="w-full h-full object-cover transition-custom group-hover:scale-110">
+                    <div class="absolute inset-0 bg-primary/40 opacity-0 group-hover:opacity-100 transition-custom flex items-center justify-center">
+                        <i class="fa fa-play-circle text-white text-4xl"></i>
+                    </div>
+                </div>
+                <div class="aspect-w-1 aspect-h-1 overflow-hidden rounded-lg group relative cursor-pointer">
+                    <img src="https://picsum.photos/id/1037/600/600" alt="城市FPV拍攝" class="w-full h-full object-cover transition-custom group-hover:scale-110">
+                    <div class="absolute inset-0 bg-primary/40 opacity-0 group-hover:opacity-100 transition-custom flex items-center justify-center">
+                        <i class="fa fa-play-circle text-white text-4xl"></i>
+                    </div>
+                </div>
+                <div class="aspect-w-1 aspect-h-1 overflow-hidden rounded-lg group relative cursor-pointer">
+                    <img src="https://picsum.photos/id/1043/600/600" alt="湖泊FPV拍攝" class="w-full h-full object-cover transition-custom group-hover:scale-110">
+                    <div class="absolute inset-0 bg-primary/40 opacity-0 group-hover:opacity-100 transition-custom flex items-center justify-center">
+                        <i class="fa fa-play-circle text-white text-4xl"></i>
+                    </div>
+                </div>
             </div>
-            <h4>台積電紀念幣</h4>
-            <h6>銅質鍍金&銀</h6>
-          </div>
-        </a>
-      </div>
-
-      <div class="col-6 text-center">
-        <a href="#">
-          <div class="photo border-start">
-            <div class="img_c">
-              <img class="gold w-100 " src="/img/A008.png" alt="">
+            
+            <div class="text-center mt-12">
+                <a href="3.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-6 py-3 bg-primary text-white font-medium rounded-lg hover:bg-primary/90 transition-custom shadow-md hover:shadow-lg">
+                    瀏覽更多作品 <i class="fa fa-images ml-2"></i>
+                </a>
             </div>
-            <h4>台積電紀念幣</h4>
-            <h6>銅質鍍金&銀</h6>
-          </div>
-        </a>
-      </div>
+        </div>
+    </section>
 
-      <div class="col-6 text-center">
-        <a href="#">
-          <div class="photo border-start">
-            <div class="img_c">
-              <img class="gold w-100 " src="/img/A009.png" alt="">
+    <!-- 拍攝案例部分 -->
+    <section id="cases" class="py-20 bg-gray-900">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold mb-4">FPV拍攝案例解析</h2>
+                <p class="text-gray-300 max-w-2xl mx-auto">深入了解真實FPV拍攝案例，學習專業飛手的技巧和經驗，掌握不同場景的拍攝要領。</p>
             </div>
-            <h4>台積電紀念幣</h4>
-            <h6>銅質鍍金&銀</h6>
-          </div>
-        </a>
-      </div>
-
-      <div class="col-6 text-center">
-        <a href="#">
-          <div class="photo border-start">
-            <div class="img_c">
-              <img class="gold w-100 " src="/img/A010.png" alt="">
+            
+            <!-- 案例過濾器 -->
+            <div class="flex flex-wrap justify-center gap-4 mb-12">
+                <button class="px-5 py-2 bg-primary text-white rounded-full text-sm font-medium">全部案例</button>
+                <button class="px-5 py-2 bg-gray-100 hover:bg-gray-200 rounded-full text-sm font-medium transition-custom">風景攝影</button>
+                <button class="px-5 py-2 bg-gray-100 hover:bg-gray-200 rounded-full text-sm font-medium transition-custom">建築拍攝</button>
+                <button class="px-5 py-2 bg-gray-100 hover:bg-gray-200 rounded-full text-sm font-medium transition-custom">戶外活動</button>
+                <button class="px-5 py-2 bg-gray-100 hover:bg-gray-200 rounded-full text-sm font-medium transition-custom">商業宣傳</button>
+                <button class="px-5 py-2 bg-gray-100 hover:bg-gray-200 rounded-full text-sm font-medium transition-custom">極限運動</button>
             </div>
-            <h4>台積電紀念幣</h4>
-            <h6>銅質鍍金&銀</h6>
-          </div>
-        </a>
-      </div>
-    </div>
+            
+            <!-- 案例卡片 -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- 案例1 -->
+                <div class="bg-gray-800 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-custom group">
+                    <div class="relative overflow-hidden h-64">
+                        <img src="https://picsum.photos/id/1031/800/500" alt="山區風景拍攝案例" class="w-full h-full object-cover transition-custom group-hover:scale-105">
+                        <div class="absolute top-4 right-4 bg-secondary text-white text-sm font-medium px-3 py-1 rounded-full">
+                            風景攝影
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center gap-2 mb-4">
+                            <img src="https://picsum.photos/id/1001/100/100" alt="攝影師頭像" class="w-10 h-10 rounded-full object-cover">
+                            <div>
+                                <h4 class="font-medium">陳大師</h4>
+                                <p class="text-sm text-gray-400">資深FPV攝影師 · 5年經驗</p>
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3 text-white">高山峽谷穿越拍攝</h3>
+                        <p class="text-gray-300 mb-4">這個案例展示了如何在復雜山區地形中進行FPV拍攝，克服強風和信號干擾，捕捉壯麗的自然景觀。使用了DJI FPV系統，搭配ND濾鏡減少反光。</p>
+                        
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="px-3 py-1 bg-primary/10 text-primary text-xs rounded-full">強風環境</span>
+                            <span class="px-3 py-1 bg-primary/10 text-primary text-xs rounded-full">山區地形</span>
+                            <span class="px-3 py-1 bg-primary/10 text-primary text-xs rounded-full">長距離飛行</span>
+                            <span class="px-3 py-1 bg-primary/10 text-primary text-xs rounded-full">ND濾鏡</span>
+                        </div>
+                        
+                        <a href="#" class="inline-flex items-center text-primary font-medium hover:underline">
+                            查看完整案例分析 <i class="fa fa-arrow-right ml-2 text-sm"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- 案例2 -->
+                <div class="bg-gray-800 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-custom group">
+                    <div class="relative overflow-hidden h-64">
+                        <img src="https://picsum.photos/id/1073/800/500" alt="城市建築拍攝案例" class="w-full h-full object-cover transition-custom group-hover:scale-105">
+                        <div class="absolute top-4 right-4 bg-primary text-white text-sm font-medium px-3 py-1 rounded-full">
+                            建築拍攝
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center gap-2 mb-4">
+                            <img src="https://picsum.photos/id/1002/100/100" alt="攝影師頭像" class="w-10 h-10 rounded-full object-cover">
+                            <div>
+                                <h4 class="font-medium">林建築</h4>
+                                <p class="text-sm text-gray-400">建築攝影師 · 8年經驗</p>
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3 text-white">現代建築群穿梭拍攝</h3>
+                        <p class="text-gray-300 mb-4">在城市高樓之間進行FPV拍攝需要特別注意安全和法規。本案例使用了小型穿越機，展示如何利用建築結構創造動感畫面，並避免信號干擾。</p>
+                        
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="px-3 py-1 bg-primary/10 text-primary text-xs rounded-full">城市環境</span>
+                            <span class="px-3 py-1 bg-primary/10 text-primary text-xs rounded-full">建築群</span>
+                            <span class="px-3 py-1 bg-primary/10 text-primary text-xs rounded-full">小型穿越機</span>
+                            <span class="px-3 py-1 bg-primary/10 text-primary text-xs rounded-full">低空飛行</span>
+                        </div>
+                        
+                        <a href="#" class="inline-flex items-center text-primary font-medium hover:underline">
+                            查看完整案例分析 <i class="fa fa-arrow-right ml-2 text-sm"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- 案例3 -->
+                <div class="bg-gray-800 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-custom group">
+                    <div class="relative overflow-hidden h-64">
+                        <img src="https://picsum.photos/id/1058/800/500" alt="極限運動拍攝案例" class="w-full h-full object-cover transition-custom group-hover:scale-105">
+                        <div class="absolute top-4 right-4 bg-dark text-white text-sm font-medium px-3 py-1 rounded-full">
+                            極限運動
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center gap-2 mb-4">
+                            <img src="https://picsum.photos/id/1003/100/100" alt="攝影師頭像" class="w-10 h-10 rounded-full object-cover">
+                            <div>
+                                <h4 class="font-medium">王極限</h4>
+                                <p class="text-sm text-gray-400">運動攝影師 · 6年經驗</p>
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3 text-white">自行車下坡賽跟拍</h3>
+                        <p class="text-gray-300 mb-4">跟拍高速移動的物體需要精準控制和預判路線。本案例詳細介紹了如何設定合適的飛行模式，保持安全距離同時捕捉精彩瞬間，使用了運動模式和跟隨功能。</p>
+                        
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="px-3 py-1 bg-primary/10 text-primary text-xs rounded-full">高速跟拍</span>
+                            <span class="px-3 py-1 bg-primary/10 text-primary text-xs rounded-full">戶外賽事</span>
+                            <span class="px-3 py-1 bg-primary/10 text-primary text-xs rounded-full">運動模式</span>
+                            <span class="px-3 py-1 bg-primary/10 text-primary text-xs rounded-full">跟隨功能</span>
+                        </div>
+                        
+                        <a href="#" class="inline-flex items-center text-primary font-medium hover:underline">
+                            查看完整案例分析 <i class="fa fa-arrow-right ml-2 text-sm"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- 案例4 -->
+                <div class="bg-gray-800 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-custom group">
+                    <div class="relative overflow-hidden h-64">
+                        <img src="https://picsum.photos/id/1056/800/500" alt="商業宣傳拍攝案例" class="w-full h-full object-cover transition-custom group-hover:scale-105">
+                        <div class="absolute top-4 right-4 bg-green-600 text-white text-sm font-medium px-3 py-1 rounded-full">
+                            商業宣傳
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center gap-2 mb-4">
+                            <img src="https://picsum.photos/id/1004/100/100" alt="攝影師頭像" class="w-10 h-10 rounded-full object-cover">
+                            <div>
+                                <h4 class="font-medium">張商業</h4>
+                                <p class="text-sm text-gray-400">廣告攝影總監 · 10年經驗</p>
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3 text-white">度假村宣傳片拍攝</h3>
+                        <p class="text-gray-300 mb-4">為五星級度假村拍攝宣傳片，本案例展示了如何通過FPV技術展現度假村的全貌和特色景點，包括黃金時段拍攝技巧和後期色彩調整建議。</p>
+                        
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="px-3 py-1 bg-primary/10 text-primary text-xs rounded-full">商業拍攝</span>
+                            <span class="px-3 py-1 bg-primary/10 text-primary text-xs rounded-full">黃金時段</span>
+                            <span class="px-3 py-1 bg-primary/10 text-primary text-xs rounded-full">色彩調整</span>
+                            <span class="px-3 py-1 bg-primary/10 text-primary text-xs rounded-full">場景展示</span>
+                        </div>
+                        
+                        <a href="#" class="inline-flex items-center text-primary font-medium hover:underline">
+                            查看完整案例分析 <i class="fa fa-arrow-right ml-2 text-sm"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="#" class="inline-flex items-center px-6 py-3 border border-white/20 text-white font-medium rounded-lg hover:bg-white/10 hover:text-white transition-custom">
+                    瀏覽更多案例 <i class="fa fa-long-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
 
+    <!-- 裝備介紹 -->
+    <section id="equipment" class="py-20 bg-gray-900">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold mb-4">FPV裝備介紹</h2>
+                <p class="text-gray-300 max-w-2xl mx-auto">了解各種FPV穿越機的裝備，從入門套裝到高端設備，幫助你做出最合適的選擇。</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <img src="https://picsum.photos/id/96/800/600" alt="FPV穿越機裝備" class="w-full h-auto rounded-xl shadow-lg">
+                </div>
+                
+                <div class="space-y-8">
+                    <div class="flex gap-4">
+                        <div class="flex-shrink-0 w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-white">
+                            <i class="fa fa-plane text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold mb-2">穿越機機身</h3>
+                            <p class="text-gray-300">不同尺寸和材質的機身適合不同的飛行場景，從室內微型機到戶外競速機，選擇適合你的機型。</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex gap-4">
+                        <div class="flex-shrink-0 w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-white">
+                            <i class="fa fa-camera text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold mb-2">攝影鏡頭</h3>
+                            <p class="text-gray-300">FPV攝影的關鍵裝備，不同視角和解析度的鏡頭將帶來截然不同的拍攝效果。</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex gap-4">
+                        <div class="flex-shrink-0 w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-white">
+                            <i class="fa fa-gamepad text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold mb-2">遙控器與接收機</h3>
+                            <p class="text-gray-300">穩定可靠的遙控系統是安全飛行的基礎，了解各種頻段和協議的差異。</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex gap-4">
+                        <div class="flex-shrink-0 w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-white">
+                            <i class="fa fa-battery-full text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold mb-2">電池與充電器</h3>
+                            <p class="text-gray-300">了解不同容量和放電倍率的電池特性，以及安全充電的重要性。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-16 bg-gray-800 rounded-2xl p-8 md:p-10 shadow-sm">
+                <h3 class="text-2xl font-bold mb-6 text-center">新手入門套裝推薦</h3>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- 套裝1 -->
+                    <div class="bg-gray-700 rounded-xl p-6 shadow-sm hover:shadow-md transition-custom">
+                        <div class="h-48 mb-4 overflow-hidden rounded-lg">
+                            <img src="https://picsum.photos/id/119/600/400" alt="入門套裝A" class="w-full h-full object-cover">
+                        </div>
+                        <h4 class="font-bold text-lg mb-2">初學者入門套裝</h4>
+                        <p class="text-gray-300 text-sm mb-4">適合完全沒有經驗的新手，包含所有必要設備和教學資源。</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-white font-bold">NT$6,999</span>
+                            <a href="#" class="text-sm text-white font-medium hover:underline">了解詳情</a>
+                        </div>
+                    </div>
+                    
+                    <!-- 套裝2 -->
+                    <div class="bg-gray-700 rounded-xl p-6 shadow-sm hover:shadow-md transition-custom">
+                        <div class="h-48 mb-4 overflow-hidden rounded-lg">
+                            <img src="https://picsum.photos/id/160/600/400" alt="入門套裝B" class="w-full h-full object-cover">
+                        </div>
+                        <h4 class="font-bold text-lg mb-2">攝影專用套裝</h4>
+                        <p class="text-gray-300 text-sm mb-4">偏重攝影功能，搭載高畫質攝影機，適合喜歡拍攝的玩家。</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-white font-bold">NT$12,500</span>
+                            <a href="#" class="text-sm text-white font-medium hover:underline">了解詳情</a>
+                        </div>
+                    </div>
+                    
+                    <!-- 套裝3 -->
+                    <div class="bg-gray-700 rounded-xl p-6 shadow-sm hover:shadow-md transition-custom">
+                        <div class="h-48 mb-4 overflow-hidden rounded-lg">
+                            <img src="https://picsum.photos/id/111/600/400" alt="入門套裝C" class="w-full h-full object-cover">
+                        </div>
+                        <h4 class="font-bold text-lg mb-2">競速入門套裝</h4>
+                        <p class="text-gray-300 text-sm mb-4">輕量化設計，適合對FPV競速感興趣的玩家，反應靈敏。</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-white font-bold">NT$9,800</span>
+                            <a href="#" class="text-sm text-white font-medium hover:underline">了解詳情</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
+    <!-- 關於我們 -->
+    <section id="about" class="py-20 bg-gray-900">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold mb-6">關於我們</h2>
+                    <p class="text-gray-300 mb-6">我們是一群熱愛FPV穿越機和空中攝影的愛好者，希望通過這個平台分享我們的經驗和知識，幫助更多人進入這個精彩的世界。</p>
+                    <p class="text-gray-300 mb-8">無論你是想了解如何開始你的第一個FPV項目，還是想提升你的飛行和攝影技巧，這裡都有適合你的內容。我們定期更新教學文章、裝備評測和精彩作品，歡迎加入我們的社區。</p>
+                    
+                    <div class="flex flex-wrap gap-4">
+                        <a href="#" class="flex items-center gap-2 px-5 py-3 bg-[#3b5998] text-white rounded-lg hover:bg-[#3b5998]/90 transition-custom">
+                            <i class="fa fa-facebook"></i>
+                            <span>關注我們的Facebook</span>
+                        </a>
+                        <a href="#" class="flex items-center gap-2 px-5 py-3 bg-[#FF0000] text-white rounded-lg hover:bg-[#FF0000]/90 transition-custom">
+                            <i class="fa fa-youtube-play"></i>
+                            <span>訂閱YouTube頻道</span>
+                        </a>
+                        <a href="#" class="flex items-center gap-2 px-5 py-3 bg-[#E1306C] text-white rounded-lg hover:bg-[#E1306C]/90 transition-custom">
+                            <i class="fa fa-instagram"></i>
+                            <span>追蹤我們的Instagram</span>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="space-y-4">
+                        <img src="https://picsum.photos/id/1005/400/500" alt="FPV愛好者" class="w-full h-auto rounded-lg shadow-md">
+                        <img src="https://picsum.photos/id/1006/400/300" alt="FPV裝備" class="w-full h-auto rounded-lg shadow-md">
+                    </div>
+                    <div class="space-y-4 pt-8">
+                        <img src="https://picsum.photos/id/1012/400/300" alt="FPV飛行場景" class="w-full h-auto rounded-lg shadow-md">
+                        <img src="https://picsum.photos/id/1074/400/500" alt="FPV攝影成果" class="w-full h-auto rounded-lg shadow-md">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
+    <!-- 訂閱區 -->
+    <section class="py-16 bg-gray-800">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-3xl mx-auto text-center">
+                <h2 class="text-[clamp(1.5rem,3vw,2rem)] font-bold text-white mb-4">訂閱我們的最新消息</h2>
+                <p class="text-white/80 mb-8">及時獲取最新的FPV教學、裝備資訊和拍攝靈感，我們會定期發送電子報到你的信箱。</p>
+                
+                <form class="flex flex-col sm:flex-row gap-3 max-w-lg mx-auto">
+                    <input type="email" placeholder="輸入你的信箱地址" class="flex-1 px-4 py-3 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-white/50">
+                    <button type="submit" class="px-6 py-3 bg-white text-black font-medium rounded-lg transition-custom whitespace-nowrap">
+                        立即訂閱
+                    </button>
+                </form>
+                
+                <p class="text-white/60 text-sm mt-4">我們重視你的隱私，不會將你的資訊分享給第三方。</p>
+            </div>
+        </div>
+    </section>
 
+    <!-- 頁腳 -->
+    <footer class="bg-gray-900 text-white pt-16 pb-8">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+                <div>
+                    <div class="flex items-center space-x-2 mb-6">
+                        <i class="fa fa-plane text-primary text-2xl"></i>
+                        <span class="text-xl font-bold text-white">FPV<span class="text-secondary">攝影</span></span>
+                    </div>
+                    <p class="text-gray-400 mb-6">分享FPV穿越機的飛行技巧和攝影知識，讓更多人享受第一視角飛行的樂趣。</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-[#3b5998] transition-custom" aria-label="Facebook">
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-[#FF0000] transition-custom" aria-label="YouTube">
+                            <i class="fa fa-youtube-play"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-[#E1306C] transition-custom" aria-label="Instagram">
+                            <i class="fa fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-6">快速連結</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#home" class="text-gray-400 hover:text-white transition-custom">首頁</a></li>
+                        <li><a href="2.html" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-custom">教學</a></li>
+                        <li><a href="#gallery" class="text-gray-400 hover:text-white transition-custom">作品展示</a></li>
+                        <li><a href="#cases" class="text-gray-400 hover:text-white transition-custom">拍攝案例</a></li>
+                        <li><a href="#equipment" class="text-gray-400 hover:text-white transition-custom">裝備介紹</a></li>
+                        <li><a href="#about" class="text-gray-400 hover:text-white transition-custom">關於我們</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-6">教學分類</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-custom">入門指南</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-custom">飛行技巧</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-custom">攝影教學</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-custom">裝備維修</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-custom">法規說明</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-6">聯繫我們</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-start gap-3">
+                            <i class="fa fa-envelope text-white mt-1"></i>
+                            <span class="text-gray-400">contact@fpvphoto.com</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fa fa-phone text-white mt-1"></i>
+                            <span class="text-gray-400">+886 912 345 678</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fa fa-map-marker text-white mt-1"></i>
+                            <span class="text-gray-400">台中市南屯區工業路123號</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-8">
+                <p class="text-gray-500 text-sm text-center">© 2023 FPV攝影. 保留所有權利.</p>
+            </div>
+        </div>
+    </footer>
 
+    <script>
+        // 移動端菜單切換
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // 導航欄滾動效果
+        const navbar = document.getElementById('navbar');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('py-2', 'shadow');
+                navbar.classList.remove('py-4');
+            } else {
+                navbar.classList.add('py-4');
+                navbar.classList.remove('py-2', 'shadow');
+            }
+        });
+        
+        // 平滑滾動
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                // 關閉移動端菜單
+                if (!mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.add('hidden');
+                }
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
 
-
-
-
-
-
-
-
-
-
-
-  </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  <script src="./script.js"></script>
+        // 案例過濾器按鈕點擊效果
+        const filterButtons = document.querySelectorAll('#cases button');
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // 移除所有按鈕的活躍狀態
+                filterButtons.forEach(btn => {
+                    btn.classList.remove('bg-primary', 'text-white');
+                    btn.classList.add('bg-gray-100', 'hover:bg-gray-200');
+                });
+                
+                // 設置當前按鈕為活躍狀態
+                button.classList.remove('bg-gray-100', 'hover:bg-gray-200');
+                button.classList.add('bg-primary', 'text-white');
+            });
+        });
+    </script>
 </body>
-
 </html>
+    
