@@ -23,32 +23,10 @@
             }
         }
     </script>
-    <style type="text/tailwindcss">
-        @layer utilities {
-            .content-auto {
-                content-visibility: auto;
-            }
-            .text-shadow {
-                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            }
-            .text-shadow-lg {
-                text-shadow: 0 4px 8px rgba(0,0,0,0.25);
-            }
-            .transition-custom {
-                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            }
-            .gallery-item-hover {
-                transform: translateY(-8px);
-            }
-            .image-overlay {
-                background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="css/styles.css">
 </head>
-<body class="bg-light text-dark antialiased">
-    <!-- 導航欄 -->
-    <header id="navbar" class="fixed w-full top-0 z-50 transition-custom bg-white/90 backdrop-blur-sm shadow-sm">
+<body class="bg-black text-white antialiased">
+    <header id="navbar" class="fixed w-full top-0 z-50 transition-custom bg-black/80 backdrop-blur-sm shadow-sm">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center py-4">
                 <div class="flex items-center space-x-2">
@@ -56,17 +34,15 @@
                     <a href="index.html" class="text-xl font-bold text-primary">FPV<span class="text-secondary">攝影</span></a>
                 </div>
                 
-                <!-- 桌面導航 -->
                 <nav class="hidden md:flex space-x-8">
                     <a href="index.html#home" class="font-medium hover:text-primary transition-custom">首頁</a>
                     <a href="index.html#tutorials" class="font-medium hover:text-primary transition-custom">教學</a>
-                    <a href="gallery.html" class="font-medium text-primary border-b-2 border-primary pb-1">作品展示</a>
+                    <a href="3.html" class="font-medium text-primary border-b-2 border-primary pb-1">作品展示</a>
                     <a href="index.html#cases" class="font-medium hover:text-primary transition-custom">拍攝案例</a>
                     <a href="index.html#equipment" class="font-medium hover:text-primary transition-custom">裝備介紹</a>
                     <a href="index.html#about" class="font-medium hover:text-primary transition-custom">關於我們</a>
                 </nav>
                 
-                <!-- 社交媒體連結 -->
                 <div class="flex items-center space-x-4">
                     <a href="#" class="text-white hover:text-[#3b5998] transition-custom" aria-label="Facebook">
                         <i class="fa fa-facebook fa-2x"></i>
@@ -78,7 +54,6 @@
                         <i class="fa fa-instagram fa-2x"></i>
                     </a>
                     
-                    <!-- 移動端菜單按鈕 -->
                     <button id="menuBtn" class="md:hidden text-white hover:text-primary transition-custom" aria-label="菜單">
                         <i class="fa fa-bars text-xl"></i>
                     </button>
@@ -86,7 +61,6 @@
             </div>
         </div>
         
-        <!-- 移動端導航菜單 -->
         <div id="mobileMenu" class="md:hidden hidden bg-black border-t border-white/10">
             <div class="container mx-auto px-4 py-3 space-y-3">
                 <a href="index.html#home" class="block py-2 font-medium hover:text-white/80 transition-custom">首頁</a>
@@ -99,8 +73,7 @@
         </div>
     </header>
 
-    <!-- 頁面標題區 -->
-    <section class="pt-28 pb-16 bg-gray-50">
+    <section class="pt-28 pb-16 bg-gray-900">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="max-w-4xl mx-auto text-center">
                 <div class="flex items-center justify-center gap-3 mb-6">
@@ -108,25 +81,23 @@
                         <i class="fa fa-arrow-left mr-1"></i> 回到首頁
                     </a>
                     <span class="text-gray-300">|</span>
-                    <span class="text-gray-500 text-sm">精選作品</span>
+                    <span class="text-gray-400 text-sm">精選作品</span>
                 </div>
                 
-                <h1 class="text-[clamp(1.8rem,4vw,3rem)] font-bold mb-6 leading-tight">
+                <h1 class="text-[clamp(1.8rem,4vw,3rem)] font-bold mb-6 leading-tight text-white">
                     FPV攝影作品展示
                 </h1>
                 
-                <p class="text-gray-600 max-w-2xl mx-auto">
+                <p class="text-gray-300 max-w-2xl mx-auto">
                     探索來自世界各地FPV愛好者的精彩作品，這些作品展示了第一人稱視角飛行的獨特魅力和無限可能。每張照片和影片背後都有獨特的拍攝技巧和故事。
                 </p>
             </div>
         </div>
     </section>
 
-    <!-- 作品過濾與分類 -->
     <section class="py-12 bg-black">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="max-w-6xl mx-auto">
-                <!-- 過濾器 -->
                 <div class="flex flex-wrap justify-center gap-4 mb-12">
                     <button class="px-5 py-2 bg-primary text-white rounded-full text-sm font-medium transition-custom">全部作品</button>
                     <button class="px-5 py-2 bg-gray-800 hover:bg-gray-700 text-white rounded-full text-sm font-medium transition-custom">風景攝影</button>
@@ -136,9 +107,7 @@
                     <button class="px-5 py-2 bg-gray-800 hover:bg-gray-700 text-white rounded-full text-sm font-medium transition-custom">賽事記錄</button>
                 </div>
                 
-                <!-- 作品網格 -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <!-- 作品1 -->
                     <div class="group rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-custom bg-gray-900">
                         <div class="relative h-64 overflow-hidden">
                             <img src="https://picsum.photos/id/1015/600/400" alt="山脈FPV攝影作品" class="w-full h-full object-cover transition-custom group-hover:scale-110">
@@ -164,7 +133,6 @@
                         </div>
                     </div>
                     
-                    <!-- 作品2 -->
                     <div class="group rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-custom bg-gray-900">
                         <div class="relative h-64 overflow-hidden">
                             <img src="https://picsum.photos/id/1037/600/400" alt="城市建築FPV攝影作品" class="w-full h-full object-cover transition-custom group-hover:scale-110">
@@ -190,7 +158,6 @@
                         </div>
                     </div>
                     
-                    <!-- 作品3 -->
                     <div class="group rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-custom bg-gray-900">
                         <div class="relative h-64 overflow-hidden">
                             <img src="https://picsum.photos/id/1058/600/400" alt="極限運動FPV攝影作品" class="w-full h-full object-cover transition-custom group-hover:scale-110">
@@ -208,16 +175,15 @@
                             <div class="flex justify-between items-center mb-2">
                                 <div class="flex items-center gap-2">
                                     <img src="https://picsum.photos/id/1003/100/100" alt="攝影師頭像" class="w-6 h-6 rounded-full object-cover">
-                                    <span class="text-sm font-medium">王極限</span>
+                                    <span class="text-sm font-medium text-white">王極限</span>
                                 </div>
-                                <span class="text-xs text-gray-500">2023.08.28</span>
+                                <span class="text-xs text-gray-400">2023.08.28</span>
                             </div>
-                            <p class="text-gray-600 text-sm line-clamp-2">跟拍山地自行車下坡比賽，使用高速模式追隨拍攝，展現速度與激情。</p>
+                            <p class="text-gray-300 text-sm line-clamp-2">跟拍山地自行車下坡比賽，使用高速模式追隨拍攝，展現速度與激情。</p>
                         </div>
                     </div>
                     
-                    <!-- 作品4 -->
-                    <div class="group rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-custom">
+                    <div class="group rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-custom bg-gray-900">
                         <div class="relative h-64 overflow-hidden">
                             <img src="https://picsum.photos/id/1059/600/400" alt="室內穿越FPV攝影作品" class="w-full h-full object-cover transition-custom group-hover:scale-110">
                             <div class="absolute inset-0 image-overlay opacity-0 group-hover:opacity-100 transition-custom flex items-end">
@@ -242,7 +208,6 @@
                         </div>
                     </div>
                     
-                    <!-- 作品5 -->
                     <div class="group rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-custom bg-gray-900">
                         <div class="relative h-64 overflow-hidden">
                             <img src="https://picsum.photos/id/1069/600/400" alt="賽事記錄FPV攝影作品" class="w-full h-full object-cover transition-custom group-hover:scale-110">
@@ -268,7 +233,6 @@
                         </div>
                     </div>
                     
-                    <!-- 作品6 -->
                     <div class="group rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-custom bg-gray-900">
                         <div class="relative h-64 overflow-hidden">
                             <img src="https://picsum.photos/id/1039/600/400" alt="風景攝影FPV作品" class="w-full h-full object-cover transition-custom group-hover:scale-110">
@@ -295,18 +259,17 @@
                     </div>
                 </div>
                 
-                <!-- 分頁按鈕 -->
                 <div class="flex justify-center mt-12">
                     <nav class="flex items-center gap-2">
-                        <a href="#" class="w-10 h-10 flex items-center justify-center rounded-full border border-gray-200 text-gray-500 hover:border-primary hover:text-primary transition-custom" aria-label="上一頁">
+                        <a href="#" class="w-10 h-10 flex items-center justify-center rounded-full border border-gray-700 text-gray-400 hover:border-primary hover:text-primary transition-custom" aria-label="上一頁">
                             <i class="fa fa-angle-left"></i>
                         </a>
                         <a href="#" class="w-10 h-10 flex items-center justify-center rounded-full bg-primary text-white">1</a>
-                        <a href="#" class="w-10 h-10 flex items-center justify-center rounded-full border border-gray-200 hover:border-primary hover:text-primary transition-custom">2</a>
-                        <a href="#" class="w-10 h-10 flex items-center justify-center rounded-full border border-gray-200 hover:border-primary hover:text-primary transition-custom">3</a>
+                        <a href="#" class="w-10 h-10 flex items-center justify-center rounded-full border border-gray-700 text-gray-400 hover:border-primary hover:text-primary transition-custom">2</a>
+                        <a href="#" class="w-10 h-10 flex items-center justify-center rounded-full border border-gray-700 text-gray-400 hover:border-primary hover:text-primary transition-custom">3</a>
                         <span class="text-gray-400">...</span>
-                        <a href="#" class="w-10 h-10 flex items-center justify-center rounded-full border border-gray-200 hover:border-primary hover:text-primary transition-custom">8</a>
-                        <a href="#" class="w-10 h-10 flex items-center justify-center rounded-full border border-gray-200 text-gray-500 hover:border-primary hover:text-primary transition-custom" aria-label="下一頁">
+                        <a href="#" class="w-10 h-10 flex items-center justify-center rounded-full border border-gray-700 text-gray-400 hover:border-primary hover:text-primary transition-custom">8</a>
+                        <a href="#" class="w-10 h-10 flex items-center justify-center rounded-full border border-gray-700 text-gray-400 hover:border-primary hover:text-primary transition-custom" aria-label="下一頁">
                             <i class="fa fa-angle-right"></i>
                         </a>
                     </nav>
@@ -315,7 +278,6 @@
         </div>
     </section>
 
-    <!-- 精選視頻作品 -->
     <section class="py-16 bg-black">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="max-w-6xl mx-auto">
@@ -325,7 +287,6 @@
                 </div>
                 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    <!-- 視頻1 -->
                     <div class="bg-gray-900 rounded-xl overflow-hidden shadow-md group">
                         <div class="relative aspect-video">
                             <img src="https://picsum.photos/id/1018/800/450" alt="山區穿越視頻封面" class="w-full h-full object-cover">
@@ -362,7 +323,6 @@
                         </div>
                     </div>
                     
-                    <!-- 視頻2 -->
                     <div class="bg-gray-900 rounded-xl overflow-hidden shadow-md group">
                         <div class="relative aspect-video">
                             <img src="https://picsum.photos/id/1071/800/450" alt="城市夜景視頻封面" class="w-full h-full object-cover">
@@ -403,46 +363,42 @@
         </div>
     </section>
 
-    <!-- 作品拍攝技巧 -->
     <section class="py-16 bg-white">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="max-w-6xl mx-auto">
                 <div class="text-center mb-12">
-                    <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold mb-4">作品背後的拍攝技巧</h2>
+                    <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold mb-4 text-dark">作品背後的拍攝技巧</h2>
                     <p class="text-gray-600 max-w-2xl mx-auto">每個精彩作品背後都有獨特的拍攝技巧，學習這些技巧來提升你的FPV攝影水平</p>
                 </div>
                 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <!-- 技巧1 -->
                     <div class="bg-light rounded-xl p-6 border border-gray-100 hover:shadow-md transition-custom">
                         <div class="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center text-primary mb-5">
                             <i class="fa fa-camera text-2xl"></i>
                         </div>
-                        <h3 class="text-xl font-bold mb-3">黃金時段拍攝</h3>
+                        <h3 class="text-xl font-bold mb-3 text-dark">黃金時段拍攝</h3>
                         <p class="text-gray-600 mb-4">利用日出日落前後的黃金時段拍攝，此時光線柔和且富有層次感，能為風景照片增添獨特氛圍。</p>
                         <a href="#" class="text-primary font-medium hover:underline inline-flex items-center">
                             學習更多 <i class="fa fa-arrow-right ml-1 text-sm"></i>
                         </a>
                     </div>
                     
-                    <!-- 技巧2 -->
                     <div class="bg-light rounded-xl p-6 border border-gray-100 hover:shadow-md transition-custom">
                         <div class="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center text-primary mb-5">
                             <i class="fa fa-arrows text-2xl"></i>
                         </div>
-                        <h3 class="text-xl font-bold mb-3">運動軌跡規劃</h3>
+                        <h3 class="text-xl font-bold mb-3 text-dark">運動軌跡規劃</h3>
                         <p class="text-gray-600 mb-4">提前規劃飛行軌跡，考慮主體與背景的關係，使用曲線和直線結合的方式增加畫面動感。</p>
                         <a href="#" class="text-primary font-medium hover:underline inline-flex items-center">
                             學習更多 <i class="fa fa-arrow-right ml-1 text-sm"></i>
                         </a>
                     </div>
                     
-                    <!-- 技巧3 -->
                     <div class="bg-light rounded-xl p-6 border border-gray-100 hover:shadow-md transition-custom">
                         <div class="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center text-primary mb-5">
                             <i class="fa fa-lightbulb-o text-2xl"></i>
                         </div>
-                        <h3 class="text-xl font-bold mb-3">光影運用</h3>
+                        <h3 class="text-xl font-bold mb-3 text-dark">光影運用</h3>
                         <p class="text-gray-600 mb-4">學會利用光影創造層次感，透過物體的陰影和光線的反射，為畫面增添深度和視覺趣味。</p>
                         <a href="#" class="text-primary font-medium hover:underline inline-flex items-center">
                             學習更多 <i class="fa fa-arrow-right ml-1 text-sm"></i>
@@ -453,7 +409,6 @@
         </div>
     </section>
 
-    <!-- 提交作品區 -->
     <section class="py-16 bg-primary">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="max-w-4xl mx-auto text-center">
@@ -467,14 +422,13 @@
         </div>
     </section>
 
-    <!-- 頁腳 -->
-    <footer class="bg-dark text-white pt-16 pb-8">
+    <footer class="bg-gray-900 text-white pt-16 pb-8">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
                 <div>
                     <div class="flex items-center space-x-2 mb-6">
                         <i class="fa fa-plane text-primary text-2xl"></i>
-                        <a href="index.html" class="text-xl font-bold text-white">FPV<span class="text-secondary">攝影</span></a>
+                        <a href="index.html" class="text-xl font-bold text-primary">FPV<span class="text-secondary">攝影</span></a>
                     </div>
                     <p class="text-gray-400 mb-6">分享FPV穿越機的飛行技巧和攝影知識，讓更多人享受第一視角飛行的樂趣。</p>
                     <div class="flex space-x-4">
@@ -495,7 +449,7 @@
                     <ul class="space-y-3">
                         <li><a href="index.html#home" class="text-gray-400 hover:text-white transition-custom">首頁</a></li>
                         <li><a href="index.html#tutorials" class="text-gray-400 hover:text-white transition-custom">教學</a></li>
-                        <li><a href="gallery.html" class="text-gray-400 hover:text-white transition-custom">作品展示</a></li>
+                        <li><a href="3.html" class="text-gray-400 hover:text-white transition-custom">作品展示</a></li>
                         <li><a href="index.html#cases" class="text-gray-400 hover:text-white transition-custom">拍攝案例</a></li>
                         <li><a href="index.html#equipment" class="text-gray-400 hover:text-white transition-custom">裝備介紹</a></li>
                         <li><a href="index.html#about" class="text-gray-400 hover:text-white transition-custom">關於我們</a></li>
@@ -538,60 +492,6 @@
         </div>
     </footer>
 
-    <script>
-        // 移動端菜單切換
-        const menuBtn = document.getElementById('menuBtn');
-        const mobileMenu = document.getElementById('mobileMenu');
-        
-        menuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
-        
-        // 導航欄滾動效果
-        const navbar = document.getElementById('navbar');
-        
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                navbar.classList.add('py-2', 'shadow');
-                navbar.classList.remove('py-4');
-            } else {
-                navbar.classList.add('py-4');
-                navbar.classList.remove('py-2', 'shadow');
-            }
-        });
-        
-        // 作品過濾按鈕切換
-        const filterButtons = document.querySelectorAll('.flex-wrap button');
-        filterButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                // 移除所有按鈕的活躍狀態
-                filterButtons.forEach(btn => {
-                    btn.classList.remove('bg-primary', 'text-white');
-                    btn.classList.add('bg-gray-100', 'hover:bg-gray-200');
-                });
-                
-                // 設置當前按鈕為活躍狀態
-                button.classList.remove('bg-gray-100', 'hover:bg-gray-200');
-                button.classList.add('bg-primary', 'text-white');
-            });
-        });
-        
-        // 平滑滾動
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                
-                // 關閉移動端菜單
-                if (!mobileMenu.classList.contains('hidden')) {
-                    mobileMenu.classList.add('hidden');
-                }
-                
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
-    </script>
+    <script src="js/script.js"></script>
 </body>
 </html>
-    

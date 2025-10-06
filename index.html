@@ -23,48 +23,26 @@
             }
         }
     </script>
-    <style type="text/tailwindcss">
-        @layer utilities {
-            .content-auto {
-                content-visibility: auto;
-            }
-            .text-shadow {
-                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            }
-            .text-shadow-lg {
-                text-shadow: 0 4px 8px rgba(0,0,0,0.25);
-            }
-            .transition-custom {
-                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            }
-            .case-card-hover {
-                transform: translateY(-8px);
-                box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="css/styles.css">
 </head>
     <body class="bg-black text-white antialiased">
-    <!-- 導航欄 -->
-        <header id="navbar" class="fixed w-full top-0 z-50 transition-custom bg-black/80 backdrop-blur-sm shadow-sm">
+    <header id="navbar" class="fixed w-full top-0 z-50 transition-custom bg-black/80 backdrop-blur-sm shadow-sm">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center py-4">
                 <div class="flex items-center space-x-2">
                     <img src="JPG/LOGO2.png" alt="FPV LOGO" class="h-8 w-auto mr-2">
-                    <span class="text-xl font-bold text-white">FPV<span class="text-gray-400">攝影</span></span>
+                    <a href="index.html" class="text-xl font-bold text-primary">FPV<span class="text-secondary">攝影</span></a>
                 </div>
                 
-                <!-- 桌面導航 -->
                 <nav class="hidden md:flex space-x-8">
                     <a href="#home" class="font-medium hover:text-white/80 transition-custom">首頁</a>
-                    <a href="2.html" target="_blank" rel="noopener noreferrer" class="font-medium hover:text-white/80 transition-custom">教學</a>
+                    <a href="#tutorials" class="font-medium hover:text-white/80 transition-custom">教學</a>
                     <a href="#gallery" class="font-medium hover:text-white/80 transition-custom">作品展示</a>
                     <a href="#cases" class="font-medium hover:text-white/80 transition-custom">拍攝案例</a>
                     <a href="#equipment" class="font-medium hover:text-white/80 transition-custom">裝備介紹</a>
                     <a href="#about" class="font-medium hover:text-white/80 transition-custom">關於我們</a>
                 </nav>
                 
-                <!-- 社交媒體連結 -->
                 <div class="flex items-center space-x-4">
                     <a href="#" class="text-white hover:text-[#3b5998] transition-custom" aria-label="Facebook">
                         <i class="fa fa-facebook fa-2x"></i>
@@ -76,7 +54,6 @@
                         <i class="fa fa-instagram fa-2x"></i>
                     </a>
                     
-                    <!-- 移動端菜單按鈕 -->
                     <button id="menuBtn" class="md:hidden text-white hover:text-primary transition-custom" aria-label="菜單">
                         <i class="fa fa-bars text-xl"></i>
                     </button>
@@ -84,11 +61,10 @@
             </div>
         </div>
         
-        <!-- 移動端導航菜單 -->
         <div id="mobileMenu" class="md:hidden hidden bg-black border-t border-white/10">
             <div class="container mx-auto px-4 py-3 space-y-3">
                 <a href="#home" class="block py-2 font-medium hover:text-white/80 transition-custom">首頁</a>
-                <a href="2.html" target="_blank" rel="noopener noreferrer" class="block py-2 font-medium hover:text-white/80 transition-custom">教學</a>
+                <a href="#tutorials" class="font-medium hover:text-white/80 transition-custom">教學</a>
                 <a href="#gallery" class="block py-2 font-medium hover:text-white/80 transition-custom">作品展示</a>
                 <a href="#cases" class="block py-2 font-medium hover:text-white/80 transition-custom">拍攝案例</a>
                 <a href="#equipment" class="block py-2 font-medium hover:text-white/80 transition-custom">裝備介紹</a>
@@ -97,26 +73,27 @@
         </div>
     </header>
 
-    <!-- 主頁英雄區 -->
-    <section id="home" class="pt-24 md:pt-0 min-h-screen flex items-center relative overflow-hidden">
-        <div class="absolute inset-0 z-0">
-            <img src="https://picsum.photos/id/1035/1920/1080" alt="FPV穿越機飛行視角" class="w-full h-full object-cover">
+    <section id="home" class="pt-24 md:pt-0 min-h-[1080px] max-h-[1080px] flex items-center relative overflow-hidden" style="height:1080px;">
+        <div class="absolute inset-0 z-0 w-full h-full">
+            <video src="MP4/Video_Generation_Based_On_Description.mp4" type="video/mp4" autoplay loop muted class="w-full h-full object-cover" style="min-width:1280px; min-height:720px;">
+                您的瀏覽器不支援影片播放。
+            </video>
             <div class="absolute inset-0 bg-dark/50"></div>
         </div>
         
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-16 md:py-24">
             <div class="max-w-3xl">
-                <h1 class="text-[clamp(2.5rem,5vw,4rem)] font-bold text-white leading-tight text-shadow-lg mb-6">
+                <h1 class="text-[clamp(2.5rem,5vw,4rem)] font-bold text-white leading-tight mb-6">
                     探索FPV穿越機<br>的精彩世界
                 </h1>
-                <p class="text-[clamp(1rem,2vw,1.25rem)] text-white/90 mb-8 max-w-2xl text-shadow">
+                <p class="text-[clamp(1rem,2vw,1.25rem)] text-white/90 mb-8 max-w-2xl">
                     無論你是初學者還是有經驗的飛手，這裡提供最詳細的教學、裝備指南和令人驚嘆的FPV攝影作品分享。
                 </p>
-                <div class="flex flex-wrap gap-4">
-                    <a href="2.html" target="_blank" rel="noopener noreferrer" class="px-8 py-3 bg-primary hover:bg-primary/90 text-white font-medium rounded-lg shadow-lg hover:shadow-xl transition-custom transform hover:-translate-y-1">
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="2.html" class="px-8 py-3 text-center bg-primary hover:bg-primary/90 text-white font-medium rounded-lg shadow-lg hover:shadow-xl transition-custom transform hover:-translate-y-1">
                         開始學習
                     </a>
-                    <a href="#cases" class="px-8 py-3 bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white font-medium rounded-lg border border-white/30 shadow-lg hover:shadow-xl transition-custom transform hover:-translate-y-1">
+                    <a href="#cases" class="px-8 py-3 text-center bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white font-medium rounded-lg border border-white/30 shadow-lg hover:shadow-xl transition-custom transform hover:-translate-y-1">
                         查看案例
                     </a>
                 </div>
@@ -124,13 +101,12 @@
         </div>
         
         <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white animate-bounce">
-            <a href="2.html" aria-label="向下滾動" target="_blank" rel="noopener noreferrer">
+            <a href="#tutorials" aria-label="向下滾動">
                 <i class="fa fa-angle-down text-3xl"></i>
             </a>
         </div>
     </section>
 
-    <!-- 教學部分 -->
     <section id="tutorials" class="py-20 bg-gray-900">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
@@ -139,7 +115,6 @@
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- 教學卡片1 -->
                 <div class="bg-gray-800 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-custom group">
                     <div class="relative overflow-hidden h-56">
                         <img src="https://picsum.photos/id/1018/600/400" alt="FPV入門教學" class="w-full h-full object-cover transition-custom group-hover:scale-105">
@@ -150,13 +125,12 @@
                     <div class="p-6">
                         <h3 class="text-xl font-bold mb-2 group-hover:text-primary transition-custom">FPV穿越機入門指南</h3>
                         <p class="text-gray-300 mb-4">適合新手的完整入門教學，從認識裝備到第一次飛行，讓你快速掌握基礎知識。</p>
-                        <a href="#" class="inline-flex items-center text-primary font-medium hover:underline">
+                        <a href="2.html" class="inline-flex items-center text-primary font-medium hover:underline">
                             閱讀更多 <i class="fa fa-arrow-right ml-2 text-sm"></i>
                         </a>
                     </div>
                 </div>
                 
-                <!-- 教學卡片2 -->
                 <div class="bg-gray-800 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-custom group">
                     <div class="relative overflow-hidden h-56">
                         <img src="https://picsum.photos/id/1039/600/400" alt="FPV攝影技巧" class="w-full h-full object-cover transition-custom group-hover:scale-105">
@@ -173,7 +147,6 @@
                     </div>
                 </div>
                 
-                <!-- 教學卡片3 -->
                 <div class="bg-gray-800 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-custom group">
                     <div class="relative overflow-hidden h-56">
                         <img src="https://picsum.photos/id/1059/600/400" alt="FPV裝備維修" class="w-full h-full object-cover transition-custom group-hover:scale-105">
@@ -192,14 +165,13 @@
             </div>
             
             <div class="text-center mt-12">
-                <a href="2.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-6 py-3 border border-primary text-primary font-medium rounded-lg hover:bg-primary hover:text-white transition-custom">
+                <a href="2.html" class="inline-flex items-center px-6 py-3 border border-primary text-primary font-medium rounded-lg hover:bg-primary hover:text-white transition-custom">
                     查看全部教學 <i class="fa fa-long-arrow-right ml-2"></i>
                 </a>
             </div>
         </div>
     </section>
 
-    <!-- 作品展示 -->
     <section id="gallery" class="py-20 bg-gray-900">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
@@ -247,14 +219,13 @@
             </div>
             
             <div class="text-center mt-12">
-                <a href="3.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-6 py-3 bg-primary text-white font-medium rounded-lg hover:bg-primary/90 transition-custom shadow-md hover:shadow-lg">
+                <a href="3.html" class="inline-flex items-center px-6 py-3 bg-primary text-white font-medium rounded-lg hover:bg-primary/90 transition-custom shadow-md hover:shadow-lg">
                     瀏覽更多作品 <i class="fa fa-images ml-2"></i>
                 </a>
             </div>
         </div>
     </section>
 
-    <!-- 拍攝案例部分 -->
     <section id="cases" class="py-20 bg-gray-900">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
@@ -262,19 +233,16 @@
                 <p class="text-gray-300 max-w-2xl mx-auto">深入了解真實FPV拍攝案例，學習專業飛手的技巧和經驗，掌握不同場景的拍攝要領。</p>
             </div>
             
-            <!-- 案例過濾器 -->
             <div class="flex flex-wrap justify-center gap-4 mb-12">
                 <button class="px-5 py-2 bg-primary text-white rounded-full text-sm font-medium">全部案例</button>
-                <button class="px-5 py-2 bg-gray-100 hover:bg-gray-200 rounded-full text-sm font-medium transition-custom">風景攝影</button>
-                <button class="px-5 py-2 bg-gray-100 hover:bg-gray-200 rounded-full text-sm font-medium transition-custom">建築拍攝</button>
-                <button class="px-5 py-2 bg-gray-100 hover:bg-gray-200 rounded-full text-sm font-medium transition-custom">戶外活動</button>
-                <button class="px-5 py-2 bg-gray-100 hover:bg-gray-200 rounded-full text-sm font-medium transition-custom">商業宣傳</button>
-                <button class="px-5 py-2 bg-gray-100 hover:bg-gray-200 rounded-full text-sm font-medium transition-custom">極限運動</button>
+                <button class="px-5 py-2 bg-gray-800 text-white rounded-full text-sm font-medium transition-custom hover:bg-gray-700">風景攝影</button>
+                <button class="px-5 py-2 bg-gray-800 text-white rounded-full text-sm font-medium transition-custom hover:bg-gray-700">建築拍攝</button>
+                <button class="px-5 py-2 bg-gray-800 text-white rounded-full text-sm font-medium transition-custom hover:bg-gray-700">戶外活動</button>
+                <button class="px-5 py-2 bg-gray-800 text-white rounded-full text-sm font-medium transition-custom hover:bg-gray-700">商業宣傳</button>
+                <button class="px-5 py-2 bg-gray-800 text-white rounded-full text-sm font-medium transition-custom hover:bg-gray-700">極限運動</button>
             </div>
             
-            <!-- 案例卡片 -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <!-- 案例1 -->
                 <div class="bg-gray-800 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-custom group">
                     <div class="relative overflow-hidden h-64">
                         <img src="https://picsum.photos/id/1031/800/500" alt="山區風景拍攝案例" class="w-full h-full object-cover transition-custom group-hover:scale-105">
@@ -306,7 +274,6 @@
                     </div>
                 </div>
                 
-                <!-- 案例2 -->
                 <div class="bg-gray-800 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-custom group">
                     <div class="relative overflow-hidden h-64">
                         <img src="https://picsum.photos/id/1073/800/500" alt="城市建築拍攝案例" class="w-full h-full object-cover transition-custom group-hover:scale-105">
@@ -338,7 +305,6 @@
                     </div>
                 </div>
                 
-                <!-- 案例3 -->
                 <div class="bg-gray-800 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-custom group">
                     <div class="relative overflow-hidden h-64">
                         <img src="https://picsum.photos/id/1058/800/500" alt="極限運動拍攝案例" class="w-full h-full object-cover transition-custom group-hover:scale-105">
@@ -370,7 +336,6 @@
                     </div>
                 </div>
                 
-                <!-- 案例4 -->
                 <div class="bg-gray-800 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-custom group">
                     <div class="relative overflow-hidden h-64">
                         <img src="https://picsum.photos/id/1056/800/500" alt="商業宣傳拍攝案例" class="w-full h-full object-cover transition-custom group-hover:scale-105">
@@ -411,7 +376,6 @@
         </div>
     </section>
 
-    <!-- 裝備介紹 -->
     <section id="equipment" class="py-20 bg-gray-900">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
@@ -471,7 +435,6 @@
                 <h3 class="text-2xl font-bold mb-6 text-center">新手入門套裝推薦</h3>
                 
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <!-- 套裝1 -->
                     <div class="bg-gray-700 rounded-xl p-6 shadow-sm hover:shadow-md transition-custom">
                         <div class="h-48 mb-4 overflow-hidden rounded-lg">
                             <img src="https://picsum.photos/id/119/600/400" alt="入門套裝A" class="w-full h-full object-cover">
@@ -484,7 +447,6 @@
                         </div>
                     </div>
                     
-                    <!-- 套裝2 -->
                     <div class="bg-gray-700 rounded-xl p-6 shadow-sm hover:shadow-md transition-custom">
                         <div class="h-48 mb-4 overflow-hidden rounded-lg">
                             <img src="https://picsum.photos/id/160/600/400" alt="入門套裝B" class="w-full h-full object-cover">
@@ -497,7 +459,6 @@
                         </div>
                     </div>
                     
-                    <!-- 套裝3 -->
                     <div class="bg-gray-700 rounded-xl p-6 shadow-sm hover:shadow-md transition-custom">
                         <div class="h-48 mb-4 overflow-hidden rounded-lg">
                             <img src="https://picsum.photos/id/111/600/400" alt="入門套裝C" class="w-full h-full object-cover">
@@ -514,7 +475,6 @@
         </div>
     </section>
 
-    <!-- 關於我們 -->
     <section id="about" class="py-20 bg-gray-900">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -553,7 +513,6 @@
         </div>
     </section>
 
-    <!-- 訂閱區 -->
     <section class="py-16 bg-gray-800">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="max-w-3xl mx-auto text-center">
@@ -572,14 +531,13 @@
         </div>
     </section>
 
-    <!-- 頁腳 -->
     <footer class="bg-gray-900 text-white pt-16 pb-8">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
                 <div>
                     <div class="flex items-center space-x-2 mb-6">
                         <i class="fa fa-plane text-primary text-2xl"></i>
-                        <span class="text-xl font-bold text-white">FPV<span class="text-secondary">攝影</span></span>
+                        <a href="index.html" class="text-xl font-bold text-primary">FPV<span class="text-secondary">攝影</span></a>
                     </div>
                     <p class="text-gray-400 mb-6">分享FPV穿越機的飛行技巧和攝影知識，讓更多人享受第一視角飛行的樂趣。</p>
                     <div class="flex space-x-4">
@@ -599,7 +557,7 @@
                     <h3 class="text-lg font-bold mb-6">快速連結</h3>
                     <ul class="space-y-3">
                         <li><a href="#home" class="text-gray-400 hover:text-white transition-custom">首頁</a></li>
-                        <li><a href="2.html" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-custom">教學</a></li>
+                        <li><a href="2.html" class="text-gray-400 hover:text-white transition-custom">教學</a></li>
                         <li><a href="#gallery" class="text-gray-400 hover:text-white transition-custom">作品展示</a></li>
                         <li><a href="#cases" class="text-gray-400 hover:text-white transition-custom">拍攝案例</a></li>
                         <li><a href="#equipment" class="text-gray-400 hover:text-white transition-custom">裝備介紹</a></li>
@@ -622,15 +580,15 @@
                     <h3 class="text-lg font-bold mb-6">聯繫我們</h3>
                     <ul class="space-y-3">
                         <li class="flex items-start gap-3">
-                            <i class="fa fa-envelope text-white mt-1"></i>
+                            <i class="fa fa-envelope text-primary mt-1"></i>
                             <span class="text-gray-400">contact@fpvphoto.com</span>
                         </li>
                         <li class="flex items-start gap-3">
-                            <i class="fa fa-phone text-white mt-1"></i>
+                            <i class="fa fa-phone text-primary mt-1"></i>
                             <span class="text-gray-400">+886 912 345 678</span>
                         </li>
                         <li class="flex items-start gap-3">
-                            <i class="fa fa-map-marker text-white mt-1"></i>
+                            <i class="fa fa-map-marker text-primary mt-1"></i>
                             <span class="text-gray-400">台中市南屯區工業路123號</span>
                         </li>
                     </ul>
@@ -643,60 +601,6 @@
         </div>
     </footer>
 
-    <script>
-        // 移動端菜單切換
-        const menuBtn = document.getElementById('menuBtn');
-        const mobileMenu = document.getElementById('mobileMenu');
-        
-        menuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
-        
-        // 導航欄滾動效果
-        const navbar = document.getElementById('navbar');
-        
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                navbar.classList.add('py-2', 'shadow');
-                navbar.classList.remove('py-4');
-            } else {
-                navbar.classList.add('py-4');
-                navbar.classList.remove('py-2', 'shadow');
-            }
-        });
-        
-        // 平滑滾動
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                
-                // 關閉移動端菜單
-                if (!mobileMenu.classList.contains('hidden')) {
-                    mobileMenu.classList.add('hidden');
-                }
-                
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
-
-        // 案例過濾器按鈕點擊效果
-        const filterButtons = document.querySelectorAll('#cases button');
-        filterButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                // 移除所有按鈕的活躍狀態
-                filterButtons.forEach(btn => {
-                    btn.classList.remove('bg-primary', 'text-white');
-                    btn.classList.add('bg-gray-100', 'hover:bg-gray-200');
-                });
-                
-                // 設置當前按鈕為活躍狀態
-                button.classList.remove('bg-gray-100', 'hover:bg-gray-200');
-                button.classList.add('bg-primary', 'text-white');
-            });
-        });
-    </script>
+    <script src="js/script.js"></script>
 </body>
 </html>
-    
