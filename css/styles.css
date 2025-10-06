@@ -1,0 +1,30 @@
+/* Shared site styles extracted from inline blocks */
+:root{
+  --bg-dark: #000;
+  --primary: #165DFF;
+  --secondary: #FF6B00;
+}
+
+/* small helpers */
+.transition-custom{transition: all 0.3s ease-in-out;}
+.text-shadow{text-shadow: 0 2px 8px rgba(0,0,0,0.6);}
+.content-auto{max-width:1200px;margin-left:auto;margin-right:auto;padding-left:1rem;padding-right:1rem}
+
+/* fade-in sections */
+.section-fade{opacity:0;transform:translateY(12px);transition:opacity .6s ease, transform .6s ease}
+.section-fade.section-visible{opacity:1;transform:none}
+
+/* card hover effects used across pages */
+.case-card-hover img,.group-hover\:scale-105{transition:transform .4s ease}
+.case-card-hover:hover img{transform:scale(1.05)}
+
+.image-overlay{position:absolute;inset:0;background:linear-gradient(180deg, transparent, rgba(0,0,0,0.45));}
+
+/* dark helpers */
+.bg-dark{background:#000}
+
+/* responsive video hero adjustments */
+.hero-video{min-width:1280px;min-height:720px}
+
+/* ensure mobile menu hidden by default */
+#mobileMenu.hidden{display:none}
