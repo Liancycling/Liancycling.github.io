@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FPV攝影作品展示 | FPV攝影</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="js/tailwind-config.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-black text-white antialiased">
+    <header id="navbar" class="fixed w-full top-0 z-50 transition-custom bg-black/80 backdrop-blur-sm shadow-sm">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center space-x-2">
+                    <img src="JPG/LOGO2.png" alt="FPV LOGO" class="h-8 w-auto mr-2">
+                    <a href="index.html" class="text-xl font-bold text-primary">FPV<span class="text-secondary">攝影</span></a>
+                </div>
+                
+                <nav class="hidden md:flex space-x-8">
+                    <a href="index.html#home" class="font-medium hover:text-primary transition-custom">首頁</a>
+                    <a href="index.html#tutorials" class="font-medium hover:text-primary transition-custom">教學</a>
+                    <a href="3.html" class="font-medium text-primary border-b-2 border-primary pb-1">作品展示</a>
+                    <a href="index.html#cases" class="font-medium hover:text-primary transition-custom">拍攝案例</a>
+                    <a href="index.html#equipment" class="font-medium hover:text-primary transition-custom">裝備介紹</a>
+                    <a href="index.html#about" class="font-medium hover:text-primary transition-custom">關於我們</a>
+                </nav>
+                
+                <div class="flex items-center space-x-4">
+                    <a href="#" class="text-white hover:text-[#3b5998] transition-custom" aria-label="Facebook">
+                        <i class="fa fa-facebook fa-2x"></i>
+                    </a>
+                    <a href="#" class="text-white hover:text-[#FF0000] transition-custom" aria-label="YouTube">
+                        <i class="fa fa-youtube-play fa-2x"></i>
+                    </a>
+                    <a href="#" class="text-white hover:text-[#E1306C] transition-custom" aria-label="Instagram">
+                        <i class="fa fa-instagram fa-2x"></i>
+                    </a>
+                    
+                    <button id="menuBtn" class="md:hidden text-white hover:text-primary transition-custom" aria-label="菜單">
+                        <i class="fa fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div id="mobileMenu" class="md:hidden hidden bg-black border-t border-white/10">
+            <div class="container mx-auto px-4 py-3 space-y-3">
+                <a href="index.html#home" class="block py-2 font-medium hover:text-white/80 transition-custom">首頁</a>
+                <a href="index.html#tutorials" class="block py-2 font-medium hover:text-white/80 transition-custom">教學</a>
+                <a href="#gallery" class="block py-2 font-medium text-white transition-custom">作品展示</a>
+                <a href="index.html#cases" class="block py-2 font-medium hover:text-white/80 transition-custom">拍攝案例</a>
+                <a href="index.html#equipment" class="block py-2 font-medium hover:text-white/80 transition-custom">裝備介紹</a>
+                <a href="index.html#about" class="block py-2 font-medium hover:text-white/80 transition-custom">關於我們</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="pt-28 pb-16 bg-gray-900">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-4xl mx-auto text-center">
+                <div class="flex items-center justify-center gap-3 mb-6">
+                    <a href="index.html" class="text-primary hover:underline flex items-center">
+                        <i class="fa fa-arrow-left mr-1"></i> 回到首頁
+                    </a>
+                    <span class="text-gray-300">|</span>
+                    <span class="text-gray-400 text-sm">精選作品</span>
+                </div>
+                
+                <h1 class="text-[clamp(1.8rem,4vw,3rem)] font-bold mb-6 leading-tight text-white">
+                    FPV攝影作品展示
+                </h1>
+                
+                <p class="text-gray-300 max-w-2xl mx-auto">
+                    探索來自世界各地FPV愛好者的精彩作品，這些作品展示了第一人稱視角飛行的獨特魅力和無限可能。每張照片和影片背後都有獨特的拍攝技巧和故事。
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-12 bg-black">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-6xl mx-auto">
+                <div class="flex flex-wrap justify-center gap-4 mb-12">
+                    <button class="px-5 py-2 bg-primary text-white rounded-full text-sm font-medium transition-custom">全部作品</button>
+                    <button class="px-5 py-2 bg-gray-800 hover:bg-gray-700 text-white rounded-full text-sm font-medium transition-custom">風景攝影</button>
+                    <button class="px-5 py-2 bg-gray-800 hover:bg-gray-700 text-white rounded-full text-sm font-medium transition-custom">城市建築</button>
+                    <button class="px-5 py-2 bg-gray-800 hover:bg-gray-700 text-white rounded-full text-sm font-medium transition-custom">極限運動</button>
+                    <button class="px-5 py-2 bg-gray-800 hover:bg-gray-700 text-white rounded-full text-sm font-medium transition-custom">室內穿越</button>
+                    <button class="px-5 py-2 bg-gray-800 hover:bg-gray-700 text-white rounded-full text-sm font-medium transition-custom">賽事記錄</button>
+                </div>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="group rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-custom bg-gray-900">
+                        <div class="relative h-64 overflow-hidden">
+                            <img src="https://picsum.photos/id/1015/600/400" alt="山脈FPV攝影作品" class="w-full h-full object-cover transition-custom group-hover:scale-110">
+                            <div class="absolute inset-0 image-overlay opacity-0 group-hover:opacity-100 transition-custom flex items-end">
+                                <div class="p-4 w-full">
+                                    <span class="inline-block px-3 py-1 bg-secondary text-white text-xs font-medium rounded-full mb-2">風景攝影</span>
+                                    <h3 class="text-white font-bold text-lg">高山峽谷穿越</h3>
+                                </div>
+                            </div>
+                            <button class="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center text-primary opacity-0 group-hover:opacity-100 transition-custom" aria-label="查看詳細">
+                                <i class="fa fa-search-plus"></i>
+                            </button>
+                        </div>
+                        <div class="p-4">
+                            <div class="flex justify-between items-center mb-2">
+                                <div class="flex items-center gap-2">
+                                    <img src="https://picsum.photos/id/1001/100/100" alt="攝影師頭像" class="w-6 h-6 rounded-full object-cover">
+                                    <span class="text-sm font-medium text-white">陳大師</span>
+                                </div>
+                                <span class="text-xs text-gray-400">2023.09.15</span>
+                            </div>
+                            <p class="text-gray-300 text-sm line-clamp-2">使用DJI FPV拍攝於台灣中部山區，清晨的陽光穿過峽谷創造出獨特的光影效果。</p>
+                        </div>
+                    </div>
+                    
+                    <div class="group rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-custom bg-gray-900">
+                        <div class="relative h-64 overflow-hidden">
+                            <img src="https://picsum.photos/id/1037/600/400" alt="城市建築FPV攝影作品" class="w-full h-full object-cover transition-custom group-hover:scale-110">
+                            <div class="absolute inset-0 image-overlay opacity-0 group-hover:opacity-100 transition-custom flex items-end">
+                                <div class="p-4 w-full">
+                                    <span class="inline-block px-3 py-1 bg-primary text-white text-xs font-medium rounded-full mb-2">城市建築</span>
+                                    <h3 class="text-white font-bold text-lg">都市叢林穿梭</h3>
+                                </div>
+                            </div>
+                            <button class="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center text-primary opacity-0 group-hover:opacity-100 transition-custom" aria-label="查看詳細">
+                                <i class="fa fa-search-plus"></i>
+                            </button>
+                        </div>
+                        <div class="p-4">
+                            <div class="flex justify-between items-center mb-2">
+                                <div class="flex items-center gap-2">
+                                    <img src="https://picsum.photos/id/1002/100/100" alt="攝影師頭像" class="w-6 h-6 rounded-full object-cover">
+                                    <span class="text-sm font-medium text-white">林建築</span>
+                                </div>
+                                <span class="text-xs text-gray-400">2023.10.02</span>
+                            </div>
+                            <p class="text-gray-300 text-sm line-clamp-2">在高樓之間穿梭拍攝，展現現代都市的幾何美感與節奏感，使用3寸穿越機。</p>
+                        </div>
+                    </div>
+                    
+                    <div class="group rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-custom bg-gray-900">
+                        <div class="relative h-64 overflow-hidden">
+                            <img src="https://picsum.photos/id/1058/600/400" alt="極限運動FPV攝影作品" class="w-full h-full object-cover transition-custom group-hover:scale-110">
+                            <div class="absolute inset-0 image-overlay opacity-0 group-hover:opacity-100 transition-custom flex items-end">
+                                <div class="p-4 w-full">
+                                    <span class="inline-block px-3 py-1 bg-dark text-white text-xs font-medium rounded-full mb-2">極限運動</span>
+                                    <h3 class="text-white font-bold text-lg">自行車下坡賽</h3>
+                                </div>
+                            </div>
+                            <button class="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center text-primary opacity-0 group-hover:opacity-100 transition-custom" aria-label="查看詳細">
+                                <i class="fa fa-search-plus"></i>
+                            </button>
+                        </div>
+                        <div class="p-4">
+                            <div class="flex justify-between items-center mb-2">
+                                <div class="flex items-center gap-2">
+                                    <img src="https://picsum.photos/id/1003/100/100" alt="攝影師頭像" class="w-6 h-6 rounded-full object-cover">
+                                    <span class="text-sm font-medium text-white">王極限</span>
+                                </div>
+                                <span class="text-xs text-gray-400">2023.08.28</span>
+                            </div>
+                            <p class="text-gray-300 text-sm line-clamp-2">跟拍山地自行車下坡比賽，使用高速模式追隨拍攝，展現速度與激情。</p>
+                        </div>
+                    </div>
+                    
+                    <div class="group rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-custom bg-gray-900">
+                        <div class="relative h-64 overflow-hidden">
+                            <img src="https://picsum.photos/id/1059/600/400" alt="室內穿越FPV攝影作品" class="w-full h-full object-cover transition-custom group-hover:scale-110">
+                            <div class="absolute inset-0 image-overlay opacity-0 group-hover:opacity-100 transition-custom flex items-end">
+                                <div class="p-4 w-full">
+                                    <span class="inline-block px-3 py-1 bg-green-600 text-white text-xs font-medium rounded-full mb-2">室內穿越</span>
+                                    <h3 class="text-white font-bold text-lg">工廠管道探險</h3>
+                                </div>
+                            </div>
+                            <button class="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center text-primary opacity-0 group-hover:opacity-100 transition-custom" aria-label="查看詳細">
+                                <i class="fa fa-search-plus"></i>
+                            </button>
+                        </div>
+                        <div class="p-4">
+                            <div class="flex justify-between items-center mb-2">
+                                <div class="flex items-center gap-2">
+                                    <img src="https://picsum.photos/id/1004/100/100" alt="攝影師頭像" class="w-6 h-6 rounded-full object-cover">
+                                    <span class="text-sm font-medium text-white">張探索</span>
+                                </div>
+                                <span class="text-xs text-gray-400">2023.07.15</span>
+                            </div>
+                            <p class="text-gray-300 text-sm line-clamp-2">拍攝於廢棄工廠，使用微型穿越機探索狹窄管道，挑戰空間判斷能力。</p>
+                        </div>
+                    </div>
+                    
+                    <div class="group rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-custom bg-gray-900">
+                        <div class="relative h-64 overflow-hidden">
+                            <img src="https://picsum.photos/id/1069/600/400" alt="賽事記錄FPV攝影作品" class="w-full h-full object-cover transition-custom group-hover:scale-110">
+                            <div class="absolute inset-0 image-overlay opacity-0 group-hover:opacity-100 transition-custom flex items-end">
+                                <div class="p-4 w-full">
+                                    <span class="inline-block px-3 py-1 bg-purple-600 text-white text-xs font-medium rounded-full mb-2">賽事記錄</span>
+                                    <h3 class="text-white font-bold text-lg">FPV競速大賽</h3>
+                                </div>
+                            </div>
+                            <button class="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center text-primary opacity-0 group-hover:opacity-100 transition-custom" aria-label="查看詳細">
+                                <i class="fa fa-search-plus"></i>
+                            </button>
+                        </div>
+                        <div class="p-4">
+                            <div class="flex justify-between items-center mb-2">
+                                <div class="flex items-center gap-2">
+                                    <img src="https://picsum.photos/id/1005/100/100" alt="攝影師頭像" class="w-6 h-6 rounded-full object-cover">
+                                    <span class="text-sm font-medium text-white">劉賽事</span>
+                                </div>
+                                <span class="text-xs text-gray-400">2023.09.30</span>
+                            </div>
+                            <p class="text-gray-300 text-sm line-clamp-2">拍攝全國FPV競速錦標賽，使用高速跟拍技術捕捉賽事中的精彩瞬間。</p>
+                        </div>
+                    </div>
+                    
+                    <div class="group rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-custom bg-gray-900">
+                        <div class="relative h-64 overflow-hidden">
+                            <img src="https://picsum.photos/id/1039/600/400" alt="風景攝影FPV作品" class="w-full h-full object-cover transition-custom group-hover:scale-110">
+                            <div class="absolute inset-0 image-overlay opacity-0 group-hover:opacity-100 transition-custom flex items-end">
+                                <div class="p-4 w-full">
+                                    <span class="inline-block px-3 py-1 bg-secondary text-white text-xs font-medium rounded-full mb-2">風景攝影</span>
+                                    <h3 class="text-white font-bold text-lg">海岸線飛行</h3>
+                                </div>
+                            </div>
+                            <button class="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center text-primary opacity-0 group-hover:opacity-100 transition-custom" aria-label="查看詳細">
+                                <i class="fa fa-search-plus"></i>
+                            </button>
+                        </div>
+                        <div class="p-4">
+                            <div class="flex justify-between items-center mb-2">
+                                <div class="flex items-center gap-2">
+                                    <img src="https://picsum.photos/id/1006/100/100" alt="攝影師頭像" class="w-6 h-6 rounded-full object-cover">
+                                    <span class="text-sm font-medium text-white">鄭海岸</span>
+                                </div>
+                                <span class="text-xs text-gray-400">2023.08.12</span>
+                            </div>
+                            <p class="text-gray-300 text-sm line-clamp-2">沿著東海岸拍攝，利用黃金時段的光線，呈現海洋與岩石的壯麗對比。</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex justify-center mt-12">
+                    <nav class="flex items-center gap-2">
+                        <a href="#" class="w-10 h-10 flex items-center justify-center rounded-full border border-gray-700 text-gray-400 hover:border-primary hover:text-primary transition-custom" aria-label="上一頁">
+                            <i class="fa fa-angle-left"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 flex items-center justify-center rounded-full bg-primary text-white">1</a>
+                        <a href="#" class="w-10 h-10 flex items-center justify-center rounded-full border border-gray-700 text-gray-400 hover:border-primary hover:text-primary transition-custom">2</a>
+                        <a href="#" class="w-10 h-10 flex items-center justify-center rounded-full border border-gray-700 text-gray-400 hover:border-primary hover:text-primary transition-custom">3</a>
+                        <span class="text-gray-400">...</span>
+                        <a href="#" class="w-10 h-10 flex items-center justify-center rounded-full border border-gray-700 text-gray-400 hover:border-primary hover:text-primary transition-custom">8</a>
+                        <a href="#" class="w-10 h-10 flex items-center justify-center rounded-full border border-gray-700 text-gray-400 hover:border-primary hover:text-primary transition-custom" aria-label="下一頁">
+                            <i class="fa fa-angle-right"></i>
+                        </a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 bg-black">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-6xl mx-auto">
+                <div class="text-center mb-12">
+                    <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold mb-4 text-white">精選視頻作品</h2>
+                    <p class="text-gray-300 max-w-2xl mx-auto">欣賞這些令人驚嘆的FPV視頻作品，感受第一視角飛行帶來的獨特視覺體驗</p>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div class="bg-gray-900 rounded-xl overflow-hidden shadow-md group">
+                        <div class="relative aspect-video">
+                            <img src="https://picsum.photos/id/1018/800/450" alt="山區穿越視頻封面" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-black/30 flex items-center justify-center">
+                                <button class="w-16 h-16 rounded-full bg-primary/90 flex items-center justify-center text-white transform group-hover:scale-110 transition-custom">
+                                    <i class="fa fa-play text-xl ml-1"></i>
+                                </button>
+                            </div>
+                            <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm text-dark text-sm font-medium px-3 py-1 rounded-full">
+                                05:32
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2 group-hover:text-primary transition-custom text-white">阿爾卑斯山FPV穿越之旅</h3>
+                            <p class="text-gray-300 mb-4">穿越阿爾卑斯山的壯麗山脈，記錄雪山、峽谷和綠洲的美景，使用DJI FPV拍攝。</p>
+                            <div class="flex justify-between items-center">
+                                <div class="flex items-center gap-3">
+                                    <div class="flex items-center gap-2">
+                                        <img src="https://picsum.photos/id/1010/100/100" alt="視頻作者頭像" class="w-8 h-8 rounded-full object-cover">
+                                        <span class="font-medium text-white">馬克·阿爾卑斯</span>
+                                    </div>
+                                    <span class="text-gray-400 text-sm">•</span>
+                                    <span class="text-gray-400 text-sm">2023.07.20</span>
+                                </div>
+                                <div class="flex items-center gap-4">
+                                    <span class="text-gray-400 text-sm flex items-center gap-1">
+                                        <i class="fa fa-eye"></i> 12.5K
+                                    </span>
+                                    <span class="text-gray-400 text-sm flex items-center gap-1">
+                                        <i class="fa fa-heart"></i> 342
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gray-900 rounded-xl overflow-hidden shadow-md group">
+                        <div class="relative aspect-video">
+                            <img src="https://picsum.photos/id/1071/800/450" alt="城市夜景視頻封面" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-black/30 flex items-center justify-center">
+                                <button class="w-16 h-16 rounded-full bg-primary/90 flex items-center justify-center text-white transform group-hover:scale-110 transition-custom">
+                                    <i class="fa fa-play text-xl ml-1"></i>
+                                </button>
+                            </div>
+                            <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm text-dark text-sm font-medium px-3 py-1 rounded-full">
+                                03:45
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2 group-hover:text-primary transition-custom text-white">城市夜景穿梭</h3>
+                            <p class="text-gray-300 mb-4">夜間穿越城市燈海，拍攝高樓大廈與霓虹燈光，使用夜視模式和低光攝像頭。</p>
+                            <div class="flex justify-between items-center">
+                                <div class="flex items-center gap-3">
+                                    <div class="flex items-center gap-2">
+                                        <img src="https://picsum.photos/id/1012/100/100" alt="視頻作者頭像" class="w-8 h-8 rounded-full object-cover">
+                                        <span class="font-medium text-white">夜行者</span>
+                                    </div>
+                                    <span class="text-gray-400 text-sm">•</span>
+                                    <span class="text-gray-400 text-sm">2023.09.05</span>
+                                </div>
+                                <div class="flex items-center gap-4">
+                                    <span class="text-gray-400 text-sm flex items-center gap-1">
+                                        <i class="fa fa-eye"></i> 8.2K
+                                    </span>
+                                    <span class="text-gray-400 text-sm flex items-center gap-1">
+                                        <i class="fa fa-heart"></i> 256
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-6xl mx-auto">
+                <div class="text-center mb-12">
+                    <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold mb-4 text-dark">作品背後的拍攝技巧</h2>
+                    <p class="text-gray-600 max-w-2xl mx-auto">每個精彩作品背後都有獨特的拍攝技巧，學習這些技巧來提升你的FPV攝影水平</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-light rounded-xl p-6 border border-gray-100 hover:shadow-md transition-custom">
+                        <div class="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center text-primary mb-5">
+                            <i class="fa fa-camera text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3 text-dark">黃金時段拍攝</h3>
+                        <p class="text-gray-600 mb-4">利用日出日落前後的黃金時段拍攝，此時光線柔和且富有層次感，能為風景照片增添獨特氛圍。</p>
+                        <a href="#" class="text-primary font-medium hover:underline inline-flex items-center">
+                            學習更多 <i class="fa fa-arrow-right ml-1 text-sm"></i>
+                        </a>
+                    </div>
+                    
+                    <div class="bg-light rounded-xl p-6 border border-gray-100 hover:shadow-md transition-custom">
+                        <div class="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center text-primary mb-5">
+                            <i class="fa fa-arrows text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3 text-dark">運動軌跡規劃</h3>
+                        <p class="text-gray-600 mb-4">提前規劃飛行軌跡，考慮主體與背景的關係，使用曲線和直線結合的方式增加畫面動感。</p>
+                        <a href="#" class="text-primary font-medium hover:underline inline-flex items-center">
+                            學習更多 <i class="fa fa-arrow-right ml-1 text-sm"></i>
+                        </a>
+                    </div>
+                    
+                    <div class="bg-light rounded-xl p-6 border border-gray-100 hover:shadow-md transition-custom">
+                        <div class="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center text-primary mb-5">
+                            <i class="fa fa-lightbulb-o text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3 text-dark">光影運用</h3>
+                        <p class="text-gray-600 mb-4">學會利用光影創造層次感，透過物體的陰影和光線的反射，為畫面增添深度和視覺趣味。</p>
+                        <a href="#" class="text-primary font-medium hover:underline inline-flex items-center">
+                            學習更多 <i class="fa fa-arrow-right ml-1 text-sm"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 bg-primary">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="text-[clamp(1.5rem,3vw,2rem)] font-bold text-white mb-4">分享你的FPV作品</h2>
+                <p class="text-white/80 mb-8 max-w-2xl mx-auto">無論你是新手還是老手，都歡迎分享你的FPV攝影作品，與全球FPV愛好者交流學習。</p>
+                
+                <a href="#" class="inline-flex items-center px-8 py-3 bg-white text-primary font-medium rounded-lg hover:bg-gray-100 transition-custom shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                    <i class="fa fa-upload mr-2"></i> 提交你的作品
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-gray-900 text-white pt-16 pb-8">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+                <div>
+                    <div class="flex items-center space-x-2 mb-6">
+                        <i class="fa fa-plane text-primary text-2xl"></i>
+                        <a href="index.html" class="text-xl font-bold text-primary">FPV<span class="text-secondary">攝影</span></a>
+                    </div>
+                    <p class="text-gray-400 mb-6">分享FPV穿越機的飛行技巧和攝影知識，讓更多人享受第一視角飛行的樂趣。</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-[#3b5998] transition-custom" aria-label="Facebook">
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-[#FF0000] transition-custom" aria-label="YouTube">
+                            <i class="fa fa-youtube-play"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-[#E1306C] transition-custom" aria-label="Instagram">
+                            <i class="fa fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-6">快速連結</h3>
+                    <ul class="space-y-3">
+                        <li><a href="index.html#home" class="text-gray-400 hover:text-white transition-custom">首頁</a></li>
+                        <li><a href="index.html#tutorials" class="text-gray-400 hover:text-white transition-custom">教學</a></li>
+                        <li><a href="3.html" class="text-gray-400 hover:text-white transition-custom">作品展示</a></li>
+                        <li><a href="index.html#cases" class="text-gray-400 hover:text-white transition-custom">拍攝案例</a></li>
+                        <li><a href="index.html#equipment" class="text-gray-400 hover:text-white transition-custom">裝備介紹</a></li>
+                        <li><a href="index.html#about" class="text-gray-400 hover:text-white transition-custom">關於我們</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-6">作品分類</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-custom">風景攝影</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-custom">城市建築</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-custom">極限運動</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-custom">室內穿越</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-custom">賽事記錄</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-6">聯繫我們</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-start gap-3">
+                            <i class="fa fa-envelope text-primary mt-1"></i>
+                            <span class="text-gray-400">contact@fpvphoto.com</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fa fa-phone text-primary mt-1"></i>
+                            <span class="text-gray-400">+886 912 345 678</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fa fa-map-marker text-primary mt-1"></i>
+                            <span class="text-gray-400">台中市南屯區工業路123號</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-8">
+                <p class="text-gray-500 text-sm text-center">© 2023 FPV攝影. 保留所有權利.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

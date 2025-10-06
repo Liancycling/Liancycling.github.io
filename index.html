@@ -5,24 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FPV穿越機與攝影 | 分享與教學</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="js/tailwind-config.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#165DFF',
-                        secondary: '#FF6B00',
-                        dark: '#1E293B',
-                        light: '#F8FAFC'
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    },
-                }
-            }
-        }
-    </script>
     <link rel="stylesheet" href="css/styles.css">
 </head>
     <body class="bg-black text-white antialiased">
@@ -33,7 +17,7 @@
                     <img src="JPG/LOGO2.png" alt="FPV LOGO" class="h-8 w-auto mr-2">
                     <a href="index.html" class="text-xl font-bold text-primary">FPV<span class="text-secondary">攝影</span></a>
                 </div>
-                
+                <!-- 桌面導航 -->
                 <nav class="hidden md:flex space-x-8">
                     <a href="#home" class="font-medium hover:text-white/80 transition-custom">首頁</a>
                     <a href="#tutorials" class="font-medium hover:text-white/80 transition-custom">教學</a>
@@ -75,7 +59,7 @@
 
     <section id="home" class="pt-24 md:pt-0 min-h-[1080px] max-h-[1080px] flex items-center relative overflow-hidden" style="height:1080px;">
         <div class="absolute inset-0 z-0 w-full h-full">
-            <video src="MP4/Video_Generation_Based_On_Description.mp4" type="video/mp4" autoplay loop muted class="w-full h-full object-cover" style="min-width:1280px; min-height:720px;">
+            <video src="Video_Generation_Based_On_Description.mp4" type="video/mp4" autoplay loop muted class="w-full h-full object-cover" style="min-width:1280px; min-height:720px;">
                 您的瀏覽器不支援影片播放。
             </video>
             <div class="absolute inset-0 bg-dark/50"></div>
@@ -165,7 +149,7 @@
             </div>
             
             <div class="text-center mt-12">
-                <a href="2.html" class="inline-flex items-center px-6 py-3 border border-primary text-primary font-medium rounded-lg hover:bg-primary hover:text-white transition-custom">
+                <a href="tutorials.html" class="inline-flex items-center px-6 py-3 border border-primary text-primary font-medium rounded-lg hover:bg-primary hover:text-white transition-custom">
                     查看全部教學 <i class="fa fa-long-arrow-right ml-2"></i>
                 </a>
             </div>
@@ -219,7 +203,7 @@
             </div>
             
             <div class="text-center mt-12">
-                <a href="3.html" class="inline-flex items-center px-6 py-3 bg-primary text-white font-medium rounded-lg hover:bg-primary/90 transition-custom shadow-md hover:shadow-lg">
+                <a href="gallery.html" class="inline-flex items-center px-6 py-3 bg-primary text-white font-medium rounded-lg hover:bg-primary/90 transition-custom shadow-md hover:shadow-lg">
                     瀏覽更多作品 <i class="fa fa-images ml-2"></i>
                 </a>
             </div>
@@ -369,7 +353,7 @@
             </div>
             
             <div class="text-center mt-12">
-                <a href="#" class="inline-flex items-center px-6 py-3 border border-white/20 text-white font-medium rounded-lg hover:bg-white/10 hover:text-white transition-custom">
+                <a href="cases.html" class="inline-flex items-center px-6 py-3 border border-white/20 text-white font-medium rounded-lg hover:bg-white/10 hover:text-white transition-custom">
                     瀏覽更多案例 <i class="fa fa-long-arrow-right ml-2"></i>
                 </a>
             </div>
