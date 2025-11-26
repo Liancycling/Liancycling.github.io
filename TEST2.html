@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fabric Technology | DV LEOPARD</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* 字體與基礎設定 */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=Noto+Sans+TC:wght@300;400;500;700&display=swap');
+        
+        body {
+            font-family: 'Inter', 'Noto Sans TC', sans-serif;
+            background-color: #050505; /* 極致黑 */
+            color: #ffffff;
+        }
+
+        /* 隱藏滾動條 */
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* 機能卡片互動效果 */
+        .tech-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid #27272a; /* Zinc 800 */
+            background: linear-gradient(180deg, rgba(24, 24, 27, 0.4) 0%, rgba(9, 9, 11, 0.8) 100%);
+        }
+        .tech-card:hover {
+            transform: translateY(-4px);
+            border-color: #71717a; /* Zinc 500 */
+            box-shadow: 0 20px 40px -15px rgba(255, 255, 255, 0.1);
+        }
+
+        /* 按鈕樣式 */
+        .btn-outline {
+            transition: all 0.3s ease;
+            letter-spacing: 0.15em;
+        }
+        .btn-outline:hover {
+            background-color: white;
+            color: black;
+        }
+        
+        /* 標籤樣式 */
+        .tag-pill {
+            font-size: 10px;
+            letter-spacing: 0.05em;
+            background-color: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 4px 8px;
+            color: #d4d4d8;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-white selection:text-black">
+
+    <nav class="fixed top-0 w-full z-50 bg-black/90 backdrop-blur-md border-b border-white/5">
+        <div class="max-w-[1600px] mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-1">
+                <span class="text-2xl font-black tracking-tighter italic">DV</span>
+                <span class="text-2xl font-bold tracking-widest uppercase ml-2">LEOPARD</span>
+            </div>
+            
+            <div class="hidden md:flex space-x-10 text-[11px] font-bold tracking-[0.2em] uppercase text-gray-400">
+                <a href="#" class="hover:text-white transition-colors">Competition</a>
+                <a href="#" class="hover:text-white transition-colors">Training</a>
+                <a href="#" class="text-white">Fabric Tech</a>
+                <a href="#" class="hover:text-white transition-colors">Lifestyle</a>
+            </div>
+
+            <div class="md:hidden text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </div>
+        </div>
+    </nav>
+
+    <header class="pt-40 pb-20 px-6 text-center max-w-5xl mx-auto">
+        <h5 class="text-xs font-bold text-gray-500 uppercase tracking-[0.3em] mb-4">Professional Product</h5>
+        <h1 class="text-4xl md:text-6xl font-bold tracking-tight mb-8 uppercase text-white">Fabric Technology</h1>
+        <p class="text-gray-400 text-sm md:text-base leading-loose max-w-3xl mx-auto font-light tracking-wide">
+            DV LEOPARD 致力於將運動科學與紡織工藝完美結合。
+            從高強度的競技壓縮到日常的舒芙蕾觸感，我們的面料不僅是為了覆蓋身體，
+            更是為了激發您在場上場下的無限潛能。
+        </p>
+    </header>
+
+    <div class="flex justify-center flex-wrap gap-3 mb-16 px-4">
+        <button class="px-6 py-2 bg-white text-black text-[10px] font-bold uppercase tracking-widest rounded-sm">All Tech</button>
+        <button class="px-6 py-2 bg-zinc-900 text-gray-400 hover:text-white hover:bg-zinc-800 text-[10px] font-bold uppercase tracking-widest rounded-sm transition-all border border-zinc-800">Compression</button>
+        <button class="px-6 py-2 bg-zinc-900 text-gray-400 hover:text-white hover:bg-zinc-800 text-[10px] font-bold uppercase tracking-widest rounded-sm transition-all border border-zinc-800">Training</button>
+        <button class="px-6 py-2 bg-zinc-900 text-gray-400 hover:text-white hover:bg-zinc-800 text-[10px] font-bold uppercase tracking-widest rounded-sm transition-all border border-zinc-800">Warmth</button>
+        <button class="px-6 py-2 bg-zinc-900 text-gray-400 hover:text-white hover:bg-zinc-800 text-[10px] font-bold uppercase tracking-widest rounded-sm transition-all border border-zinc-800">Eco-Friendly</button>
+    </div>
+
+    <main class="max-w-[1600px] mx-auto px-4 md:px-8 pb-32">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            
+            <article class="tech-card p-10 flex flex-col justify-between h-full rounded-sm group relative overflow-hidden">
+                <div class="absolute top-0 right-0 p-4 opacity-10 font-black text-6xl text-white group-hover:opacity-20 transition-opacity">01</div>
+                <div>
+                    <h2 class="text-2xl font-bold mb-4 tracking-tighter text-white">Dual-Force™</h2>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-8 border-l-2 border-white/20 pl-4">
+                        代表「雙重力量」，完美結合了強大的延展性與出色的支撐性。專為高強度競技運動設計，能在激烈對抗中穩定肌肉，同時不犧牲活動的靈活性。
+                    </p>
+                    <div class="mb-10">
+                        <h3 class="text-[10px] font-bold text-gray-500 uppercase tracking-[0.2em] mb-4">Performance Highlights</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="tag-pill">Extreme Compression</span>
+                            <span class="tag-pill">Muscle Stability</span>
+                            <span class="tag-pill">High Impact</span>
+                        </div>
+                    </div>
+                </div>
+                <a href="#" class="btn-outline w-full py-4 border border-white/20 text-center text-[10px] font-bold uppercase text-white">View Collection</a>
+            </article>
+
+            <article class="tech-card p-10 flex flex-col justify-between h-full rounded-sm group relative overflow-hidden">
+                <div class="absolute top-0 right-0 p-4 opacity-10 font-black text-6xl text-white group-hover:opacity-20 transition-opacity">02</div>
+                <div>
+                    <h2 class="text-2xl font-bold mb-4 tracking-tighter text-white">DynaFlex™</h2>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-8 border-l-2 border-white/20 pl-4">
+                        結合「Dynamic」與「Flex」，能完美適應身體的每個動作。提供極致的活動自由度，讓您在訓練中能無拘無束地發揮，達到最佳訓練效果。
+                    </p>
+                    <div class="mb-10">
+                        <h3 class="text-[10px] font-bold text-gray-500 uppercase tracking-[0.2em] mb-4">Performance Highlights</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="tag-pill">Dynamic Fit</span>
+                            <span class="tag-pill">Ultimate Freedom</span>
+                            <span class="tag-pill">Training Essential</span>
+                        </div>
+                    </div>
+                </div>
+                <a href="#" class="btn-outline w-full py-4 border border-white/20 text-center text-[10px] font-bold uppercase text-white">View Collection</a>
+            </article>
+
+            <article class="tech-card p-10 flex flex-col justify-between h-full rounded-sm group relative overflow-hidden">
+                <div class="absolute top-0 right-0 p-4 opacity-10 font-black text-6xl text-white group-hover:opacity-20 transition-opacity">03</div>
+                <div>
+                    <h2 class="text-2xl font-bold mb-4 tracking-tighter text-white">Defender-Matrix™</h2>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-8 border-l-2 border-white/20 pl-4">
+                        將產品擬人化為「守護者」。面料內部採用網狀或蜂巢的矩陣結構，能針對特定肌群提供網格化的全面支撐與防護，有效減緩衝擊。
+                    </p>
+                    <div class="mb-10">
+                        <h3 class="text-[10px] font-bold text-gray-500 uppercase tracking-[0.2em] mb-4">Performance Highlights</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="tag-pill">Impact Protection</span>
+                            <span class="tag-pill">Grid Structure</span>
+                            <span class="tag-pill">Muscle Support</span>
+                        </div>
+                    </div>
+                </div>
+                <a href="#" class="btn-outline w-full py-4 border border-white/20 text-center text-[10px] font-bold uppercase text-white">View Collection</a>
+            </article>
+
+            <article class="tech-card p-10 flex flex-col justify-between h-full rounded-sm group relative overflow-hidden">
+                <div class="absolute top-0 right-0 p-4 opacity-10 font-black text-6xl text-white group-hover:opacity-20 transition-opacity">04</div>
+                <div>
+                    <h2 class="text-2xl font-bold mb-4 tracking-tighter text-white">Drift-Air™</h2>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-8 border-l-2 border-white/20 pl-4">
+                        浮感空氣織物。「Drift」創造了一種零重力、輕盈無負擔的穿著感受，巧妙呼應「太空棉」的原始概念與平滑手感，極具未來感。
+                    </p>
+                    <div class="mb-10">
+                        <h3 class="text-[10px] font-bold text-gray-500 uppercase tracking-[0.2em] mb-4">Performance Highlights</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="tag-pill">Zero Gravity</span>
+                            <span class="tag-pill">Structure</span>
+                            <span class="tag-pill">Futuristic Feel</span>
+                        </div>
+                    </div>
+                </div>
+                <a href="#" class="btn-outline w-full py-4 border border-white/20 text-center text-[10px] font-bold uppercase text-white">View Collection</a>
+            </article>
+
+            <article class="tech-card p-10 flex flex-col justify-between h-full rounded-sm group relative overflow-hidden">
+                <div class="absolute top-0 right-0 p-4 opacity-10 font-black text-6xl text-white group-hover:opacity-20 transition-opacity">05</div>
+                <div>
+                    <h2 class="text-2xl font-bold mb-4 tracking-tighter text-white">Den-Fleece™</h2>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-8 border-l-2 border-white/20 pl-4">
+                        高密度重磅暖絨。「Dense」直接溝通了面料的紮實與厚重感，代表更強的保暖性與更好的挺度，同時保留了刷毛絨的親膚柔軟。
+                    </p>
+                    <div class="mb-10">
+                        <h3 class="text-[10px] font-bold text-gray-500 uppercase tracking-[0.2em] mb-4">Performance Highlights</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="tag-pill">High Density</span>
+                            <span class="tag-pill">Heavyweight Warmth</span>
+                            <span class="tag-pill">Premium Structure</span>
+                        </div>
+                    </div>
+                </div>
+                <a href="#" class="btn-outline w-full py-4 border border-white/20 text-center text-[10px] font-bold uppercase text-white">View Collection</a>
+            </article>
+
+            <article class="tech-card p-10 flex flex-col justify-between h-full rounded-sm group relative overflow-hidden">
+                <div class="absolute top-0 right-0 p-4 opacity-10 font-black text-6xl text-white group-hover:opacity-20 transition-opacity">06</div>
+                <div>
+                    <h2 class="text-2xl font-bold mb-4 tracking-tighter text-white">Dri-Fusion™</h2>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-8 border-l-2 border-white/20 pl-4">
+                        代表乾燥與融合。此技術能迅速吸收並蒸發汗水，在運動過程中有效將皮膚表層的濕氣帶走，讓身體始終保持乾爽舒適。
+                    </p>
+                    <div class="mb-10">
+                        <h3 class="text-[10px] font-bold text-gray-500 uppercase tracking-[0.2em] mb-4">Performance Highlights</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="tag-pill">Rapid Evaporation</span>
+                            <span class="tag-pill">Moisture Wicking</span>
+                            <span class="tag-pill">Cooling Effect</span>
+                        </div>
+                    </div>
+                </div>
+                <a href="#" class="btn-outline w-full py-4 border border-white/20 text-center text-[10px] font-bold uppercase text-white">View Collection</a>
+            </article>
+
+            <article class="tech-card p-10 flex flex-col justify-between h-full rounded-sm group relative overflow-hidden">
+                <div class="absolute top-0 right-0 p-4 opacity-10 font-black text-6xl text-white group-hover:opacity-20 transition-opacity">07</div>
+                <div>
+                    <div class="flex items-center gap-2 mb-4">
+                        <h2 class="text-2xl font-bold tracking-tighter text-white">D-Evolve™</h2>
+                        <span class="bg-green-900/30 text-green-400 text-[9px] px-1.5 py-0.5 border border-green-900/50 uppercase tracking-wide">Sustainable</span>
+                    </div>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-8 border-l-2 border-white/20 pl-4">
+                        源自「Evolution」的永續進化。布料由回收材料再製而成，不僅體現對環境的承諾，更提供如舒芙蕾般柔軟親膚的舒適體驗。
+                    </p>
+                    <div class="mb-10">
+                        <h3 class="text-[10px] font-bold text-gray-500 uppercase tracking-[0.2em] mb-4">Performance Highlights</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="tag-pill">Recycled Materials</span>
+                            <span class="tag-pill">Souffle Softness</span>
+                            <span class="tag-pill">Eco-Conscious</span>
+                        </div>
+                    </div>
+                </div>
+                <a href="#" class="btn-outline w-full py-4 border border-white/20 text-center text-[10px] font-bold uppercase text-white">View Collection</a>
+            </article>
+
+            <article class="tech-card p-10 flex flex-col justify-between h-full rounded-sm group relative overflow-hidden">
+                <div class="absolute top-0 right-0 p-4 opacity-10 font-black text-6xl text-white group-hover:opacity-20 transition-opacity">08</div>
+                <div>
+                    <h2 class="text-2xl font-bold mb-4 tracking-tighter text-white">Dyna-Plush™</h2>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-8 border-l-2 border-white/20 pl-4">
+                        打破機能與舒適的界線。結合了 Dyna 的高效能彈性與 Plush 的奢華柔軟，讓您在擁有絕佳運動機能的同時，也能享受頂級的絨布觸感。
+                    </p>
+                    <div class="mb-10">
+                        <h3 class="text-[10px] font-bold text-gray-500 uppercase tracking-[0.2em] mb-4">Performance Highlights</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="tag-pill">Luxury Feel</span>
+                            <span class="tag-pill">Performance Stretch</span>
+                            <span class="tag-pill">Hybrid Comfort</span>
+                        </div>
+                    </div>
+                </div>
+                <a href="#" class="btn-outline w-full py-4 border border-white/20 text-center text-[10px] font-bold uppercase text-white">View Collection</a>
+            </article>
+
+            <article class="tech-card p-10 flex flex-col justify-between h-full rounded-sm group relative overflow-hidden">
+                <div class="absolute top-0 right-0 p-4 opacity-10 font-black text-6xl text-white group-hover:opacity-20 transition-opacity">09</div>
+                <div>
+                    <h2 class="text-2xl font-bold mb-4 tracking-tighter text-white">Dri-Dot™</h2>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-8 border-l-2 border-white/20 pl-4">
+                        經典的抗菌系列。透過點狀孔洞（Dot）的物理結構實現快速乾爽，直接傳達了透氣與排汗的核心功能。
+                    </p>
+                    <div class="mb-10">
+                        <h3 class="text-[10px] font-bold text-gray-500 uppercase tracking-[0.2em] mb-4">Performance Highlights</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="tag-pill">Perforated Vent</span>
+                            <span class="tag-pill">Antibacterial</span>
+                            <span class="tag-pill">Quick Dry</span>
+                        </div>
+                    </div>
+                </div>
+                <a href="#" class="btn-outline w-full py-4 border border-white/20 text-center text-[10px] font-bold uppercase text-white">View Collection</a>
+            </article>
+
+        </div>
+    </main>
+
+    <footer class="border-t border-white/5 py-16 px-6 bg-black">
+        <div class="max-w-[1600px] mx-auto flex flex-col md:flex-row justify-between items-start md:items-center">
+            <div class="mb-8 md:mb-0">
+                <div class="text-2xl font-black tracking-tighter italic mb-4">DV <span class="not-italic font-bold tracking-widest ml-1">LEOPARD</span></div>
+                <p class="text-gray-600 text-[10px] uppercase tracking-widest max-w-xs">
+                    © 2025 DV LEOPARD.<br>Professional Performance Products.
+                </p>
+            </div>
+            <div class="flex gap-12 text-[10px] font-bold text-gray-500 uppercase tracking-[0.2em]">
+                <a href="#" class="hover:text-white transition-colors">About</a>
+                <a href="#" class="hover:text-white transition-colors">Tech</a>
+                <a href="#" class="hover:text-white transition-colors">Stockists</a>
+                <a href="#" class="hover:text-white transition-colors">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
