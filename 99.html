@@ -35,7 +35,7 @@
             background-size: 30px 30px;
         }
         
-        .neon-glow:hover { box-shadow: 0 0 15px rgba(204, 255, 0, 0.4); }
+        .neon-glow:hover { box-shadow: 0 0 15px rgb(9, 13, 247); }
         .clip-path-slant { clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%); }
         
         /* 隱藏捲軸 */
@@ -48,11 +48,17 @@
     <nav class="bg-dvBlack border-b border-white/10 sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6">
             <div class="flex justify-between h-20">
-                <div class="flex items-center cursor-pointer group" onclick="navigateTo('home')">
-                    <div class="bg-dvNeon text-black p-1 mr-3 skew-x-[-10deg]">
-                        <i data-lucide="zap" class="h-6 w-6 fill-black"></i>
+               <div class="flex flex-col justify-center cursor-pointer group" onclick="navigateTo('home')">
+                    <div class="flex items-center text-white font-display font-black text-3xl tracking-tighter uppercase leading-none">
+                        <span>PRO</span>
+                        <svg class="w-8 h-8 text-dvNeon mx-1 shrink-0 transform -skew-x-[30deg]" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z"></path>
+                        </svg>
+                        <span>LAB</span>
                     </div>
-                    <span class="font-display font-bold text-2xl tracking-tighter italic">DV PRO-MAKER <span class="text-dvNeon">LAB</span></span>
+                    <span class="text-dvNeon font-bold text-[10px] tracking-[0.2em] mt-1 text-center font-sans">
+                        POWERING EVERY PRODUCT
+                    </span>
                 </div>
                 
                 <div class="hidden md:flex items-center space-x-8">
