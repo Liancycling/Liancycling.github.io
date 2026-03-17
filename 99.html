@@ -45,43 +45,112 @@
 </head>
 <body class="bg-dvBlack text-white font-sans min-h-screen flex flex-col">
 
-    <nav class="bg-dvBlack border-b border-white/10 sticky top-0 z-50">
+    <nav id="main-nav" class="border-b border-white/10 sticky top-0 z-50 backdrop-blur-sm" style="background: linear-gradient(120deg,#f1ff27d2 10%, #0a0a0a 60%); background-size:200% 200%;">
+        <style>
+            /* 動態背景漸層移動 */
+            @keyframes gradientShift { 0% { background-position: 0% 50% } 50% { background-position: 100% 50% } 100% { background-position: 0% 50% } }
+            #main-nav { animation: gradientShift 10s ease infinite; box-shadow: 0 6px 24px rgba(0,0,0,0.6); }
+
+
+            /* 連結底線動畫 */
+            .nav-link { position: relative; transition: color .25s ease; }
+            .nav-link::after { content: ""; position: absolute; left: 0; right: 100%; bottom: -6px; height: 2px; background: linear-gradient(90deg,#ccff00,#a3cc00); transition: right .28s cubic-bezier(.2,.9,.2,1); }
+            .nav-link:hover::after { right: 0; }
+            .nav-cta { transition: transform .18s ease, box-shadow .18s ease; will-change: transform; }
+            .nav-cta:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 10px 30px rgba(163,204,0,0.12); }
+
+            /* neon pulse for emphasis */
+            .neon-pulse { animation: neonPulse 2.6s ease-in-out infinite; }
+            @keyframes neonPulse { 0% { box-shadow: 0 0 0 rgba(204,255,0,0.0) } 50% { box-shadow: 0 0 18px rgba(204,255,0,0.12) } 100% { box-shadow: 0 0 0 rgba(204,255,0,0.0) } }
+
+            /* mobile menu slide */
+            @keyframes slideDown { from { opacity: 0; transform: translateY(-6px) } to { opacity: 1; transform: translateY(0) } }
+            #mobile-menu.open { animation: slideDown .28s ease forwards; }
+
+            /* 菜單按鈕簡單轉換狀態（配合 lucide 切換 icon） */
+            .menu-btn.open { transform: rotate(90deg); transition: transform .28s ease; }
+        </style>
+
         <div class="max-w-7xl mx-auto px-4 sm:px-6">
             <div class="flex justify-between h-20">
-               <div class="flex flex-col justify-center cursor-pointer group" onclick="navigateTo('home')">
-                    <div class="flex items-center text-white font-display font-black text-3xl tracking-tighter uppercase leading-none">
-                        <span>DA</span>
-                        <svg class="w-8 h-8 text-dvNeon mx-1 shrink-0 transform -skew-x-[30deg]" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z"></path>
+               <div class="flex flex-col justify-center cursor-pointer group" onclick="navigateTo('home')" aria-label="Home">
+                    <div class="flex items-center font-display font-black text-5xl md:text-6xl tracking-tighter uppercase leading-none text-black brand-logo">
+                        <span class="leading-none text-4xl md:text-5xl">DA</span>
+                        <svg class="w-10 h-10 text-dvNeon mx-2 shrink-0 transform -skew-x-[10deg] neon-pulse" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <polygon points="13,2 7,12 12,12 9,22 20,10 15,10 19,2" />
                         </svg>
-                        <span>LAB</span>
+                        <span class="leading-none text-4xl md:text-5xl">LAB</span>
                     </div>
-                    <span class="text-dvNeon font-bold text-[10px] tracking-[0.2em] mt-1 text-center font-sans">
+                    <span class="font-bold text-[10px] tracking-[0.2em] mt-1 text-center font-sans text-black opacity-90">
                         POWERING EVERY PRODUCT
                     </span>
                 </div>
                 
                 <div class="hidden md:flex items-center space-x-8">
-                    <button onclick="navigateTo('products')" class="text-sm font-bold tracking-widest hover:text-dvNeon transition">商品總覽</button>
-                    <button onclick="navigateTo('materials')" class="text-sm font-bold tracking-widest hover:text-dvNeon transition">材質與工藝</button>
-                    <button onclick="navigateTo('process')" class="text-sm font-bold tracking-widest hover:text-dvNeon transition">交期與流程</button>
-                    <button onclick="navigateTo('quote')" class="bg-dvNeon text-black px-6 py-2 font-black text-sm tracking-tighter hover:bg-white transition skew-x-[-10deg]">
+                    <button onclick="navigateTo('products')" class="text-sm font-bold tracking-widest hover:text-dvNeon transition text-white nav-link">商品總覽</button>
+                    <button onclick="navigateTo('materials')" class="text-sm font-bold tracking-widest hover:text-dvNeon transition text-white nav-link">材質與工藝</button>
+                    <button onclick="navigateTo('process')" class="text-sm font-bold tracking-widest hover:text-dvNeon transition text-white nav-link">交期與流程</button>
+                    <button onclick="navigateTo('quote')" class="bg-dvNeon text-black px-6 py-2 font-black text-sm tracking-tighter hover:bg-white transition skew-x-[-10deg] nav-cta neon-pulse">
                         立即取得報價
                     </button>
                 </div>
 
                 <div class="md:hidden flex items-center">
-                    <button onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
+                    <button class="menu-btn" aria-expanded="false" aria-controls="mobile-menu" onclick="toggleMobileMenu(this)">
                         <i data-lucide="menu" class="h-8 w-8 text-dvNeon"></i>
                     </button>
                 </div>
             </div>
         </div>
-        <div id="mobile-menu" class="hidden bg-dvGray border-t border-white/10 p-4 space-y-4">
-            <button onclick="navigateTo('products')" class="block w-full text-left font-bold py-2">商品總覽</button>
-            <button onclick="navigateTo('materials')" class="block w-full text-left font-bold py-2">材質與工藝</button>
-            <button onclick="navigateTo('quote')" class="block w-full text-center bg-dvNeon text-black py-3 font-black">取得報價</button>
+
+        <div id="mobile-menu" class="hidden p-4 space-y-4" style="background: linear-gradient(90deg,#ccff00 0%, #0a0a0a 100%); border-top: 1px solid rgba(255,255,255,0.08);">
+            <button onclick="navigateTo('products')" class="block w-full text-left font-bold py-2 text-white nav-link">商品總覽</button>
+            <button onclick="navigateTo('materials')" class="block w-full text-left font-bold py-2 text-white nav-link">材質與工藝</button>
+            <button onclick="navigateTo('quote')" class="block w-full text-center bg-dvNeon text-black py-3 font-black nav-cta">取得報價</button>
         </div>
+
+        <script>
+            // 小型控制：切換 mobile menu，並將 icon 切換為 x（lucide）
+            function toggleMobileMenu(btn){
+                const menu = document.getElementById('mobile-menu');
+                const icon = btn.querySelector('i');
+                const isOpen = !menu.classList.contains('hidden');
+                if(isOpen){
+                    // 關閉
+                    menu.classList.add('hidden');
+                    menu.classList.remove('open');
+                    btn.classList.remove('open');
+                    icon.setAttribute('data-lucide', 'menu');
+                    btn.setAttribute('aria-expanded', 'false');
+                } else {
+                    // 開啟（帶動畫）
+                    menu.classList.remove('hidden');
+                    menu.classList.add('open');
+                    btn.classList.add('open');
+                    icon.setAttribute('data-lucide', 'x');
+                    btn.setAttribute('aria-expanded', 'true');
+                }
+                // 重新渲染 lucide icons（小範圍更新）
+                if (window.lucide) lucide.createIcons();
+            }
+
+            // 加入簡單滾動隱藏/顯示導航（微互動）
+            (function(){
+                let last = 0;
+                const nav = document.getElementById('main-nav');
+                window.addEventListener('scroll', () => {
+                    const y = window.scrollY;
+                    if (y > last && y > 80) {
+                        nav.style.transform = 'translateY(-8px)';
+                        nav.style.opacity = '0.96';
+                    } else {
+                        nav.style.transform = 'translateY(0)';
+                        nav.style.opacity = '1';
+                    }
+                    last = y;
+                }, { passive: true });
+            })();
+        </script>
     </nav>
 
     <main class="flex-grow">
