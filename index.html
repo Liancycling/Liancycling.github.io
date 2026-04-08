@@ -559,14 +559,38 @@
                         <div class="mb-6">
                             <h3 class="font-bold text-dvNeon mb-3 tracking-widest text-sm">材質選擇</h3>
                             <div class="flex gap-3 mb-4 text-sm">
-                                <button onclick="this.parentElement.querySelectorAll('span').forEach(s => s.classList.remove('bg-white', 'text-black')); this.parentElement.querySelectorAll('span').forEach(s => s.classList.add('border', 'border-white/20', 'text-gray-400')); this.classList.add('bg-white', 'text-black'); this.classList.remove('border', 'border-white/20', 'text-gray-400')" class="bg-white text-black px-4 py-1 font-bold cursor-pointer hover:scale-105 transition">合成皮</button>
-                                <button onclick="this.parentElement.querySelectorAll('span').forEach(s => s.classList.remove('bg-white', 'text-black')); this.parentElement.querySelectorAll('span').forEach(s => s.classList.add('border', 'border-white/20', 'text-gray-400')); this.classList.add('bg-white', 'text-black'); this.classList.remove('border', 'border-white/20', 'text-gray-400')" class="border border-white/20 px-4 py-1 text-gray-400 cursor-pointer hover:scale-105 transition">真皮</button>
+                                <button class="material-btn bg-white text-black px-4 py-1 font-bold hover:bg-gray-200 transition cursor-pointer" data-material="synthetic">合成皮</button>
+                                <button class="material-btn border border-white/20 px-4 py-1 text-gray-400 hover:border-white hover:text-white transition cursor-pointer" data-material="leather">真皮</button>
                             </div>
                             <h3 class="font-bold text-dvNeon mb-3 tracking-widest text-sm">工藝方式</h3>
                             <div class="flex gap-3 text-sm">
-                                <button onclick="this.parentElement.querySelectorAll('span').forEach(s => s.classList.remove('bg-white', 'text-black')); this.parentElement.querySelectorAll('span').forEach(s => s.classList.add('border', 'border-white/20', 'text-gray-400')); this.classList.add('bg-white', 'text-black'); this.classList.remove('border', 'border-white/20', 'text-gray-400')" class="bg-white text-black px-4 py-1 font-bold cursor-pointer hover:scale-105 transition">凹凸紋理</button>
-                                <button onclick="this.parentElement.querySelectorAll('span').forEach(s => s.classList.remove('bg-white', 'text-black')); this.parentElement.querySelectorAll('span').forEach(s => s.classList.add('border', 'border-white/20', 'text-gray-400')); this.classList.add('bg-white', 'text-black'); this.classList.remove('border', 'border-white/20', 'text-gray-400')" class="border border-white/20 px-4 py-1 text-gray-400 cursor-pointer hover:scale-105 transition">平滑表面</button>
+                                <button class="craft-btn bg-white text-black px-4 py-1 font-bold hover:bg-gray-200 transition cursor-pointer" data-craft="screen-print">客製網版印刷</button>
+                                <button class="craft-btn border border-white/20 px-4 py-1 text-gray-400 hover:border-white hover:text-white transition cursor-pointer" data-craft="heat-transfer">熱轉印</button>
                             </div>
+
+                            <script>
+                            document.querySelectorAll('.material-btn').forEach(btn => {
+                                btn.addEventListener('click', function() {
+                                    document.querySelectorAll('.material-btn').forEach(b => {
+                                        b.classList.remove('bg-white', 'text-black');
+                                        b.classList.add('border', 'border-white/20', 'text-gray-400');
+                                    });
+                                    this.classList.add('bg-white', 'text-black');
+                                    this.classList.remove('border', 'border-white/20', 'text-gray-400');
+                                });
+                            });
+
+                            document.querySelectorAll('.craft-btn').forEach(btn => {
+                                btn.addEventListener('click', function() {
+                                    document.querySelectorAll('.craft-btn').forEach(b => {
+                                        b.classList.remove('bg-white', 'text-black');
+                                        b.classList.add('border', 'border-white/20', 'text-gray-400');
+                                    });
+                                    this.classList.add('bg-white', 'text-black');
+                                    this.classList.remove('border', 'border-white/20', 'text-gray-400');
+                                });
+                            });
+                            </script>
                             </div>
                         </div>
 
