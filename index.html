@@ -1,31 +1,26 @@
+
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>客製化商品製造 | 透明報價</title>
+    <title>DV PRO-MAKER | 客製化實驗室 DALAB</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     fontFamily: {
                         sans: ['"Noto Sans TC"', 'sans-serif'],
+                        display: ['Oswald', 'sans-serif'],
                     },
                     colors: {
-                        brand: {
-                            50: '#eff6ff',
-                            100: '#dbeafe',
-                            500: '#3b82f6',
-                            600: '#2563eb',
-                            900: '#1e3a8a',
-                        },
-                        accent: {
-                            500: '#ef4444',
-                            600: '#dc2626',
-                        }
+                        dvBlack: '#0a0a0a',
+                        dvGray: '#1c1c1c',
+                        dvNeon: '#ccff00', 
+                        dvDarkNeon: '#a3cc00',
                     }
                 }
             }
@@ -33,650 +28,1202 @@
     </script>
     <style>
         .view-section { display: none; }
-        .view-section.active { display: block; animation: fadeIn 0.3s ease-in-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .view-section.active { display: block; animation: slideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+        @keyframes slideIn { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
         
-        /* 隱藏捲軸但可捲動 */
+        .bg-grid {
+            background-image: radial-gradient(circle, #333 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+        
+        .neon-glow:hover { box-shadow: 0 0 15px rgb(9, 13, 247); }
+        .clip-path-slant { clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%); }
+        
+        /* 隱藏捲軸 */
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800 font-sans min-h-screen flex flex-col">
+<body class="bg-dvBlack text-white font-sans min-h-screen flex flex-col">
 
-    <!-- 導覽列 -->
-    <nav class="bg-white shadow-sm sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16">
-                <div class="flex items-center cursor-pointer" onclick="navigateTo('home')">
-                    <i data-lucide="package" class="h-8 w-8 text-brand-600 mr-2"></i>
-                    <span class="font-bold text-xl tracking-wider text-brand-900">PRO-MAKER</span>
+    <nav id="main-nav" class="border-b border-white/10 sticky top-0 z-50 backdrop-blur-sm" style="background: linear-gradient(120deg,#f1ff27d2 10%, #0a0a0a 60%); background-size:200% 200%;">
+        <style>
+            /* 動態背景漸層移動 */
+            @keyframes gradientShift { 0% { background-position: 0% 50% } 50% { background-position: 100% 50% } 100% { background-position: 0% 50% } }
+            #main-nav { animation: gradientShift 10s ease infinite; box-shadow: 0 6px 24px rgba(0,0,0,0.6); }
+
+
+            /* 連結底線動畫 */
+            .nav-link { position: relative; transition: color .25s ease; }
+            .nav-link::after { content: ""; position: absolute; left: 0; right: 100%; bottom: -6px; height: 2px; background: linear-gradient(90deg,#ccff00,#a3cc00); transition: right .28s cubic-bezier(.2,.9,.2,1); }
+            .nav-link:hover::after { right: 0; }
+            .nav-cta { transition: transform .18s ease, box-shadow .18s ease; will-change: transform; }
+            .nav-cta:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 10px 30px rgba(163,204,0,0.12); }
+
+            /* neon pulse for emphasis */
+            .neon-pulse { animation: neonPulse 2.6s ease-in-out infinite; }
+            @keyframes neonPulse { 0% { box-shadow: 0 0 0 rgba(204,255,0,0.0) } 50% { box-shadow: 0 0 18px rgba(204,255,0,0.12) } 100% { box-shadow: 0 0 0 rgba(204,255,0,0.0) } }
+
+            /* mobile menu slide */
+            @keyframes slideDown { from { opacity: 0; transform: translateY(-6px) } to { opacity: 1; transform: translateY(0) } }
+            #mobile-menu.open { animation: slideDown .28s ease forwards; }
+
+            /* 菜單按鈕簡單轉換狀態（配合 lucide 切換 icon） */
+            .menu-btn.open { transform: rotate(90deg); transition: transform .28s ease; }
+        </style>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="flex justify-between h-20">
+               <div class="flex flex-col justify-center cursor-pointer group" onclick="navigateTo('home')" aria-label="Home">
+                    <div class="flex items-center font-display font-black text-5xl md:text-6xl tracking-tighter uppercase leading-none text-black brand-logo">
+                        <span class="leading-none text-4xl md:text-5xl">DA</span>
+                        <svg class="w-10 h-10 text-dvNeon mx-2 shrink-0 transform -skew-x-[10deg] neon-pulse" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <polygon points="13,2 7,12 12,12 9,22 20,10 15,10 19,2" />
+                        </svg>
+                        <span class="leading-none text-4xl md:text-5xl">LAB</span>
+                    </div>
+                    <span class="font-bold text-[10px] tracking-[0.2em] mt-1 text-center font-sans text-black opacity-90">
+                        POWERING EVERY PRODUCT
+                    </span>
                 </div>
+                
                 <div class="hidden md:flex items-center space-x-8">
-                    <button onclick="navigateTo('home')" class="text-gray-600 hover:text-brand-600 font-medium transition">首頁</button>
-                    <button onclick="navigateTo('products')" class="text-gray-600 hover:text-brand-600 font-medium transition">商品總覽</button>
-                    <button onclick="navigateTo('materials')" class="text-gray-600 hover:text-brand-600 font-medium transition">材質與工藝</button>
-                    <button onclick="navigateTo('quote')" class="bg-brand-600 text-white px-5 py-2 rounded-full font-bold hover:bg-brand-500 shadow-md transition transform hover:-translate-y-0.5">取得報價</button>
+                    <button onclick="navigateTo('products')" class="text-sm font-bold tracking-widest hover:text-dvNeon transition text-white nav-link">商品總覽</button>
+                    <button onclick="navigateTo('materials')" class="text-sm font-bold tracking-widest hover:text-dvNeon transition text-white nav-link">材質與工藝</button>
+                    <button onclick="navigateTo('process')" class="text-sm font-bold tracking-widest hover:text-dvNeon transition text-white nav-link">交期與流程</button>
+                    <button onclick="navigateTo('quote')" class="bg-dvNeon text-black px-6 py-2 font-black text-sm tracking-tighter hover:bg-white transition skew-x-[-10deg] nav-cta neon-pulse">
+                        立即取得報價
+                    </button>
                 </div>
-                <!-- Mobile menu button -->
+
                 <div class="md:hidden flex items-center">
-                    <button class="text-gray-500 hover:text-gray-600" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
-                        <i data-lucide="menu" class="h-6 w-6"></i>
+                    <button class="menu-btn" aria-expanded="false" aria-controls="mobile-menu" onclick="toggleMobileMenu(this)">
+                        <i data-lucide="menu" class="h-8 w-8 text-dvNeon"></i>
                     </button>
                 </div>
             </div>
         </div>
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <button onclick="navigateTo('home'); document.getElementById('mobile-menu').classList.add('hidden')" class="block w-full text-left px-3 py-2 text-base font-medium text-gray-700 hover:text-brand-600 hover:bg-gray-50">首頁</button>
-                <button onclick="navigateTo('products'); document.getElementById('mobile-menu').classList.add('hidden')" class="block w-full text-left px-3 py-2 text-base font-medium text-gray-700 hover:text-brand-600 hover:bg-gray-50">商品總覽</button>
-                <button onclick="navigateTo('quote'); document.getElementById('mobile-menu').classList.add('hidden')" class="block w-full text-left px-3 py-2 text-base font-medium text-brand-600 hover:bg-gray-50">取得報價</button>
-            </div>
+
+        <div id="mobile-menu" class="hidden p-4 space-y-4" style="background: linear-gradient(90deg,#ccff00 0%, #0a0a0a 100%); border-top: 1px solid rgba(255,255,255,0.08);">
+            <button onclick="navigateTo('products')" class="block w-full text-left font-bold py-2 text-white nav-link">商品總覽</button>
+            <button onclick="navigateTo('materials')" class="block w-full text-left font-bold py-2 text-white nav-link">材質與工藝</button>
+            <button onclick="navigateTo('quote')" class="block w-full text-center bg-dvNeon text-black py-3 font-black nav-cta">取得報價</button>
         </div>
+
+        <script>
+            // 小型控制：切換 mobile menu，並將 icon 切換為 x（lucide）
+            function toggleMobileMenu(btn){
+                const menu = document.getElementById('mobile-menu');
+                const icon = btn.querySelector('i');
+                const isOpen = !menu.classList.contains('hidden');
+                if(isOpen){
+                    // 關閉
+                    menu.classList.add('hidden');
+                    menu.classList.remove('open');
+                    btn.classList.remove('open');
+                    icon.setAttribute('data-lucide', 'menu');
+                    btn.setAttribute('aria-expanded', 'false');
+                } else {
+                    // 開啟（帶動畫）
+                    menu.classList.remove('hidden');
+                    menu.classList.add('open');
+                    btn.classList.add('open');
+                    icon.setAttribute('data-lucide', 'x');
+                    btn.setAttribute('aria-expanded', 'true');
+                }
+                // 重新渲染 lucide icons（小範圍更新）
+                if (window.lucide) lucide.createIcons();
+            }
+
+            // 加入簡單滾動隱藏/顯示導航（微互動）
+            (function(){
+                let last = 0;
+                const nav = document.getElementById('main-nav');
+                window.addEventListener('scroll', () => {
+                    const y = window.scrollY;
+                    if (y > last && y > 80) {
+                        nav.style.transform = 'translateY(-8px)';
+                        nav.style.opacity = '0.96';
+                    } else {
+                        nav.style.transform = 'translateY(0)';
+                        nav.style.opacity = '1';
+                    }
+                    last = y;
+                }, { passive: true });
+            })();
+        </script>
     </nav>
 
-    <!-- 主內容區塊 -->
     <main class="flex-grow">
         
-        <!-- ================= 首頁 (Home View) ================= -->
         <section id="view-home" class="view-section active">
-            <!-- Hero Banner -->
-            <div class="relative bg-brand-900 text-white overflow-hidden">
-                <div class="absolute inset-0 opacity-20">
-                    <div class="absolute inset-0 bg-gradient-to-r from-brand-900 to-transparent z-10"></div>
-                    <!-- 模擬背景圖案 -->
-                    <div class="w-full h-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white to-transparent opacity-10"></div>
-                </div>
-                <style>
-                    /* 小型動畫與 blob 背景 */
-                    .hero-blob { position: absolute; border-radius: 50%; filter: blur(48px); opacity: 0.65; mix-blend-mode: screen; }
-                    @keyframes blob {
-                        0% { transform: translate(0,0) scale(1); }
-                        33% { transform: translate(30px,-20px) scale(1.08); }
-                        66% { transform: translate(-20px,25px) scale(0.95); }
-                        100% { transform: translate(0,0) scale(1); }
-                    }
-                    /* 文字與按鈕進場 */
-                    @keyframes fadeUp { from { opacity:0; transform: translateY(18px); } to { opacity:1; transform: translateY(0); } }
-                    .fade-up { animation: fadeUp .7s ease-out both; }
-                    .stagger-1 { animation-delay: .12s; }
-                    .stagger-2 { animation-delay: .26s; }
-                    .stagger-3 { animation-delay: .4s; }
-                    /* 浮動小圖示 */
-                    @keyframes floaty { 0% { transform: translateY(0); } 50% { transform: translateY(-8px); } 100% { transform: translateY(0); } }
-                    .icon-float { animation: floaty 4s ease-in-out infinite; }
-                    /* CTA 懸浮 / 偏轉效果 */
-                    .cta-tilt { transition: transform .25s ease, box-shadow .25s ease; }
-                    .cta-tilt:hover { transform: translateY(-6px) rotate(-1deg); box-shadow: 0 18px 40px rgba(59,130,246,0.12); }
-                </style>
-
-                <!-- 動態背景 blobs -->
-                <div aria-hidden="true" class="hero-blob" style="width:420px;height:420px;left:-80px;top:-80px;background:linear-gradient(135deg,#2563eb,rgba(99,102,241,0.8)); animation: blob 9s infinite;"></div>
-                <div aria-hidden="true" class="hero-blob" style="width:320px;height:320px;right:-60px;top:40px;background:linear-gradient(135deg,#ef4444,rgba(249,115,22,0.75)); animation: blob 11s infinite;"></div>
-                <div aria-hidden="true" class="hero-blob" style="width:220px;height:220px;left:40%;bottom:-60px;background:linear-gradient(135deg,#10b981,rgba(34,197,94,0.7)); animation: blob 7.5s infinite;"></div>
-
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32 relative z-20">
-                    <div class="text-center">
-                        <h1 class="text-4xl md:text-5xl lg:text-6xl font-black mb-6 leading-tight text-center fade-up stagger-1">
-                            客製化服裝與<br class="hidden md:block"/>周邊商品專業代工
+            <div class="relative bg-dvBlack overflow-hidden pt-16 pb-32 bg-grid">
+                <div class="max-w-7xl mx-auto px-4 relative z-10">
+                    <div class="flex flex-col items-center text-center">
+                        <div class="inline-block bg-white/5 border border-white/10 px-4 py-1 mb-6 skew-x-[-10deg]">
+                            <span class="text-dvNeon text-xs font-bold tracking-[0.2em]">CUSTOMIZATION SYSTEM</span>
+                        </div>
+                        <h1 class="text-5xl md:text-7xl font-display font-black mb-6 leading-none italic uppercase">
+                            客製化服裝與<br/><span class="text-dvNeon">周邊商品代工</span>
                         </h1>
-                    </div>
-
-                    <p class="text-xl md:text-2xl text-brand-100 mb-8 font-medium flex items-center flex-wrap gap-4 justify-center fade-up stagger-2">
-                        <span class="flex items-center"><i data-lucide="check-circle" class="w-6 h-6 mr-2 text-green-400 icon-float" style="animation-delay:0.2s;"></i>50件起訂</span>
-                        <span class="flex items-center"><i data-lucide="clock" class="w-6 h-6 mr-2 text-green-400 icon-float" style="animation-delay:0.4s;"></i>最快14天交貨</span>
-                        <span class="flex items-center"><i data-lucide="map-pin" class="w-6 h-6 mr-2 text-green-400 icon-float" style="animation-delay:0.6s;"></i>台灣製造</span>
-                    </p>
-
-                    <div class="flex flex-col sm:flex-row gap-4 justify-center fade-up stagger-3">
-                        <button onclick="navigateTo('quote')" class="bg-accent-500 hover:bg-accent-600 text-white px-8 py-4 rounded-lg font-bold text-lg shadow-lg transition text-center flex justify-center items-center cta-tilt">
-                            <i data-lucide="calculator" class="w-5 h-5 mr-2"></i> 立即取得報價
-                        </button>
-
-                        <button onclick="navigateTo('products')" class="bg-white hover:bg-gray-100 text-brand-900 px-8 py-4 rounded-lg font-bold text-lg shadow transition text-center flex justify-center items-center cta-tilt" title="查看所有商品">
-                            <i data-lucide="grid" class="w-5 h-5 mr-2"></i> 查看所有商品
-                        </button>
-                    </div>
-
-                    <!-- 小型互動提示列 -->
-                    <div class="mt-8 flex justify-center gap-6 text-sm text-white/70 items-center">
-                        <button aria-label="免費打樣評估" class="group flex items-center gap-2 px-3 py-2 bg-white/6 rounded-full backdrop-blur transition transform hover:scale-105 hover:text-white hover:bg-white/10">
-                            <i data-lucide="sparkles" class="w-4 h-4 transition-transform duration-200 group-hover:scale-110"></i>
-                            <span class="transition-all duration-200 group-hover:scale-105 group-hover:text-white">免費打樣評估</span>
-                        </button>
-
-                        <button aria-label="品質檢驗合格" class="group flex items-center gap-2 px-3 py-2 bg-white/6 rounded-full backdrop-blur transition transform hover:scale-105 hover:text-white hover:bg-white/10">
-                            <i data-lucide="shield-check" class="w-4 h-4 transition-transform duration-200 group-hover:scale-110"></i>
-                            <span class="transition-all duration-200 group-hover:scale-105 group-hover:text-white">品質檢驗合格</span>
-                        </button>
-
-                        <button aria-label="安心物流配送" class="group flex items-center gap-2 px-3 py-2 bg-white/6 rounded-full backdrop-blur transition transform hover:scale-105 hover:text-white hover:bg-white/10">
-                            <i data-lucide="truck" class="w-4 h-4 transition-transform duration-200 group-hover:scale-110"></i>
-                            <span class="transition-all duration-200 group-hover:scale-105 group-hover:text-white">安心物流配送</span>
-                        </button>
+                        <p class="max-w-xl text-gray-400 text-lg mb-10 font-medium">
+                            專業代工，價格透明。50件起訂｜14天交貨｜台灣製造
+                        </p>
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <button onclick="navigateTo('quote')" class="bg-dvNeon text-black px-10 py-5 font-black text-xl hover:scale-105 transition-transform neon-glow">
+                                立即取得報價
+                            </button>
+                            <button onclick="navigateTo('products')" class="border border-white/20 hover:bg-white/5 px-10 py-5 font-black text-xl transition">
+                                查看商品
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- 三大快速入口 -->
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-10 relative z-30">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div onclick="navigateTo('products')" class="bg-white rounded-xl shadow-lg p-6 border-t-4 border-brand-500 cursor-pointer hover:-translate-y-1 transition">
-                        <div class="flex items-center justify-between mb-2">
-                            <h3 class="text-xl font-bold text-gray-800">商品總覽</h3>
-                            <div class="p-2 bg-brand-50 rounded-lg"><i data-lucide="layers" class="w-6 h-6 text-brand-600"></i></div>
-                        </div>
-                        <p class="text-gray-500 text-sm">看全部品項，快速找到適合的客製商品。</p>
+            <div class="max-w-7xl mx-auto px-4 py-16 border-t border-white/10">
+                <h2 class="text-3xl font-display font-black italic mb-8">HOT <span class="text-dvNeon">ITEMS</span> / 熱門商品</h2>
+                <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+                    <!-- 請將下列 file:/// 路徑替換為您實際的圖片檔名 -->
+                    <div onclick="navigateTo('detail')" class="bg-dvGray p-6 text-center hover:border-dvNeon border border-transparent cursor-pointer transition">
+                        <img src="img/baseball.jpg" alt="棒球" class="w-full h-28 object-cover mx-auto mb-4">
+                        <span class="font-bold">棒球</span>
                     </div>
-                    <div onclick="navigateTo('materials')" class="bg-white rounded-xl shadow-lg p-6 border-t-4 border-purple-500 cursor-pointer hover:-translate-y-1 transition">
-                        <div class="flex items-center justify-between mb-2">
-                            <h3 class="text-xl font-bold text-gray-800">價格說明</h3>
-                            <div class="p-2 bg-purple-50 rounded-lg"><i data-lucide="dollar-sign" class="w-6 h-6 text-purple-600"></i></div>
-                        </div>
-                        <p class="text-gray-500 text-sm">了解怎麼計價，各種材質與工藝的差異。</p>
+                    <div onclick="navigateTo('products')" class="bg-dvGray p-6 text-center hover:border-dvNeon border border-transparent cursor-pointer transition">
+                        <img src="img/jersey.jpg" alt="球衣" class="w-full h-28 object-cover mx-auto mb-4">
+                        <span class="font-bold">球衣</span>
                     </div>
-                    <div onclick="navigateTo('quote')" class="bg-white rounded-xl shadow-lg p-6 border-t-4 border-accent-500 cursor-pointer hover:-translate-y-1 transition">
-                        <div class="flex items-center justify-between mb-2">
-                            <h3 class="text-xl font-bold text-gray-800">交期與流程</h3>
-                            <div class="p-2 bg-accent-50 rounded-lg"><i data-lucide="calendar" class="w-6 h-6 text-accent-600"></i></div>
-                        </div>
-                        <p class="text-gray-500 text-sm">需要多久？打樣到大貨的標準時程表。</p>
+                    <div onclick="navigateTo('products')" class="bg-dvGray p-6 text-center hover:border-dvNeon border border-transparent cursor-pointer transition">
+                        <img src="img/hat.jpg" alt="帽子" class="w-full h-28 object-cover mx-auto mb-4">
+                        <span class="font-bold">帽子</span>
                     </div>
-                </div>
-            </div>
-
-            <!-- 熱門商品 (引導) -->
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-                <div class="flex justify-between items-end mb-8">
-                    <div>
-                        <h2 class="text-3xl font-bold text-gray-900 flex items-center">
-                            <i data-lucide="flame" class="w-8 h-8 text-accent-500 mr-2"></i> 熱門代工商品
-                        </h2>
-                        <p class="text-gray-500 mt-2">最常被詢問的熱銷客製化品項，點擊查看詳細報價區間。</p>
+                    <div onclick="navigateTo('products')" class="bg-dvGray p-6 text-center hover:border-dvNeon border border-transparent cursor-pointer transition">
+                        <img src="img/towel.jpg" alt="毛巾" class="w-full h-28 object-cover mx-auto mb-4">
+                        <span class="font-bold">毛巾</span>
                     </div>
-                    <button onclick="navigateTo('products')" class="text-brand-600 font-medium hover:underline hidden sm:block">看更多 ></button>
-                </div>
-                
-                <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
-                    <!-- 卡片 1 -->
-                    <div onclick="navigateTo('detail')" class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden cursor-pointer hover:shadow-lg transition group">
-                        <div class="h-40 bg-gray-100 flex items-center justify-center relative overflow-hidden">
-                            <i data-lucide="aperture" class="w-16 h-16 text-gray-300 group-hover:scale-110 transition duration-500"></i>
-                            <div class="absolute top-2 left-2 bg-white/90 backdrop-blur px-2 py-1 rounded text-xs font-bold text-brand-600 shadow-sm">熱銷 NO.1</div>
-                        </div>
-                        <div class="p-4">
-                            <h3 class="font-bold text-lg mb-2">客製棒球</h3>
-                            <div class="flex flex-wrap gap-2 text-xs">
-                                <span class="bg-gray-100 text-gray-600 px-2 py-1 rounded">MOQ: 100顆</span>
-                                <span class="bg-gray-100 text-gray-600 px-2 py-1 rounded">14天交貨</span>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- 卡片 2 -->
-                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden cursor-pointer hover:shadow-lg transition group">
-                        <div class="h-40 bg-gray-100 flex items-center justify-center">
-                            <i data-lucide="shirt" class="w-16 h-16 text-gray-300 group-hover:scale-110 transition duration-500"></i>
-                        </div>
-                        <div class="p-4">
-                            <h3 class="font-bold text-lg mb-2">排汗球衣</h3>
-                            <div class="flex flex-wrap gap-2 text-xs">
-                                <span class="bg-gray-100 text-gray-600 px-2 py-1 rounded">MOQ: 50件</span>
-                                <span class="bg-gray-100 text-gray-600 px-2 py-1 rounded">21天交貨</span>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- 卡片 3 -->
-                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden cursor-pointer hover:shadow-lg transition group">
-                        <div class="h-40 bg-gray-100 flex items-center justify-center">
-                            <i data-lucide="briefcase" class="w-16 h-16 text-gray-300 group-hover:scale-110 transition duration-500"></i>
-                        </div>
-                        <div class="p-4">
-                            <h3 class="font-bold text-lg mb-2">帆布托特包</h3>
-                            <div class="flex flex-wrap gap-2 text-xs">
-                                <span class="bg-gray-100 text-gray-600 px-2 py-1 rounded">MOQ: 50件</span>
-                                <span class="bg-gray-100 text-gray-600 px-2 py-1 rounded">14天交貨</span>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- 卡片 4 -->
-                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden cursor-pointer hover:shadow-lg transition group">
-                        <div class="h-40 bg-gray-100 flex items-center justify-center">
-                            <i data-lucide="wind" class="w-16 h-16 text-gray-300 group-hover:scale-110 transition duration-500"></i>
-                        </div>
-                        <div class="p-4">
-                            <h3 class="font-bold text-lg mb-2">應援毛巾</h3>
-                            <div class="flex flex-wrap gap-2 text-xs">
-                                <span class="bg-gray-100 text-gray-600 px-2 py-1 rounded">MOQ: 100條</span>
-                                <span class="bg-gray-100 text-gray-600 px-2 py-1 rounded">10天交貨</span>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- 卡片 5 -->
-                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden cursor-pointer hover:shadow-lg transition group hidden lg:block">
-                        <div class="h-40 bg-gray-100 flex items-center justify-center">
-                            <i data-lucide="hard-hat" class="w-16 h-16 text-gray-300 group-hover:scale-110 transition duration-500"></i>
-                        </div>
-                        <div class="p-4">
-                            <h3 class="font-bold text-lg mb-2">刺繡老帽</h3>
-                            <div class="flex flex-wrap gap-2 text-xs">
-                                <span class="bg-gray-100 text-gray-600 px-2 py-1 rounded">MOQ: 50頂</span>
-                                <span class="bg-gray-100 text-gray-600 px-2 py-1 rounded">21天交貨</span>
-                            </div>
-                        </div>
+                    <div onclick="navigateTo('products')" class="bg-dvGray p-6 text-center hover:border-dvNeon border border-transparent cursor-pointer transition">
+                        <img src="img/tote.jpg" alt="托特包" class="w-full h-28 object-cover mx-auto mb-4">
+                        <span class="font-bold">托特包</span>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- ================= 商品總覽 (Products View) ================= -->
-        <section id="view-products" class="view-section py-8">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex flex-col md:flex-row gap-8">
-                    <!-- 左側篩選器 -->
-                    <div class="w-full md:w-64 flex-shrink-0">
-                        <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-200 sticky top-24">
-                            <h2 class="font-bold text-lg mb-4 border-b pb-2">商品分類篩選</h2>
-                            
-                            <div class="mb-6">
-                                <h3 class="font-medium text-gray-700 mb-3">大分類</h3>
-                                <div class="space-y-2">
-                                    <label class="flex items-center text-gray-600 hover:text-brand-600 cursor-pointer">
-                                        <input type="checkbox" class="rounded border-gray-300 text-brand-600 mr-2 focus:ring-brand-500" checked> 球類周邊
-                                    </label>
-                                    <label class="flex items-center text-gray-600 hover:text-brand-600 cursor-pointer">
-                                        <input type="checkbox" class="rounded border-gray-300 text-brand-600 mr-2 focus:ring-brand-500" checked> 服裝類
-                                    </label>
-                                    <label class="flex items-center text-gray-600 hover:text-brand-600 cursor-pointer">
-                                        <input type="checkbox" class="rounded border-gray-300 text-brand-600 mr-2 focus:ring-brand-500" checked> 配件類
-                                    </label>
-                                </div>
-                            </div>
-                            
-                            <div class="mb-6">
-                                <h3 class="font-medium text-gray-700 mb-3">起訂量 (MOQ)</h3>
-                                <div class="space-y-2">
-                                    <label class="flex items-center text-gray-600 hover:text-brand-600 cursor-pointer">
-                                        <input type="radio" name="moq" class="text-brand-600 border-gray-300 mr-2 focus:ring-brand-500" checked> 50件以內
-                                    </label>
-                                    <label class="flex items-center text-gray-600 hover:text-brand-600 cursor-pointer">
-                                        <input type="radio" name="moq" class="text-brand-600 border-gray-300 mr-2 focus:ring-brand-500"> 不限
-                                    </label>
-                                </div>
-                            </div>
+        <section id="view-products" class="view-section py-16">
+            <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row gap-8">
+                <div class="w-full md:w-64 flex-shrink-0">
+                    <div class="bg-dvGray p-6 sticky top-24 border border-white/10">
+                        <h2 class="font-bold text-lg mb-4 text-dvNeon tracking-widest">商品分類</h2>
+                        
+                        <div class="mb-6 space-y-2 text-gray-300 text-sm">
+                            <label class="flex items-center cursor-pointer hover:text-white"><input type="checkbox" class="mr-2 accent-dvNeon" checked> 球類周邊</label>
+                            <label class="flex items-center cursor-pointer hover:text-white"><input type="checkbox" class="mr-2 accent-dvNeon" checked> 服裝類</label>
+                            <label class="flex items-center cursor-pointer hover:text-white"><input type="checkbox" class="mr-2 accent-dvNeon" checked> 配件類</label>
+                            <label class="flex items-center cursor-pointer hover:text-white"><input type="checkbox" class="mr-2 accent-dvNeon"> 扭蛋類</label>
+                            <label class="flex items-center cursor-pointer hover:text-white"><input type="checkbox" class="mr-2 accent-dvNeon"> 設計服務</label>
+                            <label class="flex items-center cursor-pointer hover:text-white"><input type="checkbox" class="mr-2 accent-dvNeon"> 其他服務</label>
+                        </div>
+
+                        <h2 class="font-bold text-lg mb-4 text-dvNeon tracking-widest mt-8">MOQ 篩選</h2>
+                        <div class="mb-6 space-y-2 text-gray-300 text-sm">
+                            <label class="flex items-center cursor-pointer hover:text-white"><input type="radio" name="moq_filter" class="mr-2 accent-dvNeon" checked> 50+</label>
+                            <label class="flex items-center cursor-pointer hover:text-white"><input type="radio" name="moq_filter" class="mr-2 accent-dvNeon"> 100+</label>
+                            <label class="flex items-center cursor-pointer hover:text-white"><input type="radio" name="moq_filter" class="mr-2 accent-dvNeon"> 500+</label>
+                        </div>
+                        
+                        <h2 class="font-bold text-lg mb-4 text-dvNeon tracking-widest mt-8">交期篩選</h2>
+                        <div class="space-y-2 text-gray-300 text-sm">
+                            <label class="flex items-center cursor-pointer hover:text-white"><input type="radio" name="time_filter" class="mr-2 accent-dvNeon"> 7天 (急件)</label>
+                            <label class="flex items-center cursor-pointer hover:text-white"><input type="radio" name="time_filter" class="mr-2 accent-dvNeon" checked> 14天</label>
                         </div>
                     </div>
+                </div>
+
+                <div class="flex-grow">
+                    <h2 class="text-4xl font-display font-black italic mb-8">ALL <span class="text-dvNeon">PRODUCTS</span></h2>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                        
+                        <div onclick="navigateTo('detail')" class="bg-dvGray p-5 hover:border-dvNeon border border-white/5 transition cursor-pointer group">
+                            <div class="aspect-video bg-dvBlack flex items-center justify-center mb-4"><i data-lucide="aperture" class="w-12 h-12 text-white/20"></i></div>
+                            <h3 class="font-bold text-lg mb-1 text-white">【CT】客製棒球</h3>
+                            <div class="flex gap-2 text-xs text-dvNeon mb-3 font-display tracking-wider"><span>MOQ: 100顆</span> | <span>14天</span></div>
+                            <div class="border-t border-white/10 pt-3 flex justify-between items-center text-sm">
+                                <span class="text-gray-500">預估單價起</span><span class="font-bold text-white">$80</span>
+                            </div>
+                        </div>
+
+                        <div onclick="navigateTo('detail-jersey')" class="bg-dvGray p-5 hover:border-dvNeon border border-white/5 transition cursor-pointer group">
+                        <div class="aspect-video bg-dvBlack flex items-center justify-center mb-4"><i data-lucide="shirt" class="w-12 h-12 text-white/20"></i></div>
+    <h3 class="font-bold text-lg mb-1 text-white">全昇華排汗球衣</h3>
+    <div class="flex gap-2 text-xs text-dvNeon mb-3 font-display tracking-wider"><span>MOQ: 50件</span> | <span>21天</span></div>
+    <div class="border-t border-white/10 pt-3 flex justify-between items-center text-sm">
+        <span class="text-gray-500">預估單價起</span><span class="font-bold text-white">$350</span>
+    </div>
+</div>
+
+                        <div class="bg-dvGray p-5 hover:border-dvNeon border border-white/5 transition cursor-pointer group">
+                            <div class="aspect-video bg-dvBlack flex items-center justify-center mb-4"><i data-lucide="wind" class="w-12 h-12 text-white/20"></i></div>
+                            <h3 class="font-bold text-lg mb-1 text-white">全彩應援毛巾</h3>
+                            <div class="flex gap-2 text-xs text-dvNeon mb-3 font-display tracking-wider"><span>MOQ: 100條</span> | <span>10天</span></div>
+                            <div class="border-t border-white/10 pt-3 flex justify-between items-center text-sm">
+                                <span class="text-gray-500">預估單價起</span><span class="font-bold text-white">$60</span>
+                            </div>
+                        </div>
                     
-                    <!-- 右側商品網格 -->
-                    <div class="flex-grow">
-                        <h1 class="text-3xl font-bold mb-6">全部商品</h1>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                            <!-- 商品卡片 (大量產生模擬) -->
-                            <div onclick="navigateTo('detail')" class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden cursor-pointer hover:shadow-md transition">
-                                <div class="h-48 bg-gray-100 flex items-center justify-center">
-                                    <i data-lucide="aperture" class="w-12 h-12 text-gray-400"></i>
-                                </div>
-                                <div class="p-4">
-                                    <div class="text-xs text-brand-600 font-bold mb-1">球類周邊</div>
-                                    <h3 class="font-bold text-lg mb-2">【CT】客製棒球</h3>
-                                    <p class="text-gray-500 text-sm mb-3 line-clamp-2">提供合成皮與真皮選擇，適合球隊訓練與紀念品製作。</p>
-                                    <div class="flex justify-between items-center border-t pt-3 mt-2">
-                                        <span class="text-xs font-medium bg-gray-100 px-2 py-1 rounded">MOQ: 100</span>
-                                        <span class="text-accent-600 font-bold text-sm">$80 起</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- 更多模擬商品... -->
-                            <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden cursor-pointer hover:shadow-md transition">
-                                <div class="h-48 bg-gray-100 flex items-center justify-center"><i data-lucide="shirt" class="w-12 h-12 text-gray-400"></i></div>
-                                <div class="p-4">
-                                    <div class="text-xs text-brand-600 font-bold mb-1">服裝類</div>
-                                    <h3 class="font-bold text-lg mb-2">昇華排汗球衣</h3>
-                                    <p class="text-gray-500 text-sm mb-3">全版彩色昇華印刷，透氣排汗，適合運動賽事。</p>
-                                    <div class="flex justify-between items-center border-t pt-3 mt-2">
-                                        <span class="text-xs font-medium bg-gray-100 px-2 py-1 rounded">MOQ: 50</span>
-                                        <span class="text-accent-600 font-bold text-sm">$350 起</span>
-                                    </div>
-                                </div>
-                            </div>
-                             <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden cursor-pointer hover:shadow-md transition">
-                                <div class="h-48 bg-gray-100 flex items-center justify-center"><i data-lucide="wind" class="w-12 h-12 text-gray-400"></i></div>
-                                <div class="p-4">
-                                    <div class="text-xs text-brand-600 font-bold mb-1">配件類</div>
-                                    <h3 class="font-bold text-lg mb-2">全彩應援毛巾</h3>
-                                    <p class="text-gray-500 text-sm mb-3">超細纖維材質，單面全彩印刷，吸水性佳。</p>
-                                    <div class="flex justify-between items-center border-t pt-3 mt-2">
-                                        <span class="text-xs font-medium bg-gray-100 px-2 py-1 rounded">MOQ: 100</span>
-                                        <span class="text-accent-600 font-bold text-sm">$60 起</span>
-                                    </div>
-                                </div>
+                        
+                        <div onclick="navigateTo('detail')" class="bg-dvGray p-5 hover:border-dvNeon border border-white/5 transition cursor-pointer group">
+                            <div class="aspect-video bg-dvBlack flex items-center justify-center mb-4"><i data-lucide="aperture" class="w-12 h-12 text-white/20"></i></div>
+                            <h3 class="font-bold text-lg mb-1 text-white">【CT】客製棒球</h3>
+                            <div class="flex gap-2 text-xs text-dvNeon mb-3 font-display tracking-wider"><span>MOQ: 100顆</span> | <span>14天</span></div>
+                            <div class="border-t border-white/10 pt-3 flex justify-between items-center text-sm">
+                                <span class="text-gray-500">預估單價起</span><span class="font-bold text-white">$80</span>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </section>
 
-        <!-- ================= 商品詳細頁 (Product Detail View) ================= -->
-        <section id="view-detail" class="view-section py-8">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <!-- 麵包屑導覽 -->
-                <nav class="flex mb-6 text-sm text-gray-500">
-                    <button onclick="navigateTo('home')" class="hover:text-brand-600">首頁</button>
-                    <span class="mx-2">/</span>
-                    <button onclick="navigateTo('products')" class="hover:text-brand-600">球類周邊</button>
-                    <span class="mx-2">/</span>
-                    <span class="text-gray-800 font-medium">【CT】客製棒球</span>
-                </nav>
-
-                <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
-                    <div class="flex flex-col md:flex-row">
-                        <!-- 左側圖片區 -->
-                        <div class="md:w-1/2 bg-gray-50 p-8 flex flex-col items-center justify-center border-r border-gray-100">
-                            <div class="w-full aspect-square bg-white rounded-xl shadow-inner flex items-center justify-center mb-4">
-                                <i data-lucide="aperture" class="w-32 h-32 text-gray-300"></i>
-                                <!-- <span class="text-gray-400 font-medium">[商品實拍圖片]</span> -->
+                        <div onclick="navigateTo('quote')" class="bg-dvGray p-5 hover:border-dvNeon border border-white/5 transition cursor-pointer group">
+                            <div class="aspect-video bg-dvBlack flex items-center justify-center mb-4"><i data-lucide="dribbble" class="w-12 h-12 text-white/20"></i></div>
+                            <h3 class="font-bold text-lg mb-1 text-white">客製籃球</h3>
+                            <div class="flex gap-2 text-xs text-dvNeon mb-3 font-display tracking-wider"><span>MOQ: 50顆</span> | <span>21天</span></div>
+                            <div class="border-t border-white/10 pt-3 flex justify-between items-center text-sm">
+                                <span class="text-gray-500">預估單價起</span><span class="font-bold text-white">$450</span>
                             </div>
-                            <div class="flex gap-2 w-full">
-                                <div class="w-1/4 aspect-square bg-white border-2 border-brand-500 rounded cursor-pointer flex items-center justify-center"><i data-lucide="image" class="w-6 h-6 text-gray-400"></i></div>
-                                <div class="w-1/4 aspect-square bg-white border border-gray-200 rounded cursor-pointer opacity-60 hover:opacity-100 flex items-center justify-center"><i data-lucide="image" class="w-6 h-6 text-gray-400"></i></div>
-                                <div class="w-1/4 aspect-square bg-white border border-gray-200 rounded cursor-pointer opacity-60 hover:opacity-100 flex items-center justify-center"><i data-lucide="image" class="w-6 h-6 text-gray-400"></i></div>
+                        </div>
+
+                        <div onclick="navigateTo('quote')" class="bg-dvGray p-5 hover:border-dvNeon border border-white/5 transition cursor-pointer group">
+                            <div class="aspect-video bg-dvBlack flex items-center justify-center mb-4"><i data-lucide="circle" class="w-12 h-12 text-white/20"></i></div>
+                            <h3 class="font-bold text-lg mb-1 text-white">紀念小球</h3>
+                            <div class="flex gap-2 text-xs text-dvNeon mb-3 font-display tracking-wider"><span>MOQ: 100顆</span> | <span>14天</span></div>
+                            <div class="border-t border-white/10 pt-3 flex justify-between items-center text-sm">
+                                <span class="text-gray-500">預估單價起</span><span class="font-bold text-white">$50</span>
+                            </div>
+                        </div>
+
+                        <div onclick="navigateTo('detail-jersey')" class="bg-dvGray p-5 hover:border-dvNeon border border-white/5 transition cursor-pointer group">
+                            <div class="aspect-video bg-dvBlack flex items-center justify-center mb-4 relative overflow-hidden">
+                                <i data-lucide="shirt" class="w-12 h-12 text-white/20"></i>
+                                <div class="absolute top-2 left-2 bg-dvNeon text-black px-2 py-1 text-[10px] font-bold tracking-tighter">熱銷</div>
+                            </div>
+                            <h3 class="font-bold text-lg mb-1 text-white">全昇華排汗球衣</h3>
+                            <div class="flex gap-2 text-xs text-dvNeon mb-3 font-display tracking-wider"><span>MOQ: 50件</span> | <span>21天</span></div>
+                            <div class="border-t border-white/10 pt-3 flex justify-between items-center text-sm">
+                                <span class="text-gray-500">預估單價起</span><span class="font-bold text-white">$350</span>
+                            </div>
+                        </div>
+
+                        <div onclick="navigateTo('quote')" class="bg-dvGray p-5 hover:border-dvNeon border border-white/5 transition cursor-pointer group">
+                            <div class="aspect-video bg-dvBlack flex items-center justify-center mb-4"><i data-lucide="shirt" class="w-12 h-12 text-white/20"></i></div>
+                            <h3 class="font-bold text-lg mb-1 text-white">經典 T-shirt</h3>
+                            <div class="flex gap-2 text-xs text-dvNeon mb-3 font-display tracking-wider"><span>MOQ: 50件</span> | <span>14天</span></div>
+                            <div class="border-t border-white/10 pt-3 flex justify-between items-center text-sm">
+                                <span class="text-gray-500">預估單價起</span><span class="font-bold text-white">$200</span>
+                            </div>
+                        </div>
+
+                        <div onclick="navigateTo('quote')" class="bg-dvGray p-5 hover:border-dvNeon border border-white/5 transition cursor-pointer group">
+                            <div class="aspect-video bg-dvBlack flex items-center justify-center mb-4"><i data-lucide="shirt" class="w-12 h-12 text-white/20"></i></div>
+                            <h3 class="font-bold text-lg mb-1 text-white">POLO 衫</h3>
+                            <div class="flex gap-2 text-xs text-dvNeon mb-3 font-display tracking-wider"><span>MOQ: 50件</span> | <span>14天</span></div>
+                            <div class="border-t border-white/10 pt-3 flex justify-between items-center text-sm">
+                                <span class="text-gray-500">預估單價起</span><span class="font-bold text-white">$280</span>
+                            </div>
+                        </div>
+
+                        <div onclick="navigateTo('quote')" class="bg-dvGray p-5 hover:border-dvNeon border border-white/5 transition cursor-pointer group">
+                            <div class="aspect-video bg-dvBlack flex items-center justify-center mb-4"><i data-lucide="layers" class="w-12 h-12 text-white/20"></i></div>
+                            <h3 class="font-bold text-lg mb-1 text-white">運動外套 / 夾克</h3>
+                            <div class="flex gap-2 text-xs text-dvNeon mb-3 font-display tracking-wider"><span>MOQ: 50件</span> | <span>21天</span></div>
+                            <div class="border-t border-white/10 pt-3 flex justify-between items-center text-sm">
+                                <span class="text-gray-500">預估單價起</span><span class="font-bold text-white">$600</span>
+                            </div>
+                        </div>
+
+                        <div onclick="navigateTo('quote')" class="bg-dvGray p-5 hover:border-dvNeon border border-white/5 transition cursor-pointer group">
+                            <div class="aspect-video bg-dvBlack flex items-center justify-center mb-4"><i data-lucide="shirt" class="w-12 h-12 text-white/20"></i></div>
+                            <h3 class="font-bold text-lg mb-1 text-white">客製帽 T</h3>
+                            <div class="flex gap-2 text-xs text-dvNeon mb-3 font-display tracking-wider"><span>MOQ: 50件</span> | <span>21天</span></div>
+                            <div class="border-t border-white/10 pt-3 flex justify-between items-center text-sm">
+                                <span class="text-gray-500">預估單價起</span><span class="font-bold text-white">$500</span>
+                            </div>
+                        </div>
+
+                        <div onclick="navigateTo('quote')" class="bg-dvGray p-5 hover:border-dvNeon border border-white/5 transition cursor-pointer group">
+                            <div class="aspect-video bg-dvBlack flex items-center justify-center mb-4"><i data-lucide="columns" class="w-12 h-12 text-white/20 transform rotate-90"></i></div>
+                            <h3 class="font-bold text-lg mb-1 text-white">運動短褲</h3>
+                            <div class="flex gap-2 text-xs text-dvNeon mb-3 font-display tracking-wider"><span>MOQ: 50件</span> | <span>14天</span></div>
+                            <div class="border-t border-white/10 pt-3 flex justify-between items-center text-sm">
+                                <span class="text-gray-500">預估單價起</span><span class="font-bold text-white">$250</span>
+                            </div>
+                        </div>
+
+                        <div onclick="navigateTo('quote')" class="bg-dvGray p-5 hover:border-dvNeon border border-white/5 transition cursor-pointer group">
+                            <div class="aspect-video bg-dvBlack flex items-center justify-center mb-4"><i data-lucide="columns" class="w-12 h-12 text-white/20 transform rotate-90"></i></div>
+                            <h3 class="font-bold text-lg mb-1 text-white">休閒長褲</h3>
+                            <div class="flex gap-2 text-xs text-dvNeon mb-3 font-display tracking-wider"><span>MOQ: 50件</span> | <span>14天</span></div>
+                            <div class="border-t border-white/10 pt-3 flex justify-between items-center text-sm">
+                                <span class="text-gray-500">預估單價起</span><span class="font-bold text-white">$350</span>
+                            </div>
+                        </div>
+
+                        <div onclick="navigateTo('quote')" class="bg-dvGray p-5 hover:border-dvNeon border border-white/5 transition cursor-pointer group">
+                            <div class="aspect-video bg-dvBlack flex items-center justify-center mb-4"><i data-lucide="shirt" class="w-12 h-12 text-white/20"></i></div>
+                            <h3 class="font-bold text-lg mb-1 text-white">日式法批</h3>
+                            <div class="flex gap-2 text-xs text-dvNeon mb-3 font-display tracking-wider"><span>MOQ: 50件</span> | <span>21天</span></div>
+                            <div class="border-t border-white/10 pt-3 flex justify-between items-center text-sm">
+                                <span class="text-gray-500">預估單價起</span><span class="font-bold text-white">$400</span>
+                            </div>
+                        </div>
+
+                        <div onclick="navigateTo('quote')" class="bg-dvGray p-5 hover:border-dvNeon border border-white/5 transition cursor-pointer group">
+                            <div class="aspect-video bg-dvBlack flex items-center justify-center mb-4"><i data-lucide="shirt" class="w-12 h-12 text-white/20"></i></div>
+                            <h3 class="font-bold text-lg mb-1 text-white">專業跑衣</h3>
+                            <div class="flex gap-2 text-xs text-dvNeon mb-3 font-display tracking-wider"><span>MOQ: 50件</span> | <span>14天</span></div>
+                            <div class="border-t border-white/10 pt-3 flex justify-between items-center text-sm">
+                                <span class="text-gray-500">預估單價起</span><span class="font-bold text-white">$250</span>
+                            </div>
+                        </div>
+
+                        <div onclick="navigateTo('quote')" class="bg-dvGray p-5 hover:border-dvNeon border border-white/5 transition cursor-pointer group">
+                            <div class="aspect-video bg-dvBlack flex items-center justify-center mb-4 relative overflow-hidden">
+                                <i data-lucide="wind" class="w-12 h-12 text-white/20"></i>
+                                <div class="absolute top-2 left-2 bg-dvNeon text-black px-2 py-1 text-[10px] font-bold tracking-tighter">主力商品</div>
+                            </div>
+                            <h3 class="font-bold text-lg mb-1 text-white">全彩應援毛巾</h3>
+                            <div class="flex gap-2 text-xs text-dvNeon mb-3 font-display tracking-wider"><span>MOQ: 100條</span> | <span>10天</span></div>
+                            <div class="border-t border-white/10 pt-3 flex justify-between items-center text-sm">
+                                <span class="text-gray-500">預估單價起</span><span class="font-bold text-white">$60</span>
+                            </div>
+                        </div>
+
+                        <div onclick="navigateTo('quote')" class="bg-dvGray p-5 hover:border-dvNeon border border-white/5 transition cursor-pointer group">
+                            <div class="aspect-video bg-dvBlack flex items-center justify-center mb-4 relative overflow-hidden">
+                                <i data-lucide="shopping-bag" class="w-12 h-12 text-white/20"></i>
+                                <div class="absolute top-2 left-2 bg-dvNeon text-black px-2 py-1 text-[10px] font-bold tracking-tighter">主力商品</div>
+                            </div>
+                            <h3 class="font-bold text-lg mb-1 text-white">客製包袋 (托特包)</h3>
+                            <div class="flex gap-2 text-xs text-dvNeon mb-3 font-display tracking-wider"><span>MOQ: 50件</span> | <span>14天</span></div>
+                            <div class="border-t border-white/10 pt-3 flex justify-between items-center text-sm">
+                                <span class="text-gray-500">預估單價起</span><span class="font-bold text-white">$120</span>
+                            </div>
+                        </div>
+
+                        <div onclick="navigateTo('quote')" class="bg-dvGray p-5 hover:border-dvNeon border border-white/5 transition cursor-pointer group">
+                            <div class="aspect-video bg-dvBlack flex items-center justify-center mb-4"><i data-lucide="hard-hat" class="w-12 h-12 text-white/20"></i></div>
+                            <h3 class="font-bold text-lg mb-1 text-white">刺繡老帽 / 棒球帽</h3>
+                            <div class="flex gap-2 text-xs text-dvNeon mb-3 font-display tracking-wider"><span>MOQ: 50頂</span> | <span>21天</span></div>
+                            <div class="border-t border-white/10 pt-3 flex justify-between items-center text-sm">
+                                <span class="text-gray-500">預估單價起</span><span class="font-bold text-white">$150</span>
+                            </div>
+                        </div>
+
+                        <div onclick="navigateTo('quote')" class="bg-dvGray p-5 hover:border-dvNeon border border-white/5 transition cursor-pointer group">
+                            <div class="aspect-video bg-dvBlack flex items-center justify-center mb-4"><i data-lucide="megaphone" class="w-12 h-12 text-white/20"></i></div>
+                            <h3 class="font-bold text-lg mb-1 text-white">各式應援商品</h3>
+                            <div class="flex gap-2 text-xs text-dvNeon mb-3 font-display tracking-wider"><span>MOQ: 100件</span> | <span>14天</span></div>
+                            <div class="border-t border-white/10 pt-3 flex justify-between items-center text-sm">
+                                <span class="text-gray-500">預估單價起</span><span class="font-bold text-white">$50</span>
+                            </div>
+                        </div>
+
+                        <div onclick="navigateTo('quote')" class="bg-dvGray p-5 hover:border-dvNeon border border-white/5 transition cursor-pointer group">
+                            <div class="aspect-video bg-dvBlack flex items-center justify-center mb-4"><i data-lucide="shield" class="w-12 h-12 text-white/20"></i></div>
+                            <h3 class="font-bold text-lg mb-1 text-white">金屬/胸針 徽章類</h3>
+                            <div class="flex gap-2 text-xs text-dvNeon mb-3 font-display tracking-wider"><span>MOQ: 100個</span> | <span>14天</span></div>
+                            <div class="border-t border-white/10 pt-3 flex justify-between items-center text-sm">
+                                <span class="text-gray-500">預估單價起</span><span class="font-bold text-white">$30</span>
+                            </div>
+                        </div>
+
+                        <div onclick="navigateTo('quote')" class="bg-dvGray p-5 hover:border-dvNeon border border-white/5 transition cursor-pointer group">
+                            <div class="aspect-video bg-dvBlack flex items-center justify-center mb-4"><i data-lucide="coffee" class="w-12 h-12 text-white/20"></i></div>
+                            <h3 class="font-bold text-lg mb-1 text-white">馬克杯 / 隨行杯</h3>
+                            <div class="flex gap-2 text-xs text-dvNeon mb-3 font-display tracking-wider"><span>MOQ: 100個</span> | <span>14天</span></div>
+                            <div class="border-t border-white/10 pt-3 flex justify-between items-center text-sm">
+                                <span class="text-gray-500">預估單價起</span><span class="font-bold text-white">$100</span>
+                            </div>
+                        </div>
+
+                        <div onclick="navigateTo('quote')" class="bg-dvGray p-5 hover:border-dvNeon border border-white/5 transition cursor-pointer group">
+                            <div class="aspect-video bg-dvBlack flex items-center justify-center mb-4"><i data-lucide="box-select" class="w-12 h-12 text-white/20"></i></div>
+                            <h3 class="font-bold text-lg mb-1 text-white">壓克力立牌 / 鑰匙圈</h3>
+                            <div class="flex gap-2 text-xs text-dvNeon mb-3 font-display tracking-wider"><span>MOQ: 100個</span> | <span>14天</span></div>
+                            <div class="border-t border-white/10 pt-3 flex justify-between items-center text-sm">
+                                <span class="text-gray-500">預估單價起</span><span class="font-bold text-white">$40</span>
+                            </div>
+                        </div>
+
+                        <div onclick="navigateTo('quote')" class="bg-dvGray p-5 hover:border-dvNeon border border-white/5 transition cursor-pointer group">
+                            <div class="aspect-video bg-dvBlack flex items-center justify-center mb-4"><i data-lucide="zap" class="w-12 h-12 text-white/20"></i></div>
+                            <h3 class="font-bold text-lg mb-1 text-white">運動毛巾底襪子</h3>
+                            <div class="flex gap-2 text-xs text-dvNeon mb-3 font-display tracking-wider"><span>MOQ: 100雙</span> | <span>21天</span></div>
+                            <div class="border-t border-white/10 pt-3 flex justify-between items-center text-sm">
+                                <span class="text-gray-500">預估單價起</span><span class="font-bold text-white">$60</span>
+                            </div>
+                        </div>
+
+                        <div onclick="navigateTo('quote')" class="bg-dvGray p-5 hover:border-dvNeon border border-white/5 transition cursor-pointer group">
+                            <div class="aspect-video bg-dvBlack flex items-center justify-center mb-4"><i data-lucide="square" class="w-12 h-12 text-white/20"></i></div>
+                            <h3 class="font-bold text-lg mb-1 text-white">造型抱枕</h3>
+                            <div class="flex gap-2 text-xs text-dvNeon mb-3 font-display tracking-wider"><span>MOQ: 50個</span> | <span>14天</span></div>
+                            <div class="border-t border-white/10 pt-3 flex justify-between items-center text-sm">
+                                <span class="text-gray-500">預估單價起</span><span class="font-bold text-white">$150</span>
+                            </div>
+                        </div>
+
+                        <div onclick="navigateTo('quote')" class="bg-dvGray p-5 hover:border-dvNeon border border-white/5 transition cursor-pointer group">
+                            <div class="aspect-video bg-dvBlack flex items-center justify-center mb-4"><i data-lucide="bookmark" class="w-12 h-12 text-white/20"></i></div>
+                            <h3 class="font-bold text-lg mb-1 text-white">刺繡御守</h3>
+                            <div class="flex gap-2 text-xs text-dvNeon mb-3 font-display tracking-wider"><span>MOQ: 100個</span> | <span>14天</span></div>
+                            <div class="border-t border-white/10 pt-3 flex justify-between items-center text-sm">
+                                <span class="text-gray-500">預估單價起</span><span class="font-bold text-white">$50</span>
                             </div>
                         </div>
                         
-                        <!-- 右側資訊區 -->
-                        <div class="md:w-1/2 p-8 md:p-10 relative">
-                            <div class="absolute top-8 right-8 bg-brand-50 text-brand-600 text-xs font-bold px-3 py-1 rounded-full">台灣製造</div>
-                            <h1 class="text-3xl font-black text-gray-900 mb-2">【CT】客製棒球</h1>
-                            <p class="text-gray-500 mb-6">標準9吋棒球，提供多種皮料與縫線顏色選擇，適合球隊訓練、賽事用球或紀念贈品。提供單色或全彩印刷 Logo。</p>
-                            
-                            <!-- 基本資訊 -->
-                            <div class="grid grid-cols-2 gap-4 mb-8 bg-gray-50 p-4 rounded-lg">
-                                <div>
-                                    <span class="block text-xs text-gray-500 mb-1">最低訂購量 (MOQ)</span>
-                                    <span class="font-bold text-gray-800 text-lg">100 顆</span>
-                                </div>
-                                <div>
-                                    <span class="block text-xs text-gray-500 mb-1">標準交期</span>
-                                    <span class="font-bold text-gray-800 text-lg">打樣7天 / 大貨14天</span>
-                                </div>
-                            </div>
-
-                            <!-- 價格區間表 (🔥關鍵) -->
-                            <div class="mb-8 border border-gray-200 rounded-lg overflow-hidden">
-                                <div class="bg-gray-100 px-4 py-2 font-bold text-gray-700 flex items-center">
-                                    <i data-lucide="list-ordered" class="w-4 h-4 mr-2"></i> 級距報價表 (預估)
-                                </div>
-                                <table class="w-full text-center">
-                                    <thead>
-                                        <tr class="border-b bg-gray-50 text-sm text-gray-500">
-                                            <th class="py-2 font-medium">訂購數量</th>
-                                            <th class="py-2 font-medium">單價 (合成皮)</th>
-                                            <th class="py-2 font-medium">單價 (牛皮)</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="text-gray-800">
-                                        <tr class="border-b">
-                                            <td class="py-3 font-medium">100 - 499 顆</td>
-                                            <td class="py-3">$ 95</td>
-                                            <td class="py-3">$ 150</td>
-                                        </tr>
-                                        <tr class="border-b">
-                                            <td class="py-3 font-medium">500 - 999 顆</td>
-                                            <td class="py-3 text-brand-600 font-bold">$ 85</td>
-                                            <td class="py-3 text-brand-600 font-bold">$ 135</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="py-3 font-medium">1000 顆以上</td>
-                                            <td class="py-3 text-accent-600 font-bold">$ 75</td>
-                                            <td class="py-3 text-accent-600 font-bold">$ 120</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-
-                            <!-- 客製選項 -->
-                            <div class="mb-8 space-y-4">
-                                <div>
-                                    <h4 class="font-bold text-sm text-gray-700 mb-2">材質選擇</h4>
-                                    <div class="flex gap-2">
-                                        <button class="border-2 border-brand-500 text-brand-600 font-medium px-4 py-1.5 rounded-md text-sm">合成皮</button>
-                                        <button class="border border-gray-300 text-gray-600 hover:border-gray-400 font-medium px-4 py-1.5 rounded-md text-sm transition">真皮 (牛皮)</button>
-                                    </div>
-                                </div>
-                                <div>
-                                    <h4 class="font-bold text-sm text-gray-700 mb-2">客製內容</h4>
-                                    <ul class="text-sm text-gray-600 grid grid-cols-2 gap-2">
-                                        <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-green-500 mr-1"></i> Logo網版印刷</li>
-                                        <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-green-500 mr-1"></i> 縫線顏色客製</li>
-                                        <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-green-500 mr-1"></i> 獨立熱縮膜包裝</li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <!-- 動作按鈕 -->
-                            <div class="pt-6 border-t border-gray-100">
-                                <button onclick="navigateTo('quote')" class="w-full bg-brand-600 hover:bg-brand-500 text-white py-4 rounded-xl font-bold text-lg shadow-md transition flex justify-center items-center">
-                                    <i data-lucide="calculator" class="w-5 h-5 mr-2"></i> 帶入此商品並前往報價
-                                </button>
+                        <div onclick="navigateTo('quote')" class="bg-dvGray p-5 hover:border-dvNeon border border-white/5 transition cursor-pointer group">
+                            <div class="aspect-video bg-dvBlack flex items-center justify-center mb-4"><i data-lucide="box" class="w-12 h-12 text-white/20"></i></div>
+                            <h3 class="font-bold text-lg mb-1 text-white">迷你周邊商品</h3>
+                            <div class="flex gap-2 text-xs text-dvNeon mb-3 font-display tracking-wider"><span>MOQ: 100個</span> | <span>14天</span></div>
+                            <div class="border-t border-white/10 pt-3 flex justify-between items-center text-sm">
+                                <span class="text-gray-500">預估單價起</span><span class="font-bold text-white">$40</span>
                             </div>
                         </div>
+
+                        <div onclick="navigateTo('quote')" class="bg-dvGray p-5 hover:border-dvNeon border border-white/5 transition cursor-pointer group border-b-4 border-b-dvDarkNeon">
+                            <div class="aspect-video bg-dvBlack flex items-center justify-center mb-4"><i data-lucide="circle-dot" class="w-12 h-12 text-white/20"></i></div>
+                            <h3 class="font-bold text-lg mb-1 text-white">客製扭蛋組</h3>
+                            <div class="flex gap-2 text-xs text-dvNeon mb-3 font-display tracking-wider"><span>MOQ: 500顆</span> | <span>30天</span></div>
+                            <div class="border-t border-white/10 pt-3 flex justify-between items-center text-sm">
+                                <span class="text-gray-500">預估單價起</span><span class="font-bold text-white">$60</span>
+                            </div>
+                        </div>
+
+                        <div onclick="navigateTo('quote')" class="bg-dvGray p-5 hover:border-dvNeon border border-white/5 transition cursor-pointer group border-b-4 border-b-gray-500">
+                            <div class="aspect-video bg-dvBlack flex items-center justify-center mb-4"><i data-lucide="camera" class="w-12 h-12 text-white/20"></i></div>
+                            <h3 class="font-bold text-lg mb-1 text-white">商品企劃 / 拍照設計</h3>
+                            <div class="flex gap-2 text-xs text-dvNeon mb-3 font-display tracking-wider"><span>專案制</span> | <span>依需求評估</span></div>
+                            <div class="border-t border-white/10 pt-3 flex justify-between items-center text-sm">
+                                <span class="text-gray-500">專案報價</span><span class="font-bold text-white">洽詢</span>
+                            </div>
+                        </div>
+
+                        <div onclick="navigateTo('quote')" class="bg-dvGray p-5 hover:border-dvNeon border border-white/5 transition cursor-pointer group border-b-4 border-b-gray-500">
+                            <div class="aspect-video bg-dvBlack flex items-center justify-center mb-4"><i data-lucide="package" class="w-12 h-12 text-white/20"></i></div>
+                            <h3 class="font-bold text-lg mb-1 text-white">特殊包裝 / 貼條碼 / 輔料</h3>
+                            <div class="flex gap-2 text-xs text-dvNeon mb-3 font-display tracking-wider"><span>MOQ: 依大貨</span> | <span>+3天</span></div>
+                            <div class="border-t border-white/10 pt-3 flex justify-between items-center text-sm">
+                                <span class="text-gray-500">預估單價起</span><span class="font-bold text-white">$5</span>
+                            </div>
+                        </div>
+
+                        <div onclick="navigateTo('quote')" class="bg-dvGray p-5 hover:border-dvNeon border border-white/5 transition cursor-pointer group border-b-4 border-b-gray-500">
+                            <div class="aspect-video bg-dvBlack flex items-center justify-center mb-4"><i data-lucide="monitor" class="w-12 h-12 text-white/20"></i></div>
+                            <h3 class="font-bold text-lg mb-1 text-white">POS 設備租借</h3>
+                            <div class="flex gap-2 text-xs text-dvNeon mb-3 font-display tracking-wider"><span>單次計費</span> | <span>需預約</span></div>
+                            <div class="border-t border-white/10 pt-3 flex justify-between items-center text-sm">
+                                <span class="text-gray-500">預估單次起</span><span class="font-bold text-white">$1500</span>
+                            </div>
+                        </div>
+
+                    
+                </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="view-detail" class="view-section py-8">
+            <div class="max-w-7xl mx-auto px-4">
+                <button onclick="navigateTo('products')" class="text-dvNeon text-sm font-bold mb-6 hover:underline">< 返回總覽</button>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 bg-dvGray p-8 border border-white/10">
+                    <div class="flex flex-col gap-4">
+                        <div class="w-full aspect-square bg-dvBlack flex items-center justify-center border border-white/5">
+                            <i data-lucide="aperture" class="w-32 h-32 text-white/10"></i>
+                            <div class="absolute text-white/20 font-bold tracking-widest">[案例圖片實拍]</div>
+                        </div>
+                        <div class="grid grid-cols-4 gap-2">
+                            <div class="aspect-square bg-dvBlack border border-dvNeon"></div>
+                            <div class="aspect-square bg-dvBlack border border-white/5"></div>
+                            <div class="aspect-square bg-dvBlack border border-white/5"></div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h1 class="text-4xl font-black mb-2 tracking-tight">【CT】客製棒球</h1>
+                        <p class="text-gray-400 mb-6 text-sm">適用族群：球隊賽事 / 企業活動贈品 / 品牌周邊</p>
+                        
+                        <div class="grid grid-cols-2 gap-4 bg-dvBlack p-4 mb-6 border-l-4 border-dvNeon">
+                            <div><span class="block text-xs text-gray-500 mb-1">最低訂購量 (MOQ)</span><span class="font-bold text-lg">100 顆</span></div>
+                            <div><span class="block text-xs text-gray-500 mb-1">交期</span><span class="font-bold text-lg">14–21 天</span></div>
+                            <div><span class="block text-xs text-gray-500 mb-1">產地</span><span class="font-bold text-lg">台灣</span></div>
+                        </div>
+
+                        <div class="mb-6">
+                            <h3 class="font-bold text-dvNeon mb-3 tracking-widest text-sm">材質選擇</h3>
+                            <div class="flex gap-3 mb-4 text-sm">
+                                <button onclick="this.parentElement.querySelectorAll('span').forEach(s => s.classList.remove('bg-white', 'text-black')); this.parentElement.querySelectorAll('span').forEach(s => s.classList.add('border', 'border-white/20', 'text-gray-400')); this.classList.add('bg-white', 'text-black'); this.classList.remove('border', 'border-white/20', 'text-gray-400')" class="bg-white text-black px-4 py-1 font-bold cursor-pointer hover:scale-105 transition">合成皮</button>
+                                <button onclick="this.parentElement.querySelectorAll('span').forEach(s => s.classList.remove('bg-white', 'text-black')); this.parentElement.querySelectorAll('span').forEach(s => s.classList.add('border', 'border-white/20', 'text-gray-400')); this.classList.add('bg-white', 'text-black'); this.classList.remove('border', 'border-white/20', 'text-gray-400')" class="border border-white/20 px-4 py-1 text-gray-400 cursor-pointer hover:scale-105 transition">真皮</button>
+                            </div>
+                            <h3 class="font-bold text-dvNeon mb-3 tracking-widest text-sm">工藝方式</h3>
+                            <div class="flex gap-3 text-sm">
+                                <button onclick="this.parentElement.querySelectorAll('span').forEach(s => s.classList.remove('bg-white', 'text-black')); this.parentElement.querySelectorAll('span').forEach(s => s.classList.add('border', 'border-white/20', 'text-gray-400')); this.classList.add('bg-white', 'text-black'); this.classList.remove('border', 'border-white/20', 'text-gray-400')" class="bg-white text-black px-4 py-1 font-bold cursor-pointer hover:scale-105 transition">凹凸紋理</button>
+                                <button onclick="this.parentElement.querySelectorAll('span').forEach(s => s.classList.remove('bg-white', 'text-black')); this.parentElement.querySelectorAll('span').forEach(s => s.classList.add('border', 'border-white/20', 'text-gray-400')); this.classList.add('bg-white', 'text-black'); this.classList.remove('border', 'border-white/20', 'text-gray-400')" class="border border-white/20 px-4 py-1 text-gray-400 cursor-pointer hover:scale-105 transition">平滑表面</button>
+                            </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-8">
+                            <h3 class="font-bold text-dvNeon mb-3 tracking-widest text-sm">客製內容</h3>
+                            <ul class="text-sm text-gray-300 space-y-2">
+                                <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-dvNeon mr-2"></i> Logo 印製</li>
+                                <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-dvNeon mr-2"></i> 縫線顏色客製</li>
+                                <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-dvNeon mr-2"></i> 獨立熱縮膜包裝</li>
+                            </ul>
+                        </div>
+
+                        <div class="mb-8 border border-white/10">
+                            <div class="bg-white/5 px-4 py-2 font-bold text-sm text-dvNeon tracking-widest">價格區間 (預估)</div>
+                            <table class="w-full text-center text-sm">
+                                <thead>
+                                    <tr class="border-b border-white/10 text-gray-500">
+                                        <th class="py-3 font-medium">數量</th>
+                                        <th class="py-3 font-medium">單價</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="border-b border-white/10">
+                                        <td class="py-3">100 顆</td><td class="py-3 font-bold">$ 95</td>
+                                    </tr>
+                                    <tr class="border-b border-white/10">
+                                        <td class="py-3">500 顆</td><td class="py-3 font-bold">$ 85</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-3">1000 顆</td><td class="py-3 font-bold text-dvNeon">$ 75</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <button onclick="navigateTo('quote')" class="w-full bg-dvNeon text-black py-4 font-black text-lg hover:bg-white transition flex justify-center items-center uppercase italic">
+                            立即報價
+                        </button>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- ================= 報價系統 (Quote View) ================= -->
-        <section id="view-quote" class="view-section py-8 bg-gray-50">
-            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-10">
-                    <h1 class="text-3xl font-bold text-gray-900 mb-4">取得專屬報價</h1>
-                    <p class="text-gray-500">不用來回猜測！填寫以下需求，我們將在 24 小時內提供正式報價單與交期評估。</p>
-                </div>
-
-                <div class="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
-                    <!-- 進度條概念 -->
-                    <div class="flex border-b border-gray-100 bg-gray-50 text-sm font-medium">
-                        <div class="flex-1 py-4 text-center text-brand-600 border-b-2 border-brand-600">1. 填寫需求</div>
-                        <div class="flex-1 py-4 text-center text-gray-400">2. 專人聯繫</div>
-                        <div class="flex-1 py-4 text-center text-gray-400">3. 確認打樣</div>
+<section id="view-detail-jersey" class="view-section py-8">
+            <div class="max-w-7xl mx-auto px-4">
+                <button onclick="navigateTo('products')" class="text-dvNeon text-sm font-bold mb-6 hover:underline">< 返回總覽</button>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 bg-dvGray p-8 border border-white/10">
+                    <div class="flex flex-col gap-4">
+                        <div class="w-full aspect-square bg-dvBlack flex items-center justify-center border border-white/5 relative overflow-hidden">
+                            <i data-lucide="shirt" class="w-32 h-32 text-white/10"></i>
+                            <div class="absolute text-white/20 font-bold tracking-widest">[球衣實拍圖片]</div>
+                            <div class="absolute top-4 left-4 bg-dvNeon text-black px-2 py-1 text-xs font-bold tracking-tighter">BEST SELLER</div>
+                        </div>
+                        <div class="grid grid-cols-4 gap-2">
+                            <div class="aspect-square bg-dvBlack border border-dvNeon flex items-center justify-center"><i data-lucide="image" class="w-6 h-6 text-white/20"></i></div>
+                            <div class="aspect-square bg-dvBlack border border-white/5 flex items-center justify-center"><i data-lucide="image" class="w-6 h-6 text-white/20"></i></div>
+                            <div class="aspect-square bg-dvBlack border border-white/5 flex items-center justify-center"><i data-lucide="image" class="w-6 h-6 text-white/20"></i></div>
+                        </div>
                     </div>
 
-                    <form class="p-8 space-y-6" onsubmit="event.preventDefault(); alert('這是系統雛形，送出功能請接後端 API。');">
+                    <div>
+                        <h1 class="text-4xl font-black mb-2 tracking-tight">全昇華排汗球衣</h1>
+                        <p class="text-gray-400 mb-6 text-sm">適用族群：籃球隊賽事 / 棒壘球隊 / 路跑活動 / 企業運動會</p>
+                        
+                        <div class="grid grid-cols-2 gap-4 bg-dvBlack p-4 mb-6 border-l-4 border-dvNeon">
+                            <div><span class="block text-xs text-gray-500 mb-1">最低訂購量 (MOQ)</span><span class="font-bold text-lg">50 件</span></div>
+                            <div><span class="block text-xs text-gray-500 mb-1">交期</span><span class="font-bold text-lg">21–30 天</span></div>
+                            <div class="col-span-2"><span class="block text-xs text-gray-500 mb-1">產地</span><span class="font-bold text-lg">台灣</span></div>
+                        </div>
+
+                        <div class="mb-6">
+                            <h3 class="font-bold text-dvNeon mb-3 tracking-widest text-sm">材質選擇</h3>
+                            <div class="flex gap-3 mb-4 text-sm">
+                                <span class="bg-white text-black px-4 py-1 font-bold">機能排汗布 (Polyester)</span>
+                                <span class="border border-white/20 px-4 py-1 text-gray-400">鳥眼透氣布</span>
+                            </div>
+                            <h3 class="font-bold text-dvNeon mb-3 tracking-widest text-sm">工藝方式</h3>
+                            <div class="flex gap-3 text-sm">
+                                <span class="bg-white text-black px-4 py-1 font-bold">全彩昇華印刷</span>
+                            </div>
+                        </div>
+
+                        <div class="mb-8">
+                            <h3 class="font-bold text-dvNeon mb-3 tracking-widest text-sm">客製內容</h3>
+                            <ul class="text-sm text-gray-300 space-y-2">
+                                <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-dvNeon mr-2"></i> 滿版全彩設計不限色</li>
+                                <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-dvNeon mr-2"></i> 可印製獨立球員姓名與背號</li>
+                                <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-dvNeon mr-2"></i> 提供標準版與女版剪裁選擇</li>
+                                <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-dvNeon mr-2"></i> 獨立熱縮膜包裝</li>
+                            </ul>
+                        </div>
+
+                        <div class="mb-8 border border-white/10">
+                            <div class="bg-white/5 px-4 py-2 font-bold text-sm text-dvNeon tracking-widest">價格區間 (預估)</div>
+                            <table class="w-full text-center text-sm">
+                                <thead>
+                                    <tr class="border-b border-white/10 text-gray-500">
+                                        <th class="py-3 font-medium">數量</th>
+                                        <th class="py-3 font-medium">單價</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="border-b border-white/10">
+                                        <td class="py-3">50 件</td><td class="py-3 font-bold">$ 450</td>
+                                    </tr>
+                                    <tr class="border-b border-white/10">
+                                        <td class="py-3">100 件</td><td class="py-3 font-bold">$ 350</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-3">500 件以上</td><td class="py-3 font-bold text-dvNeon">$ 280</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <button onclick="navigateTo('quote')" class="w-full bg-dvNeon text-black py-4 font-black text-lg hover:bg-white transition flex justify-center items-center uppercase italic">
+                            立即帶入此商品並報價
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="view-materials" class="view-section py-16">
+            <div class="max-w-6xl mx-auto px-4">
+                <div class="mb-12">
+                    <h2 class="text-5xl font-display font-black italic mb-2 uppercase">FABRIC <span class="text-dvNeon">TECHNOLOGY</span></h2>
+                    <p class="text-gray-400 font-bold tracking-widest text-sm">獨家開發運動科技材質，為不同競技情境打造最佳著裝體驗。</p>
+                </div>
+
+                <div class="flex flex-col md:flex-row gap-6 mb-20">
+                    
+                    <div class="w-full md:w-1/3 flex flex-col gap-4">
+                        <button onclick="switchFabricTab('comfy')" id="tab-comfy" class="fabric-tab group p-6 text-left transform skew-x-[-5deg] transition-all duration-300 bg-dvNeon text-black shadow-[4px_4px_0px_#ffffff]">
+                            <div class="flex items-center justify-between mb-2">
+                                <h3 class="font-black text-3xl uppercase italic tracking-tighter">COMFY DRY</h3>
+                                <i data-lucide="wind" class="w-6 h-6"></i>
+                            </div>
+                            <p class="font-bold text-sm tracking-widest opacity-90">親膚、排汗、速乾</p>
+                        </button>
+                        
+                        <button onclick="switchFabricTab('rhino')" id="tab-rhino" class="fabric-tab group p-6 text-left transform skew-x-[-5deg] transition-all duration-300 bg-dvGray text-white border border-white/10 hover:border-dvNeon">
+                            <div class="flex items-center justify-between mb-2">
+                                <h3 class="font-black text-3xl uppercase italic tracking-tighter group-hover:text-dvNeon transition-colors">RHINO TECH</h3>
+                                <i data-lucide="shield" class="w-6 h-6 text-gray-500 group-hover:text-dvNeon transition-colors"></i>
+                            </div>
+                            <p class="font-bold text-sm tracking-widest text-gray-500 group-hover:text-white transition-colors">抗磨、硬挺</p>
+                        </button>
+
+                        <button onclick="switchFabricTab('feather')" id="tab-feather" class="fabric-tab group p-6 text-left transform skew-x-[-5deg] transition-all duration-300 bg-dvGray text-white border border-white/10 hover:border-dvNeon">
+                            <div class="flex items-center justify-between mb-2">
+                                <h3 class="font-black text-3xl uppercase italic tracking-tighter group-hover:text-dvNeon transition-colors">FEATHER TECH</h3>
+                                <i data-lucide="cloud-rain" class="w-6 h-6 text-gray-500 group-hover:text-dvNeon transition-colors"></i>
+                            </div>
+                            <p class="font-bold text-sm tracking-widest text-gray-500 group-hover:text-white transition-colors">防風、防潑水</p>
+                        </button>
+                    </div>
+
+                    <div class="w-full md:w-2/3 bg-dvGray border border-white/10 p-8 relative overflow-hidden">
+                        <div class="absolute -bottom-10 -right-10 text-[10rem] font-display font-black text-white/[0.02] leading-none pointer-events-none select-none italic">
+                            FABRIC
+                        </div>
+
+                        <div id="content-comfy" class="fabric-content block relative z-10 animate-[slideIn_0.3s_ease-out]">
+                            <div class="border-l-4 border-dvNeon pl-5 mb-8">
+                                <p class="text-gray-300 leading-relaxed text-sm font-medium">
+                                    複合式聚酯纖維搭配獨家紡織技術，穿著時能長時間保持透氣乾爽，進而達到涼感效果，創造絕佳舒適體驗。最適合高強度的籃球、排球或路跑賽事。
+                                </p>
+                            </div>
+                            <h4 class="text-xs font-bold text-dvNeon tracking-widest mb-4 uppercase">Available Fabrics / 適用布料</h4>
+                            <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                                <div class="bg-dvBlack border border-white/5 p-4 text-center group cursor-pointer hover:border-dvNeon transition">
+                                    <div class="w-full aspect-square bg-[#111] mb-3 flex items-center justify-center border border-white/5 overflow-hidden relative">
+                                        <div class="absolute inset-0 opacity-30 bg-[radial-gradient(circle_at_center,_#fff_1px,_transparent_1px)] bg-[size:4px_4px]"></div>
+                                    </div>
+                                    <span class="font-bold text-sm text-gray-300 group-hover:text-white transition">輕量細網布</span>
+                                </div>
+                                <div class="bg-dvBlack border border-white/5 p-4 text-center group cursor-pointer hover:border-dvNeon transition">
+                                    <div class="w-full aspect-square bg-[#111] mb-3 flex items-center justify-center border border-white/5 overflow-hidden relative">
+                                        <i data-lucide="grid" class="w-10 h-10 text-white/10"></i>
+                                    </div>
+                                    <span class="font-bold text-sm text-gray-300 group-hover:text-white transition">星鑽布</span>
+                                </div>
+                                <div class="bg-dvBlack border border-white/5 p-4 text-center group cursor-pointer hover:border-dvNeon transition">
+                                    <div class="w-full aspect-square bg-[#111] mb-3 flex items-center justify-center border border-white/5 overflow-hidden relative">
+                                        <i data-lucide="layers" class="w-10 h-10 text-white/10"></i>
+                                    </div>
+                                    <span class="font-bold text-sm text-gray-300 group-hover:text-white transition">晶陣3D 立體蜂巢布</span>
+                                </div>
+                                <div class="bg-dvBlack border border-white/5 p-4 text-center group cursor-pointer hover:border-dvNeon transition">
+                                    <div class="w-full aspect-square bg-[#111] mb-3 flex items-center justify-center border border-white/5 overflow-hidden relative">
+                                        <div class="absolute inset-0 opacity-20 bg-[linear-gradient(45deg,_#fff_25%,_transparent_25%,_transparent_75%,_#fff_75%,_#fff)] bg-[size:10px_10px]"></div>
+                                    </div>
+                                    <span class="font-bold text-sm text-gray-300 group-hover:text-white transition">4D 柔彈布</span>
+                                </div>
+                                <div class="bg-dvBlack border border-white/5 p-4 text-center group cursor-pointer hover:border-dvNeon transition">
+                                    <div class="w-full aspect-square bg-[#111] mb-3 flex items-center justify-center border border-white/5 overflow-hidden relative">
+                                        <i data-lucide="waves" class="w-10 h-10 text-white/10"></i>
+                                    </div>
+                                    <span class="font-bold text-sm text-gray-300 group-hover:text-white transition">麻花冰感布</span>
+                                </div>
+                                <div class="bg-dvBlack border border-white/5 p-4 text-center group cursor-pointer hover:border-dvNeon transition">
+                                    <div class="w-full aspect-square bg-[#111] mb-3 flex items-center justify-center border border-white/5 overflow-hidden relative">
+                                        <div class="absolute inset-0 opacity-30 bg-[radial-gradient(circle_at_center,_#fff_2px,_transparent_2px)] bg-[size:8px_8px]"></div>
+                                    </div>
+                                    <span class="font-bold text-sm text-gray-300 group-hover:text-white transition">吸排彈性布</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="content-rhino" class="fabric-content hidden relative z-10 animate-[slideIn_0.3s_ease-out]">
+                            <div class="border-l-4 border-dvNeon pl-5 mb-8">
+                                <p class="text-gray-300 leading-relaxed text-sm font-medium">
+                                    聚酯纖維搭配獨特高密度編織組成，使布料表層堅韌達到具有良好保護性、抗磨性及抗撕裂性，穿著時並保有輕盈及良好舒適性衣身，適合棒球、橄欖球等高碰撞運動。
+                                </p>
+                            </div>
+                            <h4 class="text-xs font-bold text-dvNeon tracking-widest mb-4 uppercase">Available Fabrics / 適用布料</h4>
+                            <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                                <div class="bg-dvBlack border border-white/5 p-4 text-center group cursor-pointer hover:border-dvNeon transition">
+                                    <div class="w-full aspect-square bg-[#111] mb-3 flex items-center justify-center border border-white/5"><i data-lucide="hexagon" class="w-10 h-10 text-white/10"></i></div>
+                                    <span class="font-bold text-sm text-gray-300 group-hover:text-white transition">立體吊目布</span>
+                                </div>
+                                <div class="bg-dvBlack border border-white/5 p-4 text-center group cursor-pointer hover:border-dvNeon transition">
+                                    <div class="w-full aspect-square bg-[#111] mb-3 flex items-center justify-center border border-white/5"><i data-lucide="snowflake" class="w-10 h-10 text-white/10"></i></div>
+                                    <span class="font-bold text-sm text-gray-300 group-hover:text-white transition">菱紋雪花布</span>
+                                </div>
+                                <div class="bg-dvBlack border border-white/5 p-4 text-center group cursor-pointer hover:border-dvNeon transition">
+                                    <div class="w-full aspect-square bg-[#111] mb-3 flex items-center justify-center border border-white/5"><i data-lucide="link" class="w-10 h-10 text-white/10"></i></div>
+                                    <span class="font-bold text-sm text-gray-300 group-hover:text-white transition">鍊型技擊布</span>
+                                </div>
+                                <div class="bg-dvBlack border border-white/5 p-4 text-center group cursor-pointer hover:border-dvNeon transition">
+                                    <div class="w-full aspect-square bg-[#111] mb-3 flex items-center justify-center border border-white/5"><i data-lucide="shield-half" class="w-10 h-10 text-white/10"></i></div>
+                                    <span class="font-bold text-sm text-gray-300 group-hover:text-white transition">厚磅綿感布</span>
+                                </div>
+                                <div class="bg-dvBlack border border-white/5 p-4 text-center group cursor-pointer hover:border-dvNeon transition">
+                                    <div class="w-full aspect-square bg-[#111] mb-3 flex items-center justify-center border border-white/5"><i data-lucide="wind" class="w-10 h-10 text-white/10"></i></div>
+                                    <span class="font-bold text-sm text-gray-300 group-hover:text-white transition">耐磨空氣布</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="content-feather" class="fabric-content hidden relative z-10 animate-[slideIn_0.3s_ease-out]">
+                            <div class="border-l-4 border-dvNeon pl-5 mb-8">
+                                <p class="text-gray-300 leading-relaxed text-sm font-medium">
+                                    聚酯纖維搭配特細膩殊針織技術，使布料形成高密度光滑，穿著時保有優良防風及防潑水效果並保有輕盈的衣身。適合戶外運動外套、教練夾克等外層防護裝備。
+                                </p>
+                            </div>
+                            <h4 class="text-xs font-bold text-dvNeon tracking-widest mb-4 uppercase">Available Fabrics / 適用布料</h4>
+                            <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                                <div class="bg-dvBlack border border-white/5 p-4 text-center group cursor-pointer hover:border-dvNeon transition">
+                                    <div class="w-full aspect-square bg-[#111] mb-3 flex items-center justify-center border border-white/5"><i data-lucide="droplet" class="w-10 h-10 text-white/10"></i></div>
+                                    <span class="font-bold text-sm text-gray-300 group-hover:text-white transition">防潑平織布</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-2xl font-black mb-6 text-white uppercase italic">PRINTING <span class="text-dvNeon">PROCESS</span> / 工藝比較</h3>
+                    <div class="overflow-x-auto border border-white/10 bg-dvGray">
+                        <table class="w-full text-left text-sm">
+                            <thead>
+                                <tr class="bg-dvBlack border-b border-white/10 text-dvNeon tracking-widest uppercase">
+                                    <th class="p-5 font-bold w-1/4">工藝方式</th>
+                                    <th class="p-5 font-bold">技術特色</th>
+                                    <th class="p-5 font-bold w-1/3">🔥 適用建議</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-white/10 text-gray-300">
+                                <tr class="hover:bg-white/5 transition">
+                                    <td class="p-5 font-bold text-white flex items-center"><i data-lucide="printer" class="w-4 h-4 mr-2 text-dvNeon"></i> 昇華印刷</td>
+                                    <td class="p-5 leading-relaxed">將墨水高溫氣化染入纖維，布料保持透氣，可實現滿版全彩漸層，洗滌不掉色。</td>
+                                    <td class="p-5 text-dvNeon font-bold">👉 球衣、跑衣、大面積彩色毛巾首選</td>
+                                </tr>
+                                <tr class="hover:bg-white/5 transition">
+                                    <td class="p-5 font-bold text-white flex items-center"><i data-lucide="scissors" class="w-4 h-4 mr-2 text-dvNeon"></i> 刺繡工藝</td>
+                                    <td class="p-5 leading-relaxed">立體感強，質感極佳，經久耐用。透過高密度車針呈現品牌 Logo 的高級感。</td>
+                                    <td class="p-5 text-dvNeon font-bold">👉 帽子、外套胸前 Logo、高磅數服飾</td>
+                                </tr>
+                                <tr class="hover:bg-white/5 transition">
+                                    <td class="p-5 font-bold text-white flex items-center"><i data-lucide="layers" class="w-4 h-4 mr-2 text-dvNeon"></i> 熱轉印</td>
+                                    <td class="p-5 leading-relaxed">色彩鮮豔飽和，可呈現漸層與照片細節，將圖案熱壓貼合於布料表面。</td>
+                                    <td class="p-5 text-dvNeon font-bold">👉 活動贈品 T-shirt、帆布袋、小面積圖案</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="view-process" class="view-section py-16 bg-grid">
+            <div class="max-w-7xl mx-auto px-4 text-center">
+                
+                <div class="mb-24">
+                    <h2 class="text-5xl font-display font-black italic mb-2 uppercase">TIMELINE & <span class="text-dvNeon">PROCESS</span></h2>
+                    <p class="text-gray-400 font-bold tracking-widest text-sm mb-16">標準化代工作業流程，從需求確認到品檢出貨全透明</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-8 relative">
+                        <div class="hidden md:block absolute top-12 left-[10%] right-[10%] h-0.5 bg-white/10 -z-10"></div>
+                        
+                        <div class="flex flex-col items-center group">
+                            <div class="bg-dvBlack border border-white/20 group-hover:border-dvNeon group-hover:shadow-[0_0_15px_rgba(204,255,0,0.3)] transition-all duration-300 w-24 h-24 rounded-full flex flex-col items-center justify-center mb-6 relative z-10">
+                                <i data-lucide="file-check-2" class="w-8 h-8 text-white group-hover:text-dvNeon transition-colors mb-1"></i>
+                                <span class="text-xs font-bold text-gray-500">STEP 1</span>
+                            </div>
+                            <h3 class="text-xl font-black text-dvNeon mb-3">詢價與確認</h3>
+                            <p class="text-gray-400 text-sm leading-relaxed px-4">確認商品規格、圖案設計與數量。我們將提供正式報價單與排程預估，雙方確認後建檔。</p>
+                            <span class="mt-4 bg-white/5 text-gray-300 text-xs px-3 py-1 rounded-full font-bold">1 - 3 天</span>
+                        </div>
+
+                        <div class="flex flex-col items-center group">
+                            <div class="bg-dvBlack border border-white/20 group-hover:border-dvNeon group-hover:shadow-[0_0_15px_rgba(204,255,0,0.3)] transition-all duration-300 w-24 h-24 rounded-full flex flex-col items-center justify-center mb-6 relative z-10">
+                                <i data-lucide="scissors" class="w-8 h-8 text-white group-hover:text-dvNeon transition-colors mb-1"></i>
+                                <span class="text-xs font-bold text-gray-500">STEP 2</span>
+                            </div>
+                            <h3 class="text-xl font-black text-dvNeon mb-3">開版與打樣</h3>
+                            <p class="text-gray-400 text-sm leading-relaxed px-4">進入數位製版或開模階段，產出實體樣品供客戶確認材質、顏色與印刷細節，確保零落差。</p>
+                            <span class="mt-4 bg-white/5 text-gray-300 text-xs px-3 py-1 rounded-full font-bold">7 - 10 天</span>
+                        </div>
+
+                        <div class="flex flex-col items-center group">
+                            <div class="bg-dvBlack border border-white/20 group-hover:border-dvNeon group-hover:shadow-[0_0_15px_rgba(204,255,0,0.3)] transition-all duration-300 w-24 h-24 rounded-full flex flex-col items-center justify-center mb-6 relative z-10">
+                                <i data-lucide="settings" class="w-8 h-8 text-white group-hover:text-dvNeon transition-colors mb-1"></i>
+                                <span class="text-xs font-bold text-gray-500">STEP 3</span>
+                            </div>
+                            <h3 class="text-xl font-black text-dvNeon mb-3">規模量產</h3>
+                            <p class="text-gray-400 text-sm leading-relaxed px-4">樣品確認無誤後，啟動產線進入大貨量產階段。嚴格把關每一道裁縫與印刷工序。</p>
+                            <span class="mt-4 bg-white/5 text-gray-300 text-xs px-3 py-1 rounded-full font-bold">14 - 30 天</span>
+                        </div>
+
+                        <div class="flex flex-col items-center group">
+                            <div class="bg-dvBlack border-2 border-dvNeon group-hover:bg-dvNeon group-hover:shadow-[0_0_20px_rgba(204,255,0,0.4)] transition-all duration-300 w-24 h-24 rounded-full flex flex-col items-center justify-center mb-6 relative z-10">
+                                <i data-lucide="package-check" class="w-8 h-8 text-dvNeon group-hover:text-black transition-colors mb-1"></i>
+                                <span class="text-xs font-bold text-gray-500 group-hover:text-black/70">STEP 4</span>
+                            </div>
+                            <h3 class="text-xl font-black text-white mb-3">品檢與出貨</h3>
+                            <p class="text-gray-400 text-sm leading-relaxed px-4">全品項進行專業品管檢驗、獨立熱縮膜/包裝，並安排物流配送至指定地點。</p>
+                            <span class="mt-4 bg-dvNeon text-black text-xs px-3 py-1 rounded-full font-bold">任務完成</span>
+                        </div>
+                    </div>
+
+                    <div class="mt-16 bg-dvNeon text-black p-8 text-left max-w-3xl mx-auto transform skew-x-[-2deg] flex flex-col md:flex-row items-center justify-between border-b-4 border-r-4 border-black shadow-[8px_8px_0px_#ffffff]">
+                        <div class="mb-4 md:mb-0">
+                            <div class="flex items-center mb-2">
+                                <i data-lucide="zap" class="w-8 h-8 mr-2 fill-black"></i>
+                                <h3 class="font-black text-2xl uppercase tracking-widest">急單專案通道 <span class="opacity-70 text-lg">/ Rush Order</span></h3>
+                            </div>
+                            <p class="font-bold text-lg mb-1">最快 7 天極速出貨，為突發狀況提供後盾！</p>
+                            <p class="text-sm font-medium opacity-80">如遇賽事或活動緊急需求，我們提供優先插單生產服務。（註：總價將視排程狀況酌收 20% 急件處理費）</p>
+                        </div>
+                        <button onclick="navigateTo('quote')" class="bg-black text-dvNeon px-6 py-3 font-bold hover:bg-gray-800 transition whitespace-nowrap skew-x-[2deg]">
+                            申請急件評估
+                        </button>
+                    </div>
+                </div>
+
+                <div class="pt-16 border-t border-white/10">
+                    <h2 class="text-4xl md:text-5xl font-display font-black italic mb-2 uppercase">TRUSTED BY <span class="text-dvNeon">CHAMPIONS</span></h2>
+                    <p class="text-gray-400 font-bold tracking-widest text-sm mb-12">頂尖職業球團、大型賽事與指標品牌指定代工夥伴</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-left">
+                        
+                        <div class="bg-dvGray border border-white/5 p-6 hover:border-dvNeon/50 transition">
+                            <h3 class="text-xl font-black text-white mb-4 flex items-center border-b border-white/10 pb-3">
+                                <i data-lucide="trophy" class="w-5 h-5 mr-2 text-dvNeon"></i> 職業運動
+                            </h3>
+                            <ul class="space-y-3 text-sm text-gray-400 font-medium">
+                                <li class="hover:text-dvNeon transition">中信兄弟 (中信育樂)</li>
+                                <li class="hover:text-dvNeon transition">樂天桃猿</li>
+                                <li class="hover:text-dvNeon transition">味全龍</li>
+                                <li class="hover:text-dvNeon transition">統一獅</li>
+                                <li class="hover:text-dvNeon transition">中信特攻</li>
+                                <li class="hover:text-dvNeon transition">新竹街口攻城獅</li>
+                                <li class="hover:text-dvNeon transition">新北國王</li>
+                                <li class="hover:text-dvNeon transition">極速超跑女子排球隊</li>
+                                <li class="hover:text-dvNeon transition">臺北鯨華女子排球隊</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-dvGray border border-white/5 p-6 hover:border-dvNeon/50 transition">
+                            <h3 class="text-xl font-black text-white mb-4 flex items-center border-b border-white/10 pb-3">
+                                <i data-lucide="ticket" class="w-5 h-5 mr-2 text-dvNeon"></i> 賽事與體育 IP
+                            </h3>
+                            <ul class="space-y-3 text-sm text-gray-400 font-medium">
+                                <li class="hover:text-dvNeon transition">P. LEAGUE+</li>
+                                <li class="hover:text-dvNeon transition">T1 LEAGUE</li>
+                                <li class="hover:text-dvNeon transition">WBC 世界棒球經典賽</li>
+                                <li class="hover:text-dvNeon transition">HBL 乙級籃球聯賽</li>
+                                <li class="hover:text-dvNeon transition">臺北馬拉松 / 田中馬拉松</li>
+                                <li class="hover:text-dvNeon transition">灌籃高手 (東映動畫)</li>
+                                <li class="hover:text-dvNeon transition">宅男打籃球</li>
+                                <li class="hover:text-dvNeon transition">高雄捷運籃球盃賽</li>
+                                <li class="hover:text-dvNeon transition">CHIA 23</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-dvGray border border-white/5 p-6 hover:border-dvNeon/50 transition">
+                            <h3 class="text-xl font-black text-white mb-4 flex items-center border-b border-white/10 pb-3">
+                                <i data-lucide="graduation-cap" class="w-5 h-5 mr-2 text-dvNeon"></i> 校園團隊
+                            </h3>
+                            <ul class="space-y-3 text-sm text-gray-400 font-medium">
+                                <li class="hover:text-dvNeon transition">國立臺灣大學</li>
+                                <li class="hover:text-dvNeon transition">國立臺灣師範大學</li>
+                                <li class="hover:text-dvNeon transition">國立政治大學</li>
+                                <li class="hover:text-dvNeon transition">國立清華大學</li>
+                                <li class="hover:text-dvNeon transition">國立陽明交通大學</li>
+                                <li class="hover:text-dvNeon transition">馬禮遜美國學校</li>
+                                <li class="hover:text-dvNeon transition">新竹美國學校</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-dvGray border border-white/5 p-6 hover:border-dvNeon/50 transition">
+                            <h3 class="text-xl font-black text-white mb-4 flex items-center border-b border-white/10 pb-3">
+                                <i data-lucide="building-2" class="w-5 h-5 mr-2 text-dvNeon"></i> 企業品牌合作
+                            </h3>
+                            <ul class="space-y-3 text-sm text-gray-400 font-medium">
+                                <li class="hover:text-dvNeon transition">DA VILLAGE 運動品牌</li>
+                                <li class="hover:text-dvNeon transition">STANCAVE 運動電商</li>
+                                <li class="hover:text-dvNeon transition">財團法人世界展望會</li>
+                                <li class="hover:text-dvNeon transition">傳說電競有限公司</li>
+                                <li class="hover:text-dvNeon transition">展逸國際行銷</li>
+                                <li class="hover:text-dvNeon transition">悍創運動行銷</li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="view-quote" class="view-section py-16">
+            <div class="max-w-3xl mx-auto px-4">
+                <div class="bg-dvGray p-8 md:p-12 border border-white/10 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 bg-dvNeon text-black px-4 py-1 text-xs font-black tracking-widest skew-x-[-10deg] transform translate-x-2 -translate-y-1">SYSTEM ONLINE</div>
+                    <h2 class="text-4xl font-display font-black italic mb-2">GET A <span class="text-dvNeon">QUOTE</span></h2>
+                    <p class="text-gray-400 text-sm mb-8">價格透明＋交期清楚，送出需求後我們將盡速提供正式報價。</p>
+
+                    <form class="space-y-6" onsubmit="event.preventDefault(); alert('預估價格系統即將啟動！');">
                         
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <!-- 商品類型 -->
-                            <div>
-                                <label class="block text-sm font-bold text-gray-700 mb-2">商品類型 <span class="text-red-500">*</span></label>
-                                <select class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 bg-white">
-                                    <option value="">請選擇商品...</option>
-                                    <optgroup label="球類">
-                                        <option value="baseball" selected>客製棒球</option>
-                                        <option value="basketball">客製籃球</option>
+                            <div class="md:col-span-2">
+                                <label class="block text-xs font-bold text-gray-500 mb-2 uppercase tracking-widest">商品類型 <span class="text-dvNeon">*</span></label>
+                                <select class="w-full bg-dvBlack border border-white/20 p-4 font-bold focus:border-dvNeon outline-none text-white appearance-none">
+                                    <option value="">請選擇您需要的品項...</option>
+                                    <optgroup label="🔹 球類周邊">
+                                        <option value="baseball">棒球</option>
+                                        <option value="basketball">籃球</option>
+                                        <option value="miniball">小球 (紀念球)</option>
                                     </optgroup>
-                                    <optgroup label="服裝">
-                                        <option value="jersey">球衣</option>
+                                    <optgroup label="🔹 服裝類">
+                                        <option value="jersey">球衣 (籃球/棒球)</option>
                                         <option value="tshirt">T-shirt</option>
+                                        <option value="jacket">外套</option>
+                                        <option value="hoodie">帽T</option>
+                                        <option value="shorts">短褲</option>
+                                        <option value="pants">長褲</option>
+                                        <option value="polo">POLO 衫</option>
+                                        <option value="happi">法批</option>
+                                        <option value="run">跑衣</option>
                                     </optgroup>
-                                    <optgroup label="配件">
-                                        <option value="cap">帽子</option>
-                                        <option value="towel">毛巾</option>
-                                        <option value="bag">托特包</option>
+                                    <optgroup label="🔹 配件類">
+                                        <option value="hat">帽子</option>
+                                        <option value="towel">毛巾 (主力)</option>
+                                        <option value="bag">包袋 (主力)</option>
+                                        <option value="cheer">應援商品</option>
+                                        <option value="badge">徽章類</option>
+                                        <option value="cup">杯子</option>
+                                        <option value="acrylic">壓克力</option>
+                                        <option value="socks">襪子</option>
+                                        <option value="pillow">抱枕</option>
+                                        <option value="amulet">御守</option>
+                                        <option value="mini">迷你商品</option>
+                                        <option value="other">其他配件</option>
+                                    </optgroup>
+                                    <optgroup label="🔹 扭蛋類">
+                                        <option value="gacha">客製扭蛋</option>
+                                    </optgroup>
+                                    <optgroup label="🔹 設計與服務 (附加)">
+                                        <option value="design">設計企劃 / 拍照</option>
+                                        <option value="package">特殊包裝 / 貼條碼 / 輔料</option>
+                                        <option value="pos">POS 設備租借</option>
                                     </optgroup>
                                 </select>
                             </div>
 
-                            <!-- 數量 -->
                             <div>
-                                <label class="block text-sm font-bold text-gray-700 mb-2">預估數量 <span class="text-red-500">*</span></label>
-                                <div class="relative">
-                                    <input type="number" value="100" min="50" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
-                                    <div class="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none">
-                                        <span class="text-gray-500">件/顆</span>
-                                    </div>
-                                </div>
-                                <p class="text-xs text-gray-400 mt-1">此商品 MOQ 為 100</p>
+                                <label class="block text-xs font-bold text-gray-500 mb-2 uppercase tracking-widest">預估數量 <span class="text-dvNeon">*</span></label>
+                                <input type="number" placeholder="填寫數量 (如: 50)" class="w-full bg-dvBlack border border-white/20 p-4 font-bold focus:border-dvNeon outline-none text-white">
                             </div>
-
-                            <!-- 材質 -->
+                            
                             <div>
-                                <label class="block text-sm font-bold text-gray-700 mb-2">材質選擇</label>
-                                <select class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 bg-white">
-                                    <option>合成皮 (推薦預算型)</option>
-                                    <option>真皮/牛皮 (推薦高質感)</option>
-                                    <option>其他 (請在備註說明)</option>
+                                <label class="block text-xs font-bold text-gray-500 mb-2 uppercase tracking-widest">材質選擇</label>
+                                <select class="w-full bg-dvBlack border border-white/20 p-4 font-bold focus:border-dvNeon outline-none text-white">
+                                    <option>依商品預設</option>
+                                    <option>Polyester (聚酯纖維)</option>
+                                    <option>棉質</option>
+                                    <option>機能布</option>
+                                    <option>真皮/合成皮 (球類)</option>
                                 </select>
                             </div>
-
-                            <!-- 印刷/工藝 -->
-                            <div>
-                                <label class="block text-sm font-bold text-gray-700 mb-2">印刷/工藝方式</label>
-                                <select class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 bg-white">
-                                    <option>單色網版印刷</option>
-                                    <option>全彩熱轉印</option>
-                                    <option>不需要印刷</option>
+                            
+                            <div class="md:col-span-2">
+                                <label class="block text-xs font-bold text-gray-500 mb-2 uppercase tracking-widest">印刷方式</label>
+                                <select class="w-full bg-dvBlack border border-white/20 p-4 font-bold focus:border-dvNeon outline-none text-white">
+                                    <option>請專業人員為我建議</option>
+                                    <option>昇華印刷 (服裝推薦)</option>
+                                    <option>網版印刷</option>
+                                    <option>刺繡 (帽子推薦)</option>
+                                    <option>熱轉印 (贈品推薦)</option>
                                 </select>
                             </div>
                         </div>
-
-                        <!-- 交期需求 (災難財設計點) -->
-                        <div class="border border-gray-200 rounded-lg p-5 mt-6 bg-white">
-                            <label class="block text-base font-bold text-gray-800 mb-4 flex items-center">
-                                <i data-lucide="clock" class="w-5 h-5 mr-2 text-gray-500"></i> 交期需求
-                            </label>
-                            <div class="space-y-3">
-                                <label class="flex items-start p-3 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50 transition">
-                                    <input type="radio" name="leadtime" class="mt-1 text-brand-600 focus:ring-brand-500 h-4 w-4" checked>
+                        
+                        <div class="bg-dvBlack p-6 border-l-4 border-dvNeon mt-8">
+                            <label class="block text-xs font-bold text-dvNeon mb-4 uppercase tracking-widest flex items-center"><i data-lucide="clock" class="w-4 h-4 mr-2"></i> 交期需求</label>
+                            <div class="space-y-4">
+                                <label class="flex items-start cursor-pointer group p-3 hover:bg-white/5 border border-transparent rounded">
+                                    <input type="radio" name="time" class="mt-1 accent-dvNeon" checked>
                                     <div class="ml-3">
-                                        <span class="block font-medium text-gray-800">正常交期 (打樣7天 + 大貨14天)</span>
-                                        <span class="block text-sm text-gray-500">標準排程，無額外費用。</span>
+                                        <span class="block font-bold text-white">正常排單 (約 14-30 天)</span>
+                                        <span class="block text-xs text-gray-500 mt-1">標準作業流程，無需額外費用。</span>
                                     </div>
                                 </label>
-                                <label class="flex items-start p-3 border-2 border-accent-200 bg-accent-50 rounded-lg cursor-pointer hover:border-accent-300 transition relative overflow-hidden">
-                                    <div class="absolute top-0 right-0 bg-accent-500 text-white text-[10px] font-bold px-2 py-1 rounded-bl-lg">急單通道</div>
-                                    <input type="radio" name="leadtime" class="mt-1 text-accent-600 focus:ring-accent-500 h-4 w-4">
+                                <label class="flex items-start cursor-pointer group p-3 border border-dvNeon/30 bg-dvNeon/5 rounded">
+                                    <input type="radio" name="time" class="mt-1 accent-dvNeon">
                                     <div class="ml-3">
-                                        <span class="block font-bold text-accent-700">急件處理 (最快7-10天出貨)</span>
-                                        <span class="block text-sm text-accent-600/80">將優先插單生產，<strong class="text-accent-700">總價將酌收 20% 急件處理費</strong>。</span>
+                                        <span class="block font-bold text-dvNeon">急件處理 (最快 7 天出貨)</span>
+                                        <span class="block text-xs text-gray-400 mt-1">優先插單生產，總價將酌收 20% 急件處理費。</span>
                                     </div>
                                 </label>
                             </div>
                         </div>
 
-                        <!-- 檔案上傳 -->
-                        <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-2">上傳設計檔或參考圖 (選填)</label>
-                            <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:bg-gray-50 transition cursor-pointer">
-                                <i data-lucide="upload-cloud" class="w-8 h-8 text-gray-400 mx-auto mb-2"></i>
-                                <span class="text-sm text-brand-600 font-medium">點擊上傳</span>
-                                <span class="text-sm text-gray-500"> 或將檔案拖曳至此 (支援 AI, PDF, JPG, PNG)</span>
-                            </div>
+                        <div class="grid grid-cols-2 gap-4 pt-4 border-t border-white/10">
+                            <div><input type="text" placeholder="聯絡人姓名" class="w-full bg-dvBlack border border-white/20 p-3 text-sm focus:border-dvNeon outline-none text-white"></div>
+                            <div><input type="text" placeholder="公司/球隊名稱" class="w-full bg-dvBlack border border-white/20 p-3 text-sm focus:border-dvNeon outline-none text-white"></div>
                         </div>
 
-                        <!-- 聯絡資訊 -->
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-gray-100">
-                            <div>
-                                <label class="block text-sm font-bold text-gray-700 mb-2">聯絡人姓名 <span class="text-red-500">*</span></label>
-                                <input type="text" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-500">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-bold text-gray-700 mb-2">聯絡電話 <span class="text-red-500">*</span></label>
-                                <input type="text" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-500">
-                            </div>
-                        </div>
-
-                        <!-- 提交 -->
-                        <div class="pt-6">
-                            <button type="submit" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold text-lg py-4 rounded-xl shadow-lg transition flex justify-center items-center">
-                                送出需求，取得正式報價
-                                <i data-lucide="arrow-right" class="w-5 h-5 ml-2"></i>
-                            </button>
-                            <p class="text-center text-xs text-gray-400 mt-3">點擊送出即表示您同意我們的隱私權政策與報價須知。</p>
-                        </div>
+                        <button type="submit" class="w-full bg-dvNeon text-black py-5 font-black text-xl hover:bg-white transition-colors uppercase italic tracking-tighter mt-6">
+                            立即取得正式報價
+                        </button>
                     </form>
                 </div>
             </div>
         </section>
 
-        <!-- ================= 材質與工藝說明頁 (Materials View - 簡化版) ================= -->
-        <section id="view-materials" class="view-section py-16 bg-white">
-             <div class="max-w-4xl mx-auto px-4 text-center">
-                 <i data-lucide="layers" class="w-16 h-16 mx-auto text-brand-300 mb-4"></i>
-                 <h2 class="text-3xl font-bold mb-4">材質與工藝說明頁</h2>
-                 <p class="text-gray-500 mb-8">這裡將依據企劃書放置布料介紹（Polyester、棉、機能布）與印刷方式比較（昇華、刺繡、熱轉印）的對照表。</p>
-                 <button onclick="navigateTo('home')" class="text-brand-600 border border-brand-600 px-6 py-2 rounded-full hover:bg-brand-50">返回首頁</button>
-             </div>
-        </section>
-
     </main>
 
-    <!-- 頁尾 -->
-    <footer class="bg-gray-900 text-gray-400 py-12 mt-auto">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div>
-                <div class="flex items-center text-white mb-4">
-                    <i data-lucide="package" class="h-6 w-6 mr-2"></i>
-                    <span class="font-bold text-lg tracking-wider">PRO-MAKER</span>
+    <footer class="bg-dvBlack border-t border-white/10 pt-16 pb-8 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-12 gap-12 mb-12">
+            
+            <div class="lg:col-span-4">
+                <span class="font-display font-bold text-3xl italic mb-4 block">PRO-MAKER <span class="text-dvNeon">LAB</span></span>
+                <p class="text-gray-500 text-sm leading-relaxed mb-6 font-medium">
+                    斯藍運動股份有限公司 / 00220872<br>
+                    聯絡地址 / 新北市新莊區中正路68號10F
+                </p>
+                
+                <div class="bg-dvGray p-5 border-l-2 border-dvNeon space-y-3">
+                    <div class="flex items-center text-sm font-bold text-white">
+                        <i data-lucide="clock" class="w-4 h-4 mr-3 text-dvNeon"></i> 客服時間 / 週一到週五 09:00 - 18:00
+                    </div>
+                    <div class="flex items-center text-sm font-bold text-white">
+                        <i data-lucide="phone" class="w-4 h-4 mr-3 text-dvNeon"></i> 客服專線 / 0976-061-090
+                    </div>
+                    <a href="#" class="inline-flex items-center mt-2 bg-[#06C755] text-white px-4 py-2 text-sm font-bold hover:bg-[#05b34c] transition group">
+                        <i data-lucide="message-circle" class="w-4 h-4 mr-2 group-hover:scale-110 transition-transform"></i>
+                        客服LINE / @dvstore
+                    </a>
                 </div>
-                <p class="text-sm">專業客製化服裝與周邊商品代工，致力於讓採購流程透明、簡單、高效。</p>
             </div>
-            <div>
-                <h4 class="text-white font-bold mb-4">快速連結</h4>
-                <ul class="space-y-2 text-sm">
-                    <li><button onclick="navigateTo('products')" class="hover:text-white transition">所有商品</button></li>
-                    <li><button onclick="navigateTo('materials')" class="hover:text-white transition">材質與工藝介紹</button></li>
-                    <li><button onclick="navigateTo('quote')" class="hover:text-white transition">立即報價</button></li>
-                </ul>
+
+            <div class="lg:col-span-2 flex flex-col space-y-3">
+                <span class="font-bold text-xs tracking-widest text-dvNeon mb-2 uppercase">快速連結</span>
+                <button onclick="navigateTo('products')" class="text-left text-sm font-bold text-gray-400 hover:text-white transition w-fit">商品總覽</button>
+                <button onclick="navigateTo('materials')" class="text-left text-sm font-bold text-gray-400 hover:text-white transition w-fit">材質與工藝</button>
+                <button onclick="navigateTo('process')" class="text-left text-sm font-bold text-gray-400 hover:text-white transition w-fit">交期與流程</button>
+                <button onclick="navigateTo('quote')" class="text-left text-sm font-bold text-gray-400 hover:text-white transition w-fit">線上報價系統</button>
             </div>
-            <div>
-                <h4 class="text-white font-bold mb-4">聯絡我們</h4>
-                <ul class="space-y-2 text-sm">
-                    <li class="flex items-center"><i data-lucide="mail" class="w-4 h-4 mr-2"></i> service@promaker.tw</li>
-                    <li class="flex items-center"><i data-lucide="phone" class="w-4 h-4 mr-2"></i> 02-2345-6789</li>
-                    <li class="flex items-center"><i data-lucide="clock" class="w-4 h-4 mr-2"></i> 週一至週五 09:00 - 18:00</li>
-                </ul>
+
+            <div class="lg:col-span-6">
+                <span class="font-bold text-xs tracking-widest text-dvNeon mb-4 uppercase block">專業聯絡窗口</span>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    
+                    <div class="bg-dvGray border border-white/5 p-4 hover:border-dvNeon/50 transition group">
+                        <div class="flex items-baseline mb-3">
+                            <span class="text-lg font-black text-white mr-2">許明翰</span>
+                            <span class="text-xs text-dvNeon font-bold tracking-widest">總經理</span>
+                        </div>
+                        <div class="space-y-2 text-xs text-gray-400">
+                            <a href="mailto:Eric.Hsu@davillage.com.tw" class="flex items-center hover:text-white transition">
+                                <i data-lucide="mail" class="w-3 h-3 mr-2"></i> Eric.Hsu@davillage.com.tw
+                            </a>
+                            <a href="tel:0917597966" class="flex items-center text-white font-bold group-hover:text-dvNeon transition">
+                                <i data-lucide="smartphone" class="w-3 h-3 mr-2 text-gray-500 group-hover:text-dvNeon transition"></i> 0917-597-966
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="bg-dvGray border border-white/5 p-4 hover:border-dvNeon/50 transition group">
+                        <div class="flex items-baseline mb-3">
+                            <span class="text-lg font-black text-white mr-2">周辰彥</span>
+                            <span class="text-xs text-dvNeon font-bold tracking-widest">生產經理</span>
+                        </div>
+                        <div class="space-y-2 text-xs text-gray-400">
+                            <a href="mailto:joe.chou@davillage.com.tw" class="flex items-center hover:text-white transition">
+                                <i data-lucide="mail" class="w-3 h-3 mr-2"></i> joe.chou@davillage.com.tw
+                            </a>
+                            <a href="tel:0975663276" class="flex items-center text-white font-bold group-hover:text-dvNeon transition">
+                                <i data-lucide="smartphone" class="w-3 h-3 mr-2 text-gray-500 group-hover:text-dvNeon transition"></i> 0975-663-276
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="bg-dvGray border border-white/5 p-4 hover:border-dvNeon/50 transition group">
+                        <div class="flex items-baseline mb-3">
+                            <span class="text-lg font-black text-white mr-2">李靖為</span>
+                            <span class="text-xs text-dvNeon font-bold tracking-widest">團服經理</span>
+                        </div>
+                        <div class="space-y-2 text-xs text-gray-400">
+                            <a href="mailto:Stanley.wii@davillage.com.tw" class="flex items-center hover:text-white transition break-all">
+                                <i data-lucide="mail" class="w-3 h-3 mr-2 shrink-0"></i> Stanley.wii@...
+                            </a>
+                            <a href="tel:0912282189" class="flex items-center text-white font-bold group-hover:text-dvNeon transition">
+                                <i data-lucide="smartphone" class="w-3 h-3 mr-2 text-gray-500 group-hover:text-dvNeon transition"></i> 0912-282-189
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
-        <div class="border-t border-gray-800 mt-8 pt-8 text-center text-xs">
-            <p>&copy; 2024 PRO-MAKER. All rights reserved.</p>
+        
+        <div class="border-t border-white/10 pt-8 text-center text-xs text-gray-600 font-display tracking-widest">
+            &copy; 2024 PRO-MAKER CUSTOMIZATION LAB. ALL RIGHTS RESERVED.
         </div>
     </footer>
 
-    <!-- 初始化圖示與畫面切換邏輯 -->
     <script>
-        // 初始化 Lucide 圖示
         lucide.createIcons();
 
-        // 簡單的單頁切換邏輯
         function navigateTo(viewId) {
-            // 隱藏所有 view
-            document.querySelectorAll('.view-section').forEach(el => {
-                el.classList.remove('active');
-            });
-            // 顯示目標 view
-            const targetView = document.getElementById('view-' + viewId);
-            if (targetView) {
-                targetView.classList.add('active');
-                // 滾動回最上方
-                window.scrollTo({ top: 0, behavior: 'smooth' });
+            document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+            const target = document.getElementById('view-' + viewId);
+            if (target) {
+                target.classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'instant' });
             }
+            // Close mobile menu if open
+            document.getElementById('mobile-menu').classList.add('hidden');
         }
-
-        // 預設確保停在首頁
-        navigateTo('home');
     </script>
-
-    <!--
-      附註：下面為您原本提供的 React 檔案 (0317_02.html) 完整原始碼備份。
-      我把它放在註解中，避免瀏覽器直接執行且方便您日後取用或轉為模組 (例如使用 bundler 或 ESM CDN)。
-      若您要我將該 React 元件改寫為可在瀏覽器直接以 <script type="module"> 執行的版本（使用 esm.sh / unpkg 等 CDN），我可以再協助。
-    -->
-
-    <!-- React source (備份) -->
-    <!--
-    // 以下為 0317_02.html 的 React 原始碼備份（略）
-    // ...existing code...
-    (若需完整原始碼可移回註解內或另存為 .jsx / .js 檔)
-    -->
-
 </body>
 </html>
