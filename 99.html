@@ -1028,120 +1028,156 @@
         </section>
 
         <section id="view-quote" class="view-section py-16">
-            <div class="max-w-3xl mx-auto px-4">
-                <div class="bg-dvGray p-8 md:p-12 border border-white/10 relative overflow-hidden">
-                    <div class="absolute top-0 right-0 bg-dvNeon text-black px-4 py-1 text-xs font-black tracking-widest skew-x-[-10deg] transform translate-x-2 -translate-y-1">SYSTEM ONLINE</div>
-                    <h2 class="text-4xl font-display font-black italic mb-2">GET A <span class="text-dvNeon">QUOTE</span></h2>
-                    <p class="text-gray-400 text-sm mb-8">價格透明＋交期清楚，送出需求後我們將盡速提供正式報價。</p>
+                    <div class="max-w-3xl mx-auto px-4">
+                        <div class="bg-dvGray p-8 md:p-12 border border-white/10 relative overflow-hidden">
+                            <div class="absolute top-0 right-0 bg-dvNeon text-black px-4 py-1 text-xs font-black tracking-widest skew-x-[-10deg] transform translate-x-2 -translate-y-1">SYSTEM ONLINE</div>
+                            <h2 class="text-4xl font-display font-black italic mb-2">GET A <span class="text-dvNeon">QUOTE</span></h2>
+                            <p class="text-gray-400 text-sm mb-8">價格透明＋交期清楚，送出需求後我們將盡速提供正式報價。</p>
 
-                    <form class="space-y-6" onsubmit="event.preventDefault(); alert('預估價格系統即將啟動！');">
-                        
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div class="md:col-span-2">
-                                <label class="block text-xs font-bold text-gray-500 mb-2 uppercase tracking-widest">商品類型 <span class="text-dvNeon">*</span></label>
-                                <select class="w-full bg-dvBlack border border-white/20 p-4 font-bold focus:border-dvNeon outline-none text-white appearance-none">
-                                    <option value="">請選擇您需要的品項...</option>
-                                    <optgroup label="🔹 球類周邊">
-                                        <option value="baseball">棒球</option>
-                                        <option value="basketball">籃球</option>
-                                        <option value="miniball">小球 (紀念球)</option>
-                                    </optgroup>
-                                    <optgroup label="🔹 服裝類">
-                                        <option value="jersey">球衣 (籃球/棒球)</option>
-                                        <option value="tshirt">T-shirt</option>
-                                        <option value="jacket">外套</option>
-                                        <option value="hoodie">帽T</option>
-                                        <option value="shorts">短褲</option>
-                                        <option value="pants">長褲</option>
-                                        <option value="polo">POLO 衫</option>
-                                        <option value="happi">法批</option>
-                                        <option value="run">跑衣</option>
-                                    </optgroup>
-                                    <optgroup label="🔹 配件類">
-                                        <option value="hat">帽子</option>
-                                        <option value="towel">毛巾 (主力)</option>
-                                        <option value="bag">包袋 (主力)</option>
-                                        <option value="cheer">應援商品</option>
-                                        <option value="badge">徽章類</option>
-                                        <option value="cup">杯子</option>
-                                        <option value="acrylic">壓克力</option>
-                                        <option value="socks">襪子</option>
-                                        <option value="pillow">抱枕</option>
-                                        <option value="amulet">御守</option>
-                                        <option value="mini">迷你商品</option>
-                                        <option value="other">其他配件</option>
-                                    </optgroup>
-                                    <optgroup label="🔹 扭蛋類">
-                                        <option value="gacha">客製扭蛋</option>
-                                    </optgroup>
-                                    <optgroup label="🔹 設計與服務 (附加)">
-                                        <option value="design">設計企劃 / 拍照</option>
-                                        <option value="package">特殊包裝 / 貼條碼 / 輔料</option>
-                                        <option value="pos">POS 設備租借</option>
-                                    </optgroup>
-                                </select>
-                            </div>
-
-                            <div>
-                                <label class="block text-xs font-bold text-gray-500 mb-2 uppercase tracking-widest">預估數量 <span class="text-dvNeon">*</span></label>
-                                <input type="number" placeholder="填寫數量 (如: 50)" class="w-full bg-dvBlack border border-white/20 p-4 font-bold focus:border-dvNeon outline-none text-white">
-                            </div>
-                            
-                            <div>
-                                <label class="block text-xs font-bold text-gray-500 mb-2 uppercase tracking-widest">材質選擇</label>
-                                <select class="w-full bg-dvBlack border border-white/20 p-4 font-bold focus:border-dvNeon outline-none text-white">
-                                    <option>依商品預設</option>
-                                    <option>Polyester (聚酯纖維)</option>
-                                    <option>棉質</option>
-                                    <option>機能布</option>
-                                    <option>真皮/合成皮 (球類)</option>
-                                </select>
-                            </div>
-                            
-                            <div class="md:col-span-2">
-                                <label class="block text-xs font-bold text-gray-500 mb-2 uppercase tracking-widest">印刷方式</label>
-                                <select class="w-full bg-dvBlack border border-white/20 p-4 font-bold focus:border-dvNeon outline-none text-white">
-                                    <option>請專業人員為我建議</option>
-                                    <option>昇華印刷 (服裝推薦)</option>
-                                    <option>網版印刷</option>
-                                    <option>刺繡 (帽子推薦)</option>
-                                    <option>熱轉印 (贈品推薦)</option>
-                                </select>
-                            </div>
-                        </div>
-                        
-                        <div class="bg-dvBlack p-6 border-l-4 border-dvNeon mt-8">
-                            <label class="block text-xs font-bold text-dvNeon mb-4 uppercase tracking-widest flex items-center"><i data-lucide="clock" class="w-4 h-4 mr-2"></i> 交期需求</label>
-                            <div class="space-y-4">
-                                <label class="flex items-start cursor-pointer group p-3 hover:bg-white/5 border border-transparent rounded">
-                                    <input type="radio" name="time" class="mt-1 accent-dvNeon" checked>
-                                    <div class="ml-3">
-                                        <span class="block font-bold text-white">正常排單 (約 14-30 天)</span>
-                                        <span class="block text-xs text-gray-500 mt-1">標準作業流程，無需額外費用。</span>
+                            <form class="space-y-6" onsubmit="handleQuoteSubmit(event)">
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div class="md:col-span-2">
+                                        <label class="block text-xs font-bold text-gray-500 mb-2 uppercase tracking-widest">商品類型 <span class="text-dvNeon">*</span></label>
+                                        <select id="productType" class="w-full bg-dvBlack border border-white/20 p-4 font-bold focus:border-dvNeon outline-none text-white appearance-none">
+                                            <option value="">請選擇您需要的品項...</option>
+                                            <optgroup label="🔹 球類周邊">
+                                                <option value="baseball">棒球</option>
+                                                <option value="basketball">籃球</option>
+                                                <option value="miniball">小球 (紀念球)</option>
+                                            </optgroup>
+                                            <optgroup label="🔹 服裝類">
+                                                <option value="jersey">球衣 (籃球/棒球)</option>
+                                                <option value="tshirt">T-shirt</option>
+                                                <option value="jacket">外套</option>
+                                                <option value="hoodie">帽T</option>
+                                                <option value="shorts">短褲</option>
+                                                <option value="pants">長褲</option>
+                                                <option value="polo">POLO 衫</option>
+                                                <option value="happi">法批</option>
+                                                <option value="run">跑衣</option>
+                                            </optgroup>
+                                            <optgroup label="🔹 配件類">
+                                                <option value="hat">帽子</option>
+                                                <option value="towel">毛巾 (主力)</option>
+                                                <option value="bag">包袋 (主力)</option>
+                                                <option value="cheer">應援商品</option>
+                                                <option value="badge">徽章類</option>
+                                                <option value="cup">杯子</option>
+                                                <option value="acrylic">壓克力</option>
+                                                <option value="socks">襪子</option>
+                                                <option value="pillow">抱枕</option>
+                                                <option value="amulet">御守</option>
+                                                <option value="mini">迷你商品</option>
+                                                <option value="other">其他配件</option>
+                                            </optgroup>
+                                            <optgroup label="🔹 扭蛋類">
+                                                <option value="gacha">客製扭蛋</option>
+                                            </optgroup>
+                                            <optgroup label="🔹 設計與服務 (附加)">
+                                                <option value="design">設計企劃 / 拍照</option>
+                                                <option value="package">特殊包裝 / 貼條碼 / 輔料</option>
+                                                <option value="pos">POS 設備租借</option>
+                                            </optgroup>
+                                        </select>
                                     </div>
-                                </label>
-                                <label class="flex items-start cursor-pointer group p-3 border border-dvNeon/30 bg-dvNeon/5 rounded">
-                                    <input type="radio" name="time" class="mt-1 accent-dvNeon">
-                                    <div class="ml-3">
-                                        <span class="block font-bold text-dvNeon">急件處理 (最快 7 天出貨)</span>
-                                        <span class="block text-xs text-gray-400 mt-1">優先插單生產，總價將酌收 20% 急件處理費。</span>
+
+                                    <div>
+                                        <label class="block text-xs font-bold text-gray-500 mb-2 uppercase tracking-widest">預估數量 <span class="text-dvNeon">*</span></label>
+                                        <input type="number" id="quantity" placeholder="填寫數量 (如: 50)" class="w-full bg-dvBlack border border-white/20 p-4 font-bold focus:border-dvNeon outline-none text-white">
                                     </div>
-                                </label>
-                            </div>
-                        </div>
+                                    
+                                    <div>
+                                        <label class="block text-xs font-bold text-gray-500 mb-2 uppercase tracking-widest">材質選擇</label>
+                                        <select id="material" class="w-full bg-dvBlack border border-white/20 p-4 font-bold focus:border-dvNeon outline-none text-white">
+                                            <option>依商品預設</option>
+                                            <option>Polyester (聚酯纖維)</option>
+                                            <option>棉質</option>
+                                            <option>機能布</option>
+                                            <option>真皮/合成皮 (球類)</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="md:col-span-2">
+                                        <label class="block text-xs font-bold text-gray-500 mb-2 uppercase tracking-widest">印刷方式</label>
+                                        <select id="printMethod" class="w-full bg-dvBlack border border-white/20 p-4 font-bold focus:border-dvNeon outline-none text-white">
+                                            <option>請專業人員為我建議</option>
+                                            <option>昇華印刷 (服裝推薦)</option>
+                                            <option>網版印刷</option>
+                                            <option>刺繡 (帽子推薦)</option>
+                                            <option>熱轉印 (贈品推薦)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-dvBlack p-6 border-l-4 border-dvNeon mt-8">
+                                    <label class="block text-xs font-bold text-dvNeon mb-4 uppercase tracking-widest flex items-center"><i data-lucide="clock" class="w-4 h-4 mr-2"></i> 交期需求</label>
+                                    <div class="space-y-4">
+                                        <label class="flex items-start cursor-pointer group p-3 hover:bg-white/5 border border-transparent rounded">
+                                            <input type="radio" name="time" value="normal" class="mt-1 accent-dvNeon" checked>
+                                            <div class="ml-3">
+                                                <span class="block font-bold text-white">正常排單 (約 14-30 天)</span>
+                                                <span class="block text-xs text-gray-500 mt-1">標準作業流程，無需額外費用。</span>
+                                            </div>
+                                        </label>
+                                        <label class="flex items-start cursor-pointer group p-3 border border-dvNeon/30 bg-dvNeon/5 rounded">
+                                            <input type="radio" name="time" value="rush" class="mt-1 accent-dvNeon">
+                                            <div class="ml-3">
+                                                <span class="block font-bold text-dvNeon">急件處理 (最快 7 天出貨)</span>
+                                                <span class="block text-xs text-gray-400 mt-1">優先插單生產，總價將酌收 20% 急件處理費。</span>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
 
-                        <div class="grid grid-cols-2 gap-4 pt-4 border-t border-white/10">
-                            <div><input type="text" placeholder="聯絡人姓名" class="w-full bg-dvBlack border border-white/20 p-3 text-sm focus:border-dvNeon outline-none text-white"></div>
-                            <div><input type="text" placeholder="公司/球隊名稱" class="w-full bg-dvBlack border border-white/20 p-3 text-sm focus:border-dvNeon outline-none text-white"></div>
-                        </div>
+                                <div class="grid grid-cols-2 gap-4 pt-4 border-t border-white/10">
+                                    <div><input type="text" id="contactName" placeholder="聯絡人姓名" class="w-full bg-dvBlack border border-white/20 p-3 text-sm focus:border-dvNeon outline-none text-white"></div>
+                                    <div><input type="text" id="company" placeholder="公司/球隊名稱" class="w-full bg-dvBlack border border-white/20 p-3 text-sm focus:border-dvNeon outline-none text-white"></div>
+                                    <div class="col-span-2"><input type="email" id="email" placeholder="聯絡信箱" class="w-full bg-dvBlack border border-white/20 p-3 text-sm focus:border-dvNeon outline-none text-white"></div>
+                                    <div class="col-span-2"><input type="url" id="designLink" placeholder="設計稿雲端連結 (Google Drive / Dropbox 等)" class="w-full bg-dvBlack border border-white/20 p-3 text-sm focus:border-dvNeon outline-none text-white"></div>
+                                </div>
 
-                        <button type="submit" class="w-full bg-dvNeon text-black py-5 font-black text-xl hover:bg-white transition-colors uppercase italic tracking-tighter mt-6">
-                            立即取得正式報價
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </section>
+                                <button type="submit" class="w-full bg-dvNeon text-black py-5 font-black text-xl hover:bg-white transition-colors uppercase italic tracking-tighter mt-6">
+                                    立即取得正式報價
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </section>
+
+                <script>
+                    function handleQuoteSubmit(event) {
+                        event.preventDefault();
+                        
+                        const formData = {
+                            productType: document.getElementById('productType').value,
+                            quantity: document.getElementById('quantity').value,
+                            material: document.getElementById('material').value,
+                            printMethod: document.getElementById('printMethod').value,
+                            timeframe: document.querySelector('input[name="time"]:checked').value,
+                            contactName: document.getElementById('contactName').value,
+                            company: document.getElementById('company').value,
+                            email: document.getElementById('email').value,
+                            designLink: document.getElementById('designLink').value
+                        };
+
+                        // Send email via EmailJS or your backend
+                        fetch('https://formspree.io/f/YOUR_FORM_ID', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                ...formData,
+                                to_email: 'gai2445513@gmail.com',
+                                subject: '新報價單: ' + formData.contactName
+                            })
+                        }).then(() => {
+                            alert('報價單已送出！我們將盡速與您聯絡。');
+                            event.target.reset();
+                        }).catch(() => {
+                            alert('送出失敗，請檢查網路連線。');
+                        });
+                    }
+                </script>
 
     </main>
 
