@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>訂製流程 ｜ 客製化實驗室 DALAB | DA VILLAGE</title>
+  <meta name="description" content="DA VILLAGE (DV) 旗下客製化實驗室 DALAB (DV PRO-MAKER) 標準訂製流程。從諮詢需求、報價合約、設計確認、量產製作、品檢出貨提供完善代工服務。">
+  <meta name="keywords" content="davillage, da village, dalab, dv promaker, 訂製流程, 團體服代工流程, 客製化交期">
+  <meta property="og:title" content="訂製流程 ｜ 客製化實驗室 DALAB | DA VILLAGE">
+  <meta property="og:description" content="DA VILLAGE (DV) 旗下客製化實驗室 DALAB (DV PRO-MAKER) 標準訂製流程。從諮詢需求、報價合約、設計確認、量產製作、品檢出貨提供完善代工服務。">
+  <meta property="og:image" content="assets/img/homepage_background.jpg">
+  <meta property="og:type" content="website">
+  <!-- 外部資源 -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- 自訂樣式檔 -->
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/main.css">
+  <!-- Tailwind 配置 -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Noto Sans TC"', 'sans-serif'],
+            display: ['Oswald', 'sans-serif']
+          },
+          colors: {
+            dvBlack: '#0a0a0a',
+            dvGray: '#1c1c1c',
+            dvNeon: '#ccff00',
+            dvDarkNeon: '#a3cc00'
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-dvBlack text-white">
+
+<!-- 導覽列 -->
+<nav id="main-nav" class="bg-dvBlack relative z-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="flex justify-between h-20 items-center">
+      <div class="flex flex-col justify-center cursor-pointer group" onclick="location.href='index.html'" aria-label="Home">
+          <div class="flex items-center font-display font-black tracking-tighter leading-none text-white brand-logo">
+            <svg class="w-10 h-10 text-dvNeon shrink-0 neon-pulse mr-2" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M 45 13 Q 50 10 55 13 L 80 27 Q 85 30 85 35 L 85 65 Q 85 70 80 73 L 55 87 Q 50 90 45 87 L 20 73 Q 15 70 15 65 L 15 35 Q 15 30 20 27 Z" stroke="currentColor" stroke-width="8" stroke-linejoin="round" fill="none"/>
+              <ellipse cx="50" cy="42" rx="10.5" ry="18" stroke="currentColor" stroke-width="6" fill="none" transform="rotate(0 50 50)"/>
+              <ellipse cx="50" cy="42" rx="10.5" ry="18" stroke="currentColor" stroke-width="6" fill="none" transform="rotate(120 50 50)"/>
+              <ellipse cx="50" cy="42" rx="10.5" ry="18" stroke="currentColor" stroke-width="6" fill="none" transform="rotate(240 50 50)"/>
+            </svg>
+            <span class="leading-none text-4xl font-display font-black lowercase tracking-tight">dalab</span>
+          </div>
+          <span class="font-bold text-[10px] tracking-[0.2em] mt-1 text-center font-sans text-dvNeon">POWERING EVERY PRODUCT</span>
+        </div>
+      <div class="hidden md:flex items-center space-x-8">
+        <button onclick="location.href='products.html'" class="nav-link text-sm font-bold text-white">商品總覽</button>
+        <button onclick="location.href='materials.html'" class="nav-link text-sm font-bold text-white">材質與工藝</button>
+        <button onclick="location.href='process.html'" class="text-dvNeon font-bold">訂製流程</button>
+        <button onclick="location.href='quote.html'" class="bg-dvNeon px-6 py-2 font-bold text-sm text-black skew-x-[-10deg]">立即報價</button>
+      </div>
+      <div class="md:hidden flex items-center">
+        <button class="menu-btn" onclick="toggleMobileMenu(this)"><i data-lucide="menu" class="h-8 w-8 text-dvNeon"></i></button>
+      </div>
+    </div>
+  </div>
+  <div id="mobile-menu" class="hidden p-4 bg-dvGray border-t border-dvNeon/20">
+    <button onclick="location.href='products.html'" class="block w-full text-left py-2 font-bold text-white">商品總覽</button>
+    <button onclick="location.href='materials.html'" class="block w-full text-left py-2 font-bold text-white">材質與工藝</button>
+    <button onclick="location.href='process.html'" class="block w-full text-left py-2 font-bold text-dvNeon">訂製流程</button>
+    <button onclick="location.href='quote.html'" class="block w-full text-center bg-dvNeon text-black py-3 font-bold mt-2">立即報價</button>
+  </div>
+</nav>
+
+<!-- 頂部影片 -->
+<div class="video-container">
+  <div class="video-overlay"></div>
+  <div class="video-content">
+    <h1 class="text-4xl md:text-6xl font-black text-white text-center px-4">訂製流程</h1>
+  </div>
+  <video src="001.MP4" autoplay muted loop playsinline></video>
+</div>
+
+<!-- 放大版方格卡片流程圖 -->
+<main class="max-w-5xl mx-auto px-4 py-16">
+  <div class="text-center mb-12">
+    <h2 class="text-2xl font-bold mb-2">標準訂製流程</h2>
+    <p class="text-gray-400">點擊卡片查看詳細說明</p>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <!-- STEP 1 -->
+    <div class="step-card bg-dvGray border border-white/10 p-8 relative group overflow-hidden">
+      <div class="absolute right-4 top-4 text-white/5 group-hover:text-dvNeon/15 group-hover:scale-110 group-hover:rotate-12 transition-all duration-500 pointer-events-none">
+        <i data-lucide="message-square" class="w-16 h-16"></i>
+      </div>
+      <div class="flex items-center justify-between mb-4 relative z-10" onclick="toggleStep(this.parentElement)">
+        <div class="flex items-center gap-4">
+          <div class="step-number">01</div>
+          <h3 class="font-bold text-dvNeon text-xl">諮詢與需求確認</h3>
+        </div>
+        <i data-lucide="chevron-down" class="arrow-icon text-dvNeon"></i>
+      </div>
+      <div class="step-content text-gray-300 text-base pl-14 relative z-10">
+        透過電話、LINE 或表單提供需求，專人為您評估最佳方案。
+      </div>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="step-card bg-dvGray border border-white/10 p-8 relative group overflow-hidden">
+      <div class="absolute right-4 top-4 text-white/5 group-hover:text-dvNeon/15 group-hover:scale-110 group-hover:rotate-12 transition-all duration-500 pointer-events-none">
+        <i data-lucide="file-text" class="w-16 h-16"></i>
+      </div>
+      <div class="flex items-center justify-between mb-4 relative z-10" onclick="toggleStep(this.parentElement)">
+        <div class="flex items-center gap-4">
+          <div class="step-number">02</div>
+          <h3 class="font-bold text-dvNeon text-xl">報價與合約</h3>
+        </div>
+        <i data-lucide="chevron-down" class="arrow-icon text-dvNeon"></i>
+      </div>
+      <div class="step-content text-gray-300 text-base pl-14 relative z-10">
+        提供正式報價單，確認後簽訂訂單合約，保障雙方權益。
+      </div>
+    </div>
+
+    <!-- STEP 3 -->
+    <div class="step-card bg-dvGray border border-white/10 p-8 relative group overflow-hidden">
+      <div class="absolute right-4 top-4 text-white/5 group-hover:text-dvNeon/15 group-hover:scale-110 group-hover:rotate-12 transition-all duration-500 pointer-events-none">
+        <i data-lucide="pen-tool" class="w-16 h-16"></i>
+      </div>
+      <div class="flex items-center justify-between mb-4 relative z-10" onclick="toggleStep(this.parentElement)">
+        <div class="flex items-center gap-4">
+          <div class="step-number">03</div>
+          <h3 class="font-bold text-dvNeon text-xl">設計與圖稿確認</h3>
+        </div>
+        <i data-lucide="chevron-down" class="arrow-icon text-dvNeon"></i>
+      </div>
+      <div class="step-content text-gray-300 text-base pl-14 relative z-10">
+        設計師提供圖稿，確認字體、顏色、位置無誤後進入生產。
+      </div>
+    </div>
+
+    <!-- STEP 4 -->
+    <div class="step-card bg-dvGray border border-white/10 p-8 relative group overflow-hidden">
+      <div class="absolute right-4 top-4 text-white/5 group-hover:text-dvNeon/15 group-hover:scale-110 group-hover:rotate-12 transition-all duration-500 pointer-events-none">
+        <i data-lucide="cpu" class="w-16 h-16"></i>
+      </div>
+      <div class="flex items-center justify-between mb-4 relative z-10" onclick="toggleStep(this.parentElement)">
+        <div class="flex items-center gap-4">
+          <div class="step-number">04</div>
+          <h3 class="font-bold text-dvNeon text-xl">量產製作</h3>
+        </div>
+        <i data-lucide="chevron-down" class="arrow-icon text-dvNeon"></i>
+      </div>
+      <div class="step-content text-gray-300 text-base pl-14 relative z-10">
+        依據確認圖稿與規格，嚴格把關每一個生產流程。
+      </div>
+    </div>
+
+    <!-- STEP 5 -->
+    <div class="step-card bg-dvGray border border-white/10 p-8 relative group overflow-hidden">
+      <div class="absolute right-4 top-4 text-white/5 group-hover:text-dvNeon/15 group-hover:scale-110 group-hover:rotate-12 transition-all duration-500 pointer-events-none">
+        <i data-lucide="check-circle" class="w-16 h-16"></i>
+      </div>
+      <div class="flex items-center justify-between mb-4 relative z-10" onclick="toggleStep(this.parentElement)">
+        <div class="flex items-center gap-4">
+          <div class="step-number">05</div>
+          <h3 class="font-bold text-dvNeon text-xl">品質檢驗</h3>
+        </div>
+        <i data-lucide="chevron-down" class="arrow-icon text-dvNeon"></i>
+      </div>
+      <div class="step-content text-gray-300 text-base pl-14 relative z-10">
+        成品全數檢驗，確認印刷、尺寸、品質皆符合標準。
+      </div>
+    </div>
+
+    <!-- STEP 6 -->
+    <div class="step-card bg-dvGray border border-white/10 p-8 relative group overflow-hidden">
+      <div class="absolute right-4 top-4 text-white/5 group-hover:text-dvNeon/15 group-hover:scale-110 group-hover:rotate-12 transition-all duration-500 pointer-events-none">
+        <i data-lucide="truck" class="w-16 h-16"></i>
+      </div>
+      <div class="flex items-center justify-between mb-4 relative z-10" onclick="toggleStep(this.parentElement)">
+        <div class="flex items-center gap-4">
+          <div class="step-number">06</div>
+          <h3 class="font-bold text-dvNeon text-xl">出貨與完成</h3>
+        </div>
+        <i data-lucide="chevron-down" class="arrow-icon text-dvNeon"></i>
+      </div>
+      <div class="step-content text-gray-300 text-base pl-14 relative z-10">
+        依指定物流方式出貨，提供後續服務與支援。
+      </div>
+    </div>
+  </div>
+</main>
+<footer class="footer py-12">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+      <!-- 品牌資訊 -->
+      <div class="md:col-span-1">
+        <div class="flex flex-col justify-center cursor-pointer footer-logo" onclick="location.href='index.html'">
+          <div class="flex items-center font-display font-black tracking-tighter leading-none text-white">
+            <svg class="w-8 h-8 text-dvNeon shrink-0 mr-1.5" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M 45 13 Q 50 10 55 13 L 80 27 Q 85 30 85 35 L 85 65 Q 85 70 80 73 L 55 87 Q 50 90 45 87 L 20 73 Q 15 70 15 65 L 15 35 Q 15 30 20 27 Z" stroke="currentColor" stroke-width="8" stroke-linejoin="round" fill="none"/>
+              <ellipse cx="50" cy="42" rx="10.5" ry="18" stroke="currentColor" stroke-width="6" fill="none" transform="rotate(0 50 50)"/>
+              <ellipse cx="50" cy="42" rx="10.5" ry="18" stroke="currentColor" stroke-width="6" fill="none" transform="rotate(120 50 50)"/>
+              <ellipse cx="50" cy="42" rx="10.5" ry="18" stroke="currentColor" stroke-width="6" fill="none" transform="rotate(240 50 50)"/>
+            </svg>
+            <span class="leading-none text-3xl font-display font-black lowercase tracking-tight">dalab</span>
+          </div>
+          <span class="text-[10px] font-bold tracking-[0.2em] text-center text-dvNeon mt-1">POWERING EVERY PRODUCT</span>
+        </div>
+        <p class="text-gray-400 text-sm mt-4">
+          專業客製化產品製造<br>
+          品質保證 · 快速交期
+        </p>
+      </div>
+
+      <!-- 快速連結 -->
+      <div class="md:col-span-1">
+        <h4 class="font-bold text-white text-lg mb-4">快速連結</h4>
+        <ul class="space-y-2">
+          <li><button onclick="location.href='index.html'" class="footer-link text-gray-300 text-sm">首頁</button></li>
+          <li><button onclick="location.href='products.html'" class="footer-link text-gray-300 text-sm">商品總覽</button></li>
+          <li><button onclick="location.href='materials.html'" class="footer-link text-gray-300 text-sm">材質與工藝</button></li>
+          <li><button onclick="location.href='process.html'" class="footer-link text-dvNeon text-sm">訂製流程</button></li>
+          <li><button onclick="location.href='quote.html'" class="footer-link text-gray-300 text-sm">立即報價</button></li>
+        </ul>
+      </div>
+
+      <!-- 聯繫資訊 -->
+      <div class="md:col-span-1">
+        <h4 class="font-bold text-white text-lg mb-4">聯繫我們</h4>
+        <ul class="space-y-2 text-sm text-gray-300">
+          <li class="flex items-center gap-2">
+            <i data-lucide="phone" class="w-4 h-4 text-dvNeon"></i>
+            <span>(02)2990-5980</span>
+          </li>
+          <li class="flex items-center gap-2">
+            <i data-lucide="mail" class="w-4 h-4 text-dvNeon"></i>
+            <span>joe.chou@davillage.com.tw</span>
+          </li>
+          <li class="flex items-center gap-2">
+            <i data-lucide="map-pin" class="w-4 h-4 text-dvNeon"></i>
+            <span>新北市新莊區中正路68號10F</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- 營業時間 -->
+      <div class="md:col-span-1">
+        <h4 class="font-bold text-white text-lg mb-4">營業時間</h4>
+        <ul class="space-y-2 text-sm text-gray-300">
+          <li class="flex justify-between">
+            <span>週一至週五</span>
+            <span>10:00 - 19:00</span>
+          </li>
+          <li class="flex justify-between">
+            <span>週六日/國定假日</span>  
+            <span>休息</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 版權資訊 -->
+    <div class="copyright mt-12 pt-6">
+      <div class="flex flex-col md:flex-row justify-between items-center">
+        <p class="text-gray-500 text-sm text-center md:text-left">
+          © 2026 DA LAB. All rights reserved. | <button onclick="location.href='privacy.html'" class="footer-link text-gray-400 hover:text-dvNeon">隱私政策</button> | <button onclick="location.href='terms.html'" class="footer-link text-gray-400 hover:text-dvNeon">使用條款</button>
+
+        </p>
+        <div class="flex gap-4 mt-4 md:mt-0">
+          <button class="footer-link text-gray-400 hover:text-dvNeon">
+            <i data-lucide="facebook" class="w-5 h-5"></i>
+          </button>
+          <button class="footer-link text-gray-400 hover:text-dvNeon">
+            <i data-lucide="instagram" class="w-5 h-5"></i>
+          </button>
+          <button class="footer-link text-gray-400 hover:text-dvNeon">
+            <i data-lucide="line" class="w-5 h-5"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- 外部 JS 檔案（放在最後確保 DOM 載入完成） -->
+<script src="assets/js/main.js"></script>
+</body>
+</html>
