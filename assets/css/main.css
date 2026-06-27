@@ -303,7 +303,7 @@ body {
     opacity: 0;
   }
   to {
-    opacity: 0.55;
+    opacity: 0.9;
   }
 }
 
@@ -338,11 +338,11 @@ body {
   100% { top: 100%; opacity: 0; }
 }
 
-/* 同軸雙向旋轉目標鎖定環 */
 @keyframes spinCW {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
 @keyframes spinCCW {
   from { transform: rotate(360deg); }
   to { transform: rotate(0deg); }
@@ -376,5 +376,16 @@ body {
   animation: hudFlicker 5s infinite !important;
 }
 
-
-
+/* 首頁三支柱分支線流動動畫 */
+@keyframes flowLeft {
+  from {
+    stroke-dashoffset: 50;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+.hud-flow-path {
+  stroke-dasharray: 6 6;
+  animation: flowLeft 1.5s linear infinite;
+}

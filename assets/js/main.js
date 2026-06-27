@@ -281,9 +281,6 @@ function getCyberHudGroup(productCode, productName, options = {}) {
       <!-- Corner brackets -->
       <path d="M 6 14 V 6 H 14 M 94 14 V 6 H 86 M 6 86 V 94 H 14 M 94 86 V 94 H 86" stroke="currentColor" stroke-width="0.8" stroke-opacity="0.3"/>
       
-      <!-- Dimension lines & ticks -->
-      <path d="M 10 20 V 80 M 7 20 H 13 M 7 80 H 13 M 20 90 H 80 M 20 87 V 93 M 80 87 V 93" stroke="currentColor" stroke-width="0.6" stroke-opacity="0.25"/>
-      
       <!-- Centered Target Lock concentric circles with inline transform-origin -->
       <circle class="hud-spin-cw" cx="${targetCx}" cy="${targetCy}" r="${targetR}" stroke="currentColor" stroke-opacity="0.25" stroke-width="0.8" stroke-dasharray="2 3" style="transform-origin: ${targetCx}px ${targetCy}px;"/>
       <circle class="hud-spin-ccw" cx="${targetCx}" cy="${targetCy}" r="${targetR + 3}" stroke="#00f0ff" stroke-opacity="0.2" stroke-width="0.6" stroke-dasharray="1 2" style="transform-origin: ${targetCx}px ${targetCy}px;"/>
@@ -300,18 +297,19 @@ function getCyberHudGroup(productCode, productName, options = {}) {
       <path d="M 77 8 h 2 M 82 11 h 3 M 85 14 h 1 M 81 17 h 2" stroke="#ff0055" stroke-width="0.8" stroke-opacity="0.5"/>
       
       <!-- Technical Monospace Labels -->
-      <text x="10" y="14" font-family="monospace" font-size="2.6" fill="currentColor">DALAB.SYS // ${productCode}</text>
-      <text x="10" y="86" font-family="monospace" font-size="2.2" fill="currentColor">ANGLE: ${angleText}</text>
-      <text x="74" y="86" font-family="monospace" font-size="2.2" fill="#00f0ff">${scaleText}</text>
-      <text x="5" y="44" font-family="monospace" font-size="2.0" fill="currentColor" transform="rotate(-90 5 44)">H_DIM: ${heightText}</text>
-      <text x="44" y="95" font-family="monospace" font-size="2.2" fill="currentColor">W_DIM: ${widthText}</text>
+      <text x="10" y="14" font-family="monospace" font-size="3.2" fill="currentColor">DALAB.SYS // ${productCode}</text>
+      <text x="10" y="86" font-family="monospace" font-size="2.8" fill="currentColor">ANGLE: ${angleText}</text>
+      <text x="74" y="86" font-family="monospace" font-size="2.8" fill="#00f0ff">${scaleText}</text>
+      <text x="6" y="44" font-family="monospace" font-size="2.6" fill="currentColor" transform="rotate(-90 6 44)">H_DIM: ${heightText}</text>
+      <text x="44" y="94" font-family="monospace" font-size="2.8" fill="currentColor">W_DIM: ${widthText}</text>
       
       <!-- Terminal bootloader readout! -->
-      <text x="10" y="18" font-family="monospace" font-size="1.8" fill="#00f0ff" fill-opacity="0.6" class="hud-flicker">SYS_STATUS: ACTIVE [100%]</text>
-      <text x="10" y="21" font-family="monospace" font-size="1.6" fill="currentColor" fill-opacity="0.3">GRID_LOCK: ENFORCED</text>
+      <text x="10" y="19" font-family="monospace" font-size="2.4" fill="#00f0ff" fill-opacity="0.8" class="hud-flicker">SYS_STATUS: ACTIVE [100%]</text>
+      <text x="10" y="23" font-family="monospace" font-size="2.2" fill="currentColor" fill-opacity="0.6">GRID_LOCK: ENFORCED</text>
     </g>
   `;
 }
+
 
 // Master SVG builder to normalize layers to exactly 8 children + interactive 9th child
 function buildStructuredSvg(icon, sizeClass, baseElements, hudOpts) {
@@ -400,11 +398,11 @@ function getProductSvg(icon, sizeClass = "w-10 h-10") {
 
   const rawShapes = {
     'baseball': [
-      `<circle cx="50" cy="50" r="32" stroke-width="2"/>`,
-      `<path d="M26 38c10 3 15 8 15 12s-5 9-15 12M74 38c-10 3-15 8-15 12s5 9 15 12" stroke-width="1.5"/>`,
-      `<path d="M30 40l1-2M33 43l1-2M37 46l1-2M40 49l1-2M38 52l-1-2M35 55l-1-2M31 58l-1-2" stroke-width="1"/>`,
-      `<path d="M70 40l-1-2M67 43l-1-2M63 46l-1-2M60 49l-1-2M62 52l1-2M65 55l1-2M69 58l1-2" stroke-width="1"/>`,
-      `<path d="M12 18h76M12 18v6M88 18v6" stroke-width="1"/>`
+      `<circle cx="50" cy="50" r="30" stroke-width="2"/>`,
+      `<path d="M27 37c9 4 13 9 13 13s-4 9-13 13" stroke-width="1.5"/>`,
+      `<path d="M73 37c-9 4-13 9-13 13s4 9 13 13" stroke-width="1.5"/>`,
+      `<path d="M31 39l1.5-2M34 43l1.5-1.5M36 47l1.2-1M36 53l-1.2-1M34 57l-1.5-1.5M31 61l-1.5-2" stroke-width="1" stroke-opacity="0.6"/>`,
+      `<path d="M69 39l-1.5-2M66 43l-1.5-1.5M64 47l-1.2-1M64 53l1.2-1M66 57l1.5-1.5M69 61l1.5-2" stroke-width="1" stroke-opacity="0.6"/>`
     ],
     'jersey': [
       `<path d="M30 25h12c1 0 2 .5 2.5 1.5l3.5 6 3.5-6c.5-1 1.5-1.5 2.5-1.5h12l14 8-6 12-8-3v33H36V41l-8 3-6-12 14-8z" stroke-width="2" stroke-linejoin="round"/>`,

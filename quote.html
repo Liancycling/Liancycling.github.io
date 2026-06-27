@@ -122,192 +122,254 @@
 </div>
 
 <!-- 詢價專案詢問單 (原生暗色系與 Weebly 詢價單欄位同步) -->
-<main class="max-w-4xl mx-auto px-4 py-16">
-  <div class="bg-dvGray/85 backdrop-blur-md border border-white/10 rounded-lg p-6 md:p-10 shadow-2xl relative overflow-hidden blueprint-grid">
-    <!-- 背景半透明遮罩 -->
-    <div class="absolute inset-0 bg-black/40 pointer-events-none z-0"></div>
-    <div class="relative z-10">
-      <h2 class="text-3xl font-display font-black italic mb-2 text-white uppercase tracking-wider">PROJECT INQUIRY / <span class="text-dvNeon">專案需求詢價單</span></h2>
-      <p class="text-gray-400 mb-8 text-sm">請提供您的採購專案細節，DA LAB 專屬規劃師將於收到需求後 24 小時內與您聯繫並提供正式報價單。</p>
+<main class="max-w-7xl mx-auto px-4 py-16">
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+    
+    <!-- 左側欄：品牌科技感視覺 (Col-span 5) -->
+    <div class="lg:col-span-5 bg-dvGray/30 border border-white/10 rounded-lg p-8 shadow-2xl relative overflow-hidden flex flex-col justify-between blueprint-grid min-h-[450px] lg:min-h-0">
+      <div class="absolute inset-0 bg-black/45 pointer-events-none z-0"></div>
       
-      <form 
-        id="quote-form"
-        class="space-y-8"
-      >
-        <!-- 兩欄式基本資料 -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <label class="block text-sm font-bold text-gray-300 mb-2" for="company-input">採購公司名稱 (正式公司名) <span class="text-dvNeon">*</span></label>
-            <input 
-              id="company-input"
-              type="text" 
-              name="company_name" 
-              required 
-              placeholder="例：戴維斯運動股份有限公司" 
-              class="w-full bg-dvBlack/60 border border-white/15 px-4 py-3 text-white rounded outline-none focus:border-dvNeon focus:shadow-[0_0_15px_rgba(204,255,0,0.15)] transition"
-            >
+      <!-- 頂部科技裝飾線 -->
+      <div class="relative z-10 flex items-center justify-between border-b border-white/10 pb-4">
+        <div class="flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-dvNeon animate-ping"></span>
+          <span class="text-xs font-mono font-bold tracking-[0.2em] text-dvNeon">SYSTEM ACTIVE</span>
+        </div>
+        <span class="text-[10px] font-mono text-gray-500">SYS_V2.5.0</span>
+      </div>
+      
+      <!-- 中間動態視覺 (旋轉同心圓與雷達) -->
+      <div class="relative z-10 my-auto flex flex-col items-center justify-center py-8">
+        <div class="relative w-64 h-64 flex items-center justify-center">
+          <!-- 雷達掃描線 -->
+          <div class="absolute inset-0 rounded-full border border-dvNeon/20 animate-[spin_8s_linear_infinite] overflow-hidden">
+            <div class="w-1/2 h-1/2 bg-gradient-to-tr from-dvNeon/20 to-transparent origin-bottom-right rotate-45"></div>
           </div>
-          <div>
-            <label class="block text-sm font-bold text-gray-300 mb-2" for="contact-input">採購窗口稱呼 <span class="text-dvNeon">*</span></label>
-            <input 
-              id="contact-input"
-              type="text" 
-              name="contact_name" 
-              required 
-              placeholder="例：林經理 / 周小姐" 
-              class="w-full bg-dvBlack/60 border border-white/15 px-4 py-3 text-white rounded outline-none focus:border-dvNeon focus:shadow-[0_0_15px_rgba(204,255,0,0.15)] transition"
-            >
+          <!-- 外圈同心圓 -->
+          <div class="absolute inset-2 rounded-full border border-dashed border-white/10 animate-[spin_20s_linear_infinite]"></div>
+          <!-- 內圈同心圓 -->
+          <div class="absolute inset-8 rounded-full border border-white/5 animate-[spin_12s_linear_infinite_reverse]"></div>
+          <!-- 核心 SVG 帽子 -->
+          <div class="z-10 text-dvNeon/60 filter drop-shadow-[0_0_15px_rgba(204,255,0,0.3)] animate-pulse">
+            <svg class="w-32 h-32" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M15 65C15 45 30 30 50 30C70 30 85 45 85 65" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+              <path d="M50 30V25" stroke="currentColor" stroke-width="3"/>
+              <circle cx="50" cy="23" r="3" fill="currentColor"/>
+              <path d="M50 45C35 45 22 53 17 65" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 3"/>
+              <path d="M50 45C65 45 78 53 83 65" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 3"/>
+              <path d="M83 65C83 65 92 68 95 72C97 75 92 78 80 78C60 78 45 72 45 72" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/>
+            </svg>
           </div>
         </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <label class="block text-sm font-bold text-gray-300 mb-2" for="email-input">電子郵件 E-mail <span class="text-dvNeon">*</span></label>
-            <input 
-              id="email-input"
-              type="email" 
-              name="email" 
-              required 
-              placeholder="name@example.com" 
-              class="w-full bg-dvBlack/60 border border-white/15 px-4 py-3 text-white rounded outline-none focus:border-dvNeon focus:shadow-[0_0_15px_rgba(204,255,0,0.15)] transition"
-            >
-          </div>
-          <div>
-            <label class="block text-sm font-bold text-gray-300 mb-2" for="phone-input">電話 / 手機 / LINE ID <span class="text-dvNeon">*</span></label>
-            <input 
-              id="phone-input"
-              type="text" 
-              name="phone" 
-              required 
-              placeholder="例：0912-345678 / LINE ID" 
-              class="w-full bg-dvBlack/60 border border-white/15 px-4 py-3 text-white rounded outline-none focus:border-dvNeon focus:shadow-[0_0_15px_rgba(204,255,0,0.15)] transition"
-            >
-          </div>
-        </div>
-
-        <!-- 欲採購的產品 (客製化卡片選取) -->
-        <div>
-          <label class="block text-sm font-bold text-gray-300 mb-3">欲採購的產品 <span class="text-dvNeon">*</span></label>
-          <div class="grid grid-cols-2 md:grid-cols-3 gap-4" id="product-select-grid">
-            <label class="product-checkbox-card flex flex-col items-center justify-center p-4 bg-dvBlack/45 border border-white/10 hover:border-dvNeon/50 rounded cursor-pointer transition select-none group/item relative overflow-hidden h-32" data-svg="jersey">
-              <input type="checkbox" name="products" value="團體服飾/球衣" class="sr-only product-input">
-              <!-- SVG將動態注入 -->
-              <span class="text-xs text-gray-400 group-hover/item:text-white transition font-bold mt-2 z-10">團體服飾/球衣</span>
-            </label>
-            <label class="product-checkbox-card flex flex-col items-center justify-center p-4 bg-dvBlack/45 border border-white/10 hover:border-dvNeon/50 rounded cursor-pointer transition select-none group/item relative overflow-hidden h-32" data-svg="hat">
-              <input type="checkbox" name="products" value="客製帽子" class="sr-only product-input">
-              <span class="text-xs text-gray-400 group-hover/item:text-white transition font-bold mt-2 z-10">客製帽子/配件</span>
-            </label>
-            <label class="product-checkbox-card flex flex-col items-center justify-center p-4 bg-dvBlack/45 border border-white/10 hover:border-dvNeon/50 rounded cursor-pointer transition select-none group/item relative overflow-hidden h-32" data-svg="towel">
-              <input type="checkbox" name="products" value="運動毛巾" class="sr-only product-input">
-              <span class="text-xs text-gray-400 group-hover/item:text-white transition font-bold mt-2 z-10">運動/應援毛巾</span>
-            </label>
-            <label class="product-checkbox-card flex flex-col items-center justify-center p-4 bg-dvBlack/45 border border-white/10 hover:border-dvNeon/50 rounded cursor-pointer transition select-none group/item relative overflow-hidden h-32" data-svg="tote">
-              <input type="checkbox" name="products" value="托特包/袋類" class="sr-only product-input">
-              <span class="text-xs text-gray-400 group-hover/item:text-white transition font-bold mt-2 z-10">帆布包/袋類</span>
-            </label>
-            <label class="product-checkbox-card flex flex-col items-center justify-center p-4 bg-dvBlack/45 border border-white/10 hover:border-dvNeon/50 rounded cursor-pointer transition select-none group/item relative overflow-hidden h-32" data-svg="dribbble">
-              <input type="checkbox" name="products" value="客製球類" class="sr-only product-input">
-              <span class="text-xs text-gray-400 group-hover/item:text-white transition font-bold mt-2 z-10">客製球類代工</span>
-            </label>
-            <label class="product-checkbox-card flex flex-col items-center justify-center p-4 bg-dvBlack/45 border border-white/10 hover:border-dvNeon/50 rounded cursor-pointer transition select-none group/item relative overflow-hidden h-32" data-svg="check-circle">
-              <input type="checkbox" name="products" value="其他周邊配件" class="sr-only product-input">
-              <span class="text-xs text-gray-400 group-hover/item:text-white transition font-bold mt-2 z-10">其他周邊配件</span>
-            </label>
-          </div>
-        </div>
-
-        <!-- 專案規劃與預算 -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div>
-            <label class="block text-sm font-bold text-gray-300 mb-2" for="qty-input">預計製作數量 *</label>
-            <input 
-              id="qty-input"
-              type="text" 
-              name="quantity" 
-              required 
-              placeholder="例：50件 / 300件以上" 
-              class="w-full bg-dvBlack/60 border border-white/15 px-4 py-3 text-white rounded outline-none focus:border-dvNeon focus:shadow-[0_0_15px_rgba(204,255,0,0.15)] transition"
-            >
-          </div>
-          <div>
-            <label class="block text-sm font-bold text-gray-300 mb-2" for="budget-input">預計製作預算 (NT$/件) *</label>
-            <input 
-              id="budget-input"
-              type="text" 
-              name="budget" 
-              required 
-              placeholder="例：$250/件" 
-              class="w-full bg-dvBlack/60 border border-white/15 px-4 py-3 text-white rounded outline-none focus:border-dvNeon focus:shadow-[0_0_15px_rgba(204,255,0,0.15)] transition"
-            >
-          </div>
-          <div>
-            <label class="block text-sm font-bold text-gray-300 mb-2" for="delivery-input">預計交期 (填寫日期) *</label>
-            <input 
-              id="delivery-input"
-              type="date" 
-              name="delivery_date" 
-              required 
-              class="w-full bg-dvBlack/60 border border-white/15 px-4 py-3 text-white rounded outline-none focus:border-dvNeon focus:shadow-[0_0_15px_rgba(204,255,0,0.15)] transition"
-            >
-          </div>
-        </div>
-
-        <!-- 寄送地址 -->
-        <div>
-          <label class="block text-sm font-bold text-gray-300 mb-2" for="address-input">樣本/大貨收件地址</label>
-          <input 
-              id="address-input"
-              type="text" 
-              name="shipping_address" 
-              placeholder="請輸入詳細的大貨寄送或樣本收件地址" 
-              class="w-full bg-dvBlack/60 border border-white/15 px-4 py-3 text-white rounded outline-none focus:border-dvNeon focus:shadow-[0_0_15px_rgba(204,255,0,0.15)] transition"
-          >
-        </div>
-
-        <!-- 產品概述 / 備註 -->
-        <div>
-          <label class="block text-sm font-bold text-gray-300 mb-2" for="notes-textarea">產品概述 / 代工資訊 / 備註 *</label>
-          <textarea 
-            id="notes-textarea"
-            name="project_notes" 
-            required 
-            rows="5"
-            placeholder="請簡述您的產品規格、圖案印刷位置、顏色配置或代工包裝需求..." 
-            class="w-full bg-dvBlack/60 border border-white/15 p-4 text-white rounded outline-none focus:border-dvNeon focus:shadow-[0_0_15px_rgba(204,255,0,0.15)] transition resize-y"
-          ></textarea>
-        </div>
-
-        <!-- 附加服務需求 -->
-        <div>
-          <label class="block text-sm font-bold text-gray-300 mb-3">其他附加服務需求 (可複選)</label>
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <label class="flex items-center gap-3 bg-dvBlack/35 border border-white/5 hover:border-dvNeon/30 p-3 rounded cursor-pointer transition select-none group/item">
-              <input type="checkbox" name="services" value="需要樣品打樣" class="w-4 h-4 rounded border-gray-300 text-dvNeon focus:ring-dvNeon accent-dvNeon">
-              <span class="text-sm text-gray-300 group-hover/item:text-white transition">需要樣品打樣</span>
-            </label>
-            <label class="flex items-center gap-3 bg-dvBlack/35 border border-white/5 hover:border-dvNeon/30 p-3 rounded cursor-pointer transition select-none group/item">
-              <input type="checkbox" name="services" value="需要設計排版支援" class="w-4 h-4 rounded border-gray-300 text-dvNeon focus:ring-dvNeon accent-dvNeon">
-              <span class="text-sm text-gray-300 group-hover/item:text-white transition">需要設計與排版支援</span>
-            </label>
-            <label class="flex items-center gap-3 bg-dvBlack/35 border border-white/5 hover:border-dvNeon/30 p-3 rounded cursor-pointer transition select-none group/item">
-              <input type="checkbox" name="services" value="特殊單獨包裝/貼標" class="w-4 h-4 rounded border-gray-300 text-dvNeon focus:ring-dvNeon accent-dvNeon">
-              <span class="text-sm text-gray-300 group-hover/item:text-white transition">特殊單獨包裝/貼標</span>
-            </label>
-          </div>
-        </div>
-
-        <!-- 提交按鈕 -->
-        <div>
-          <button 
-            type="submit" 
-            class="w-full bg-dvNeon text-black py-5 font-bold text-xl hover:bg-white transition skew-x-[-10deg] shadow-lg shadow-dvNeon/10 hover:shadow-white/20 nav-cta font-display italic tracking-widest"
-          >
-            SUBMIT REQUEST / 送出專案詢價
-          </button>
-        </div>
-      </form>
+        <h2 class="text-3xl font-display font-black tracking-wider text-white mt-6 lowercase">dalab <span class="text-dvNeon">config</span></h2>
+        <p class="text-xs font-mono text-gray-500 mt-2">POWERING EVERY CUSTOM INQUIRY</p>
+      </div>
+      
+      <!-- 底部系統狀態日誌 -->
+      <div class="relative z-10 border-t border-white/10 pt-4 font-mono text-[10px] text-gray-400 space-y-1">
+        <div>&gt; CONNECTIVITY: ACTIVE</div>
+        <div>&gt; HOSTING: GITHUB_PAGES</div>
+        <div>&gt; DB_REF: GOOGLE_SHEETS_V2</div>
+        <div>&gt; SECURITY: SECURE</div>
+      </div>
     </div>
+    
+    <!-- 右側欄：單頁高階玻璃擬態表單 (Col-span 7) -->
+    <div class="lg:col-span-7 bg-dvGray/40 backdrop-blur-lg border border-white/10 rounded-lg p-6 md:p-8 shadow-2xl relative overflow-hidden blueprint-grid">
+      <div class="absolute inset-0 bg-black/45 pointer-events-none z-0"></div>
+      
+      <div class="relative z-10">
+        <h2 class="text-2xl font-display font-black italic mb-2 text-white uppercase tracking-wider">PROJECT CONFIGURATOR / <span class="text-dvNeon">專案規格配置單</span></h2>
+        <p class="text-gray-400 mb-8 text-xs">請完成下方規格配置。您的專屬規劃師將於收到需求後 24 小時內與您聯繫並提供正式報價單。</p>
+        
+        <form id="quote-form" class="space-y-6">
+          
+          <!-- 第一區塊：聯絡資訊 -->
+          <div class="border-b border-white/10 pb-2 mb-4">
+            <h3 class="text-xs font-bold text-dvNeon tracking-wider uppercase font-mono">&gt; 01. 採購聯絡資訊</h3>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-bold text-gray-300 mb-2" for="company-input">採購公司名稱 (正式公司名) <span class="text-dvNeon">*</span></label>
+              <input id="company-input" type="text" name="company_name" required placeholder="例：戴維斯運動股份有限公司" class="w-full bg-dvBlack/60 border border-white/15 px-4 py-2.5 text-sm text-white rounded outline-none focus:border-dvNeon focus:shadow-[0_0_15px_rgba(204,255,0,0.15)] transition">
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-gray-300 mb-2" for="contact-input">採購窗口稱呼 <span class="text-dvNeon">*</span></label>
+              <input id="contact-input" type="text" name="contact_name" required placeholder="例：林經理 / 周小姐" class="w-full bg-dvBlack/60 border border-white/15 px-4 py-2.5 text-sm text-white rounded outline-none focus:border-dvNeon focus:shadow-[0_0_15px_rgba(204,255,0,0.15)] transition">
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-bold text-gray-300 mb-2" for="email-input">電子郵件 E-mail <span class="text-dvNeon">*</span></label>
+              <input id="email-input" type="email" name="email" required placeholder="name@example.com" class="w-full bg-dvBlack/60 border border-white/15 px-4 py-2.5 text-sm text-white rounded outline-none focus:border-dvNeon focus:shadow-[0_0_15px_rgba(204,255,0,0.15)] transition">
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-gray-300 mb-2" for="phone-input">電話 / 手機 / LINE ID <span class="text-dvNeon">*</span></label>
+              <input id="phone-input" type="text" name="phone" required placeholder="例：0912-345678" class="w-full bg-dvBlack/60 border border-white/15 px-4 py-2.5 text-sm text-white rounded outline-none focus:border-dvNeon focus:shadow-[0_0_15px_rgba(204,255,0,0.15)] transition">
+            </div>
+          </div>
+          
+          <!-- 第二區塊：產品與加工 -->
+          <div class="border-b border-white/10 pb-2 mt-6 mb-4">
+            <h3 class="text-xs font-bold text-dvNeon tracking-wider uppercase font-mono">&gt; 02. 產品與加工技術配置</h3>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-gray-300 mb-3">欲採購的產品 (可複選) <span class="text-dvNeon">*</span></label>
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3" id="product-select-grid">
+              <label class="product-checkbox-card flex flex-col items-center justify-center p-4 bg-dvBlack/45 border border-white/10 hover:border-dvNeon/50 rounded cursor-pointer transition select-none group/item relative overflow-hidden h-28" data-svg="jersey">
+                <input type="checkbox" name="products" value="團體服飾/球衣" class="sr-only product-input">
+                <div class="absolute top-2 right-2 w-4 h-4 rounded-full border border-white/20 flex items-center justify-center bg-black/40 text-transparent transition-all checked-badge group-hover/item:border-dvNeon/50">
+                  <svg class="w-2.5 h-2.5 checked-badge-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+                <span class="text-[11px] text-gray-400 group-hover/item:text-white transition font-bold mt-2 z-10">團體服飾/球衣</span>
+              </label>
+              <label class="product-checkbox-card flex flex-col items-center justify-center p-4 bg-dvBlack/45 border border-white/10 hover:border-dvNeon/50 rounded cursor-pointer transition select-none group/item relative overflow-hidden h-28" data-svg="hat">
+                <input type="checkbox" name="products" value="客製帽子" class="sr-only product-input">
+                <div class="absolute top-2 right-2 w-4 h-4 rounded-full border border-white/20 flex items-center justify-center bg-black/40 text-transparent transition-all checked-badge group-hover/item:border-dvNeon/50">
+                  <svg class="w-2.5 h-2.5 checked-badge-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+                <span class="text-[11px] text-gray-400 group-hover/item:text-white transition font-bold mt-2 z-10">客製帽子/配件</span>
+              </label>
+              <label class="product-checkbox-card flex flex-col items-center justify-center p-4 bg-dvBlack/45 border border-white/10 hover:border-dvNeon/50 rounded cursor-pointer transition select-none group/item relative overflow-hidden h-28" data-svg="towel">
+                <input type="checkbox" name="products" value="運動毛巾" class="sr-only product-input">
+                <div class="absolute top-2 right-2 w-4 h-4 rounded-full border border-white/20 flex items-center justify-center bg-black/40 text-transparent transition-all checked-badge group-hover/item:border-dvNeon/50">
+                  <svg class="w-2.5 h-2.5 checked-badge-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+                <span class="text-[11px] text-gray-400 group-hover/item:text-white transition font-bold mt-2 z-10">運動/應援毛巾</span>
+              </label>
+              <label class="product-checkbox-card flex flex-col items-center justify-center p-4 bg-dvBlack/45 border border-white/10 hover:border-dvNeon/50 rounded cursor-pointer transition select-none group/item relative overflow-hidden h-28" data-svg="tote">
+                <input type="checkbox" name="products" value="托特包/袋類" class="sr-only product-input">
+                <div class="absolute top-2 right-2 w-4 h-4 rounded-full border border-white/20 flex items-center justify-center bg-black/40 text-transparent transition-all checked-badge group-hover/item:border-dvNeon/50">
+                  <svg class="w-2.5 h-2.5 checked-badge-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+                <span class="text-[11px] text-gray-400 group-hover/item:text-white transition font-bold mt-2 z-10">帆布包/袋類</span>
+              </label>
+              <label class="product-checkbox-card flex flex-col items-center justify-center p-4 bg-dvBlack/45 border border-white/10 hover:border-dvNeon/50 rounded cursor-pointer transition select-none group/item relative overflow-hidden h-28" data-svg="dribbble">
+                <input type="checkbox" name="products" value="客製球類" class="sr-only product-input">
+                <div class="absolute top-2 right-2 w-4 h-4 rounded-full border border-white/20 flex items-center justify-center bg-black/40 text-transparent transition-all checked-badge group-hover/item:border-dvNeon/50">
+                  <svg class="w-2.5 h-2.5 checked-badge-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+                <span class="text-[11px] text-gray-400 group-hover/item:text-white transition font-bold mt-2 z-10">客製球類代工</span>
+              </label>
+              <label class="product-checkbox-card flex flex-col items-center justify-center p-4 bg-dvBlack/45 border border-white/10 hover:border-dvNeon/50 rounded cursor-pointer transition select-none group/item relative overflow-hidden h-28" data-svg="check-circle">
+                <input type="checkbox" name="products" value="其他周邊配件" class="sr-only product-input">
+                <div class="absolute top-2 right-2 w-4 h-4 rounded-full border border-white/20 flex items-center justify-center bg-black/40 text-transparent transition-all checked-badge group-hover/item:border-dvNeon/50">
+                  <svg class="w-2.5 h-2.5 checked-badge-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+                <span class="text-[11px] text-gray-400 group-hover/item:text-white transition font-bold mt-2 z-10">其他周邊配件</span>
+              </label>
+            </div>
+          </div>
+          
+          <div>
+            <label class="block text-xs font-bold text-gray-300 mb-3">加工需求項目 (可複選) <span class="text-dvNeon">*</span></label>
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3" id="demand-items-grid">
+              <label class="flex items-center gap-3 bg-dvBlack/35 border border-white/5 hover:border-dvNeon/30 p-2.5 rounded cursor-pointer transition select-none group/item">
+                <input type="checkbox" name="demand_items" value="網版印刷" class="w-4 h-4 rounded border-gray-300 text-dvNeon focus:ring-dvNeon accent-dvNeon">
+                <span class="text-xs text-gray-300 group-hover/item:text-white transition">網版印刷</span>
+              </label>
+              <label class="flex items-center gap-3 bg-dvBlack/35 border border-white/5 hover:border-dvNeon/30 p-2.5 rounded cursor-pointer transition select-none group/item">
+                <input type="checkbox" name="demand_items" value="精緻刺繡" class="w-4 h-4 rounded border-gray-300 text-dvNeon focus:ring-dvNeon accent-dvNeon">
+                <span class="text-xs text-gray-300 group-hover/item:text-white transition">精緻刺繡</span>
+              </label>
+              <label class="flex items-center gap-3 bg-dvBlack/35 border border-white/5 hover:border-dvNeon/30 p-2.5 rounded cursor-pointer transition select-none group/item">
+                <input type="checkbox" name="demand_items" value="數位直噴" class="w-4 h-4 rounded border-gray-300 text-dvNeon focus:ring-dvNeon accent-dvNeon">
+                <span class="text-xs text-gray-300 group-hover/item:text-white transition">數位直噴</span>
+              </label>
+              <label class="flex items-center gap-3 bg-dvBlack/35 border border-white/5 hover:border-dvNeon/30 p-2.5 rounded cursor-pointer transition select-none group/item">
+                <input type="checkbox" name="demand_items" value="電腦熱轉印" class="w-4 h-4 rounded border-gray-300 text-dvNeon focus:ring-dvNeon accent-dvNeon">
+                <span class="text-xs text-gray-300 group-hover/item:text-white transition">電腦熱轉印</span>
+              </label>
+              <label class="flex items-center gap-3 bg-dvBlack/35 border border-white/5 hover:border-dvNeon/30 p-2.5 rounded cursor-pointer transition select-none group/item">
+                <input type="checkbox" name="demand_items" value="全彩熱昇華" class="w-4 h-4 rounded border-gray-300 text-dvNeon focus:ring-dvNeon accent-dvNeon">
+                <span class="text-xs text-gray-300 group-hover/item:text-white transition">全彩熱昇華</span>
+              </label>
+              <label class="flex items-center gap-3 bg-dvBlack/35 border border-white/5 hover:border-dvNeon/30 p-2.5 rounded cursor-pointer transition select-none group/item">
+                <input type="checkbox" name="demand_items" value="純代工裁縫/包裝" class="w-4 h-4 rounded border-gray-300 text-dvNeon focus:ring-dvNeon accent-dvNeon">
+                <span class="text-xs text-gray-300 group-hover/item:text-white transition">純代工裁縫/包裝</span>
+              </label>
+            </div>
+          </div>
+          
+          <!-- 第三區塊：量體預算與交期 -->
+          <div class="border-b border-white/10 pb-2 mt-6 mb-4">
+            <h3 class="text-xs font-bold text-dvNeon tracking-wider uppercase font-mono">&gt; 03. 專案量體與交期</h3>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div>
+              <label class="block text-xs font-bold text-gray-300 mb-2" for="qty-input">預計製作數量 <span class="text-dvNeon">*</span></label>
+              <input id="qty-input" type="text" name="quantity" required placeholder="例：100件" class="w-full bg-dvBlack/60 border border-white/15 px-4 py-2.5 text-sm text-white rounded outline-none focus:border-dvNeon focus:shadow-[0_0_15px_rgba(204,255,0,0.15)] transition">
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-gray-300 mb-2" for="budget-input">預計製作預算 (選填)</label>
+              <input id="budget-input" type="text" name="budget" placeholder="例：$250/件" class="w-full bg-dvBlack/60 border border-white/15 px-4 py-2.5 text-sm text-white rounded outline-none focus:border-dvNeon focus:shadow-[0_0_15px_rgba(204,255,0,0.15)] transition">
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-gray-300 mb-2" for="delivery-select">預計交期 <span class="text-dvNeon">*</span></label>
+              <select id="delivery-select" name="delivery_date" required class="w-full bg-dvBlack/60 border border-white/15 px-4 py-2.5 text-sm text-white rounded outline-none focus:border-dvNeon focus:shadow-[0_0_15px_rgba(204,255,0,0.15)] transition">
+                <option value="" disabled selected>請選擇預計交期</option>
+                <option value="1週內 (特急件)">1週內 (特急件)</option>
+                <option value="2-3週內">2-3週內</option>
+                <option value="1個月內">1個月內</option>
+                <option value="1-2個月">1-2個月</option>
+                <option value="2個月以上">2個月以上</option>
+                <option value="未確定 / 依生產排程">未確定 / 依生產排程</option>
+              </select>
+            </div>
+          </div>
+          
+          <div>
+            <label class="block text-xs font-bold text-gray-300 mb-2" for="address-input">樣本/大貨收件地址 (選填)</label>
+            <input id="address-input" type="text" name="shipping_address" placeholder="請輸入詳細的大貨寄送或樣本收件地址" class="w-full bg-dvBlack/60 border border-white/15 px-4 py-2.5 text-sm text-white rounded outline-none focus:border-dvNeon focus:shadow-[0_0_15px_rgba(204,255,0,0.15)] transition">
+          </div>
+          
+          <div>
+            <label class="block text-xs font-bold text-gray-300 mb-2" for="notes-textarea">專案細節備註 (選填)</label>
+            <textarea id="notes-textarea" name="project_notes" rows="3" placeholder="請簡述您的產品規格、圖案印刷位置、顏色配置或代工包裝需求..." class="w-full bg-dvBlack/60 border border-white/15 p-4 text-sm text-white rounded outline-none focus:border-dvNeon focus:shadow-[0_0_15px_rgba(204,255,0,0.15)] transition resize-y"></textarea>
+          </div>
+          
+          <!-- 第四區塊：附加服務 -->
+          <div class="mt-4">
+            <label class="block text-xs font-bold text-gray-300 mb-3">其他附加服務需求 (可複選)</label>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <label class="flex items-center gap-3 bg-dvBlack/35 border border-white/5 hover:border-dvNeon/30 p-2.5 rounded cursor-pointer transition select-none group/item">
+                <input type="checkbox" name="services" value="需要樣品打樣" class="w-4 h-4 rounded border-gray-300 text-dvNeon focus:ring-dvNeon accent-dvNeon">
+                <span class="text-xs text-gray-300 group-hover/item:text-white transition">需要樣品打樣</span>
+              </label>
+              <label class="flex items-center gap-3 bg-dvBlack/35 border border-white/5 hover:border-dvNeon/30 p-2.5 rounded cursor-pointer transition select-none group/item">
+                <input type="checkbox" name="services" value="需要設計排版支援" class="w-4 h-4 rounded border-gray-300 text-dvNeon focus:ring-dvNeon accent-dvNeon">
+                <span class="text-xs text-gray-300 group-hover/item:text-white transition">需要設計與排版支援</span>
+              </label>
+              <label class="flex items-center gap-3 bg-dvBlack/35 border border-white/5 hover:border-dvNeon/30 p-2.5 rounded cursor-pointer transition select-none group/item">
+                <input type="checkbox" name="services" value="特殊單獨包裝/貼標" class="w-4 h-4 rounded border-gray-300 text-dvNeon focus:ring-dvNeon accent-dvNeon">
+                <span class="text-xs text-gray-300 group-hover/item:text-white transition">特殊單獨包裝/貼標</span>
+              </label>
+            </div>
+          </div>
+          
+          <!-- 提交按鈕 -->
+          <div class="pt-4">
+            <button type="submit" class="w-full bg-dvNeon text-black py-4 font-bold text-lg hover:bg-white transition skew-x-[-10deg] shadow-lg shadow-dvNeon/10 hover:shadow-white/20 font-display italic tracking-widest flex items-center justify-center gap-2">
+              SUBMIT CONFIGURATION / 送出專案詢價 <i data-lucide="check" class="w-5 h-5"></i>
+            </button>
+          </div>
+          
+        </form>
+      </div>
+    </div>
+    
   </div>
 </main>
 
@@ -428,6 +490,8 @@
   <!-- 引入 JS 檔案 -->
   <script src="assets/js/main.js"></script>
   <script>
+
+
     // 注入產品選取卡片 SVG 圖形
     document.addEventListener('DOMContentLoaded', () => {
       document.querySelectorAll('.product-checkbox-card').forEach(card => {
@@ -439,23 +503,36 @@
         }
       });
 
-      // 監聽產品卡片選取狀態
+      // 監聽產品卡片選取狀態 (監聽 checkbox 的 change 事件，避免 label 雙重觸發)
       const cards = document.querySelectorAll('.product-checkbox-card');
       cards.forEach(card => {
         const checkbox = card.querySelector('input[type="checkbox"]');
-        card.addEventListener('click', function(e) {
-          if (e.target !== checkbox) {
-            checkbox.checked = !checkbox.checked;
-          }
-          if (checkbox.checked) {
-            card.classList.add('border-dvNeon', 'bg-dvNeon/10');
-            card.querySelector('svg').classList.add('text-dvNeon', 'scale-110');
-          } else {
-            card.classList.remove('border-dvNeon', 'bg-dvNeon/10');
-            card.querySelector('svg').classList.remove('text-dvNeon', 'scale-110');
-          }
-        });
+        if (checkbox) {
+          checkbox.addEventListener('change', function() {
+            const badge = card.querySelector('.checked-badge');
+            const mainSvg = card.querySelector('svg:not(.checked-badge-icon)');
+            if (this.checked) {
+              card.classList.add('border-dvNeon', 'bg-dvNeon/10');
+              if (mainSvg) mainSvg.classList.add('text-dvNeon', 'scale-110');
+              if (badge) {
+                badge.classList.remove('border-white/20', 'bg-black/40', 'text-transparent');
+                badge.classList.add('border-dvNeon', 'bg-dvNeon', 'text-black');
+              }
+            } else {
+              card.classList.remove('border-dvNeon', 'bg-dvNeon/10');
+              if (mainSvg) mainSvg.classList.remove('text-dvNeon', 'scale-110');
+              if (badge) {
+                badge.classList.remove('border-dvNeon', 'bg-dvNeon', 'text-black');
+                badge.classList.add('border-white/20', 'bg-black/40', 'text-transparent');
+              }
+            }
+          });
+        }
       });
+
+      // 填寫您的 Google Apps Script 網頁應用程式 URL
+      // 設定後，詢價單資料會自動寫入 Google 試算表並發送電子郵件通知
+      const GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzz5B_bcg9C-hXvfnxRS3ZLQhkDE-69EKO-3Zy5LyePzfMYpc9RR2AH0TXE_oJgDbEC-g/exec"; // 預留或直接填寫，若為空或預設則走 localStorage
 
       // 詢價單提交處理
       const form = document.getElementById('quote-form');
@@ -481,8 +558,53 @@
           document.querySelectorAll('.product-checkbox-card input[type="checkbox"]:checked').forEach(cb => {
             selectedProducts.push(cb.value);
           });
-          data.selected_products = selectedProducts;
           
+          if (selectedProducts.length === 0) {
+            alert('請至少選擇一項「欲採購的產品」！');
+            return;
+          }
+          data.selected_products = selectedProducts;
+
+          // 獲取選中的加工需求項目
+          const selectedDemandItems = [];
+          document.querySelectorAll('input[name="demand_items"]:checked').forEach(cb => {
+            selectedDemandItems.push(cb.value);
+          });
+          
+          if (selectedDemandItems.length === 0) {
+            alert('請至少選擇一項「加工需求項目」！');
+            return;
+          }
+          data.demand_items = selectedDemandItems;
+
+          // 將加工需求項目格式化並附加到產品概述備註的開頭
+          const notesText = data.project_notes || "";
+          data.project_notes = `【加工需求項目】: ${selectedDemandItems.join(', ')}\n\n【其他備註說明】:\n${notesText}`;
+
+          // 獲取複選服務
+          const selectedServices = [];
+          document.querySelectorAll('input[name="services"]:checked').forEach(cb => {
+            selectedServices.push(cb.value);
+          });
+          data.selected_services = selectedServices;
+
+          // 當有設定 Google Apps Script URL 時，發送 POST 請求
+          if (GOOGLE_APPS_SCRIPT_URL && !GOOGLE_APPS_SCRIPT_URL.includes("YOUR_DEPLOYED_APPS_SCRIPT_URL")) {
+            fetch(GOOGLE_APPS_SCRIPT_URL, {
+              method: 'POST',
+              mode: 'no-cors', // 避免跨網域 CORS 問題
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(data)
+            }).then(() => {
+              console.log('Data successfully sent to Google Sheet.');
+            }).catch(err => {
+              console.error('Error sending data to Google Sheet:', err);
+            });
+          }
+          
+          // 同步備份至本地 localStorage
           let quotes = [];
           try {
             quotes = JSON.parse(localStorage.getItem('submitted_quotes') || '[]');
@@ -506,9 +628,17 @@
           // 重置卡片選取狀態
           document.querySelectorAll('.product-checkbox-card').forEach(c => {
             c.classList.remove('border-dvNeon', 'bg-dvNeon/10');
-            const svg = c.querySelector('svg');
-            if (svg) svg.classList.remove('text-dvNeon', 'scale-110');
+            const mainSvg = c.querySelector('svg:not(.checked-badge-icon)');
+            if (mainSvg) mainSvg.classList.remove('text-dvNeon', 'scale-110');
+            const badge = c.querySelector('.checked-badge');
+            if (badge) {
+              badge.classList.remove('border-dvNeon', 'bg-dvNeon', 'text-black');
+              badge.classList.add('border-white/20', 'bg-black/40', 'text-transparent');
+            }
           });
+
+          // 滾動回表單頂部
+          window.scrollTo({ top: document.querySelector('main').offsetTop - 20, behavior: 'smooth' });
         });
       }
     });
