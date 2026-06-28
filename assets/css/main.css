@@ -1,14 +1,16 @@
+@charset "UTF-8";
+
 /* 導航欄樣式 */
 #main-nav {
   @apply border-b border-white/10 sticky top-0 z-50 backdrop-blur-sm;
-  background: linear-gradient(120deg, #f1ff27d2 10%, #0a0a0a 60%);
+  background: linear-gradient(120deg, rgba(0, 163, 224, 0.4) 10%, #000000 60%);
   background-size: 200% 200%;
   animation: gradientShift 10s ease infinite;
   box-shadow: 0 6px 24px rgba(0, 0, 0, 0.6);
   transition: transform 0.3s ease, opacity 0.3s ease, background-color 0.3s ease;
 }
 
-/* 導航連結動畫 */
+/* 導航欄連結 */
 .nav-link {
   @apply relative transition-colors duration-200;
 }
@@ -24,7 +26,7 @@
   right: 0;
 }
 
-/* 導航按鈕交互 */
+/* 導航欄按鈕 */
 .nav-cta {
   @apply transition-all duration-150 will-change-transform;
 }
@@ -34,7 +36,7 @@
   box-shadow: 0 10px 30px rgba(163, 204, 0, 0.12);
 }
 
-/* 移動端菜單 */
+/* 行動端選單 */
 #mobile-menu.open {
   animation: slideDown 0.28s ease forwards;
 }
@@ -43,7 +45,7 @@
   @apply transition-transform duration-200 rotate-90;
 }
 
-/* 分頁切換樣式 */
+/* 頁面淡入淡出 */
 .view-section {
   display: none;
 }
@@ -62,14 +64,12 @@
   @apply absolute top-2 left-2 bg-dvNeon text-black px-2 py-1 text-[10px] font-bold tracking-tighter;
 }
 
-/* 熱門商品區塊 */
+/* 熱門商品卡片 */
 .hot-item-card {
   @apply bg-dvGray p-6 text-center hover:border-dvNeon border border-transparent cursor-pointer transition;
 }
 
-/* ========== 訂製流程頁面專用樣式 ========== */
-
-/* 影片背景樣式 */
+/* 影片背景 */
 .video-container {
   position: relative;
   width: 100%;
@@ -97,20 +97,20 @@
   justify-content: center;
 }
 
-/* 放大版方格流程卡片 */
+/* 步驟展開卡片 */
 .step-card {
   cursor: pointer;
   transition: 0.3s;
   border-radius: 8px;
-  min-height: 120px; /* 設定最小高度 */
+  min-height: 120px;
 }
 .step-card:hover {
   border-color: #ccff00;
   background: rgba(28,28,28,0.8);
 }
 .step-number {
-  width: 40px; /* 放大數字框 */
-  height: 40px; /* 放大數字框 */
+  width: 40px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -118,7 +118,7 @@
   border: 1px solid rgba(204,255,0,0.3);
   border-radius: 4px;
   font-weight: bold;
-  font-size: 18px; /* 放大數字 */
+  font-size: 18px;
   color: #ccff00;
 }
 .step-content {
@@ -127,23 +127,21 @@
   transition: max-height 0.4s ease;
 }
 .step-card.active .step-content {
-  max-height: 120px; /* 調整展開高度 */
+  max-height: 120px;
 }
 .arrow-icon {
   transition: 0.3s;
-  width: 24px; /* 放大箭頭 */
-  height: 24px; /* 放大箭頭 */
+  width: 24px;
+  height: 24px;
 }
 .step-card.active .arrow-icon {
   transform: rotate(180deg);
 }
 
-/* 手機選單相關（如果其他頁面也需要可以保留） */
 #mobile-menu {
   transition: all 0.3s ease;
 }
 
-/* 輪播卡片平滑淡入動畫 */
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -159,7 +157,7 @@
   animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-/* 設計圖藍圖格線背景效果 */
+/* 科技設計網格 */
 .blueprint-grid {
   background-color: #0b0f19 !important;
   background-size: 20px 20px;
@@ -168,7 +166,6 @@
     linear-gradient(to bottom, rgba(204, 255, 0, 0.04) 1px, transparent 1px) !important;
 }
 
-/* 網頁加載淡入效果 */
 @keyframes pageFadeIn {
   from {
     opacity: 0;
@@ -184,16 +181,14 @@ body {
   animation: pageFadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-/* 影片容器與超炫 Fallback 背景動畫 */
 .video-container {
   position: relative;
   width: 100%;
   height: 460px;
   overflow: hidden;
-  background: #080b11 !important; /* 深暗藍色底色 */
+  background: #080b11 !important;
 }
 
-/* Fallback 背景格線與發光效果 */
 .video-container::before {
   content: "";
   position: absolute;
@@ -205,7 +200,6 @@ body {
   z-index: 0;
 }
 
-/* 霓虹發光漸變 */
 .video-container::after {
   content: "";
   position: absolute;
@@ -215,7 +209,7 @@ body {
   pointer-events: none;
 }
 
-/* SVG 設計藍圖：一筆一筆畫出線條的工程製圖動畫效果 */
+/* SVG 動態線條動畫 */
 @keyframes svgLineDraw {
   from {
     stroke-dashoffset: 1000;
@@ -225,7 +219,6 @@ body {
   }
 }
 
-/* 僅當 .blueprint-active 被加載時，觸發動畫，每次切換都會重頭播放 */
 .blueprint-active svg path,
 .blueprint-active svg circle,
 .blueprint-active svg rect,
@@ -235,79 +228,17 @@ body {
   animation: svgLineDraw 2.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
-/* 實體與輔助線條一筆一筆畫出的順序與延遲效果 */
-/* 1. 先畫極微細的輔助十字中心網格線 (0s 延遲，快速畫完) */
 .blueprint-active svg > :nth-child(1) {
   animation-duration: 0.6s;
   animation-delay: 0s;
   stroke-opacity: 0.08;
 }
 
-/* 2. 畫主體外廓 (帽子/衣服等的主要外觀輪廓) */
 .blueprint-active svg > :nth-child(2) {
   animation-duration: 1.6s;
   animation-delay: 0.3s;
 }
 
-/* 3. 畫次要主結構線 (如帽沿、球衣肩線) */
-.blueprint-active svg > :nth-child(3) {
-  animation-duration: 1.2s;
-  animation-delay: 1.2s;
-}
-
-/* 4. 畫小細節/配件 (如鈕扣、輔助部件) */
-.blueprint-active svg > :nth-child(4) {
-  animation-duration: 0.8s;
-  animation-delay: 2.0s;
-}
-
-/* 5. 畫內部車縫線或拼接剪裁面板細節 */
-.blueprint-active svg > :nth-child(5) {
-  animation-duration: 1.8s;
-  animation-delay: 2.4s;
-}
-
-/* 6. 畫最末端裝飾條或車縫點綴虛線 */
-.blueprint-active svg > :nth-child(6) {
-  animation-duration: 1.0s;
-  animation-delay: 3.5s;
-}
-
-/* 7. 畫最中央品牌 LOGO 或標籤貼紙 (第 7 步，最後完成) */
-.blueprint-active svg > :nth-child(7),
-.blueprint-active svg > :nth-child(7) path,
-.blueprint-active svg > :nth-child(7) circle,
-.blueprint-active svg > :nth-child(7) ellipse {
-  animation-duration: 1.2s;
-  animation-delay: 4.5s;
-}
-
-/* 8. 畫最外圍的科技感數據 HUD、尺寸標註與邊框標記 (第 8 步，加載完後上架) */
-.blueprint-active svg > :nth-child(8),
-.blueprint-active svg > :nth-child(8) path,
-.blueprint-active svg > :nth-child(8) circle,
-.blueprint-active svg > :nth-child(8) rect {
-  animation-duration: 1.0s;
-  animation-delay: 5.5s;
-}
-
-/* 9. 科技文字漸入淡化效果 */
-.blueprint-active svg text {
-  opacity: 0;
-  animation: svgTextFade 1.2s ease forwards;
-  animation-delay: 5.5s;
-}
-
-@keyframes svgTextFade {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 0.9;
-  }
-}
-
-/* 互動十字座標線樣式 (強制不套用一筆一筆線條動畫，即時渲染) */
 #hud-crosshair,
 #hud-crosshair line,
 #hud-crosshair text {
@@ -317,7 +248,7 @@ body {
   transition: opacity 0.2s ease;
 }
 
-/* 背景綠光雷達水平掃描線 */
+/* 雷達掃描紅外線 */
 .hud-scanner-line {
   position: absolute;
   left: 0;
@@ -354,16 +285,10 @@ body {
   animation: spinCCW 10s linear infinite !important;
 }
 
-/* 科技定位點閃爍 */
-@keyframes hudPulse {
-  0%, 100% { opacity: 0.25; }
-  50% { opacity: 1; }
-}
 .hud-blink {
   animation: hudPulse 1.6s infinite !important;
 }
 
-/* Monospace 終端開機狀態讀出閃爍效果 */
 @keyframes hudFlicker {
   0%, 100% { opacity: 0.8; }
   91% { opacity: 0.8; }
@@ -376,7 +301,6 @@ body {
   animation: hudFlicker 5s infinite !important;
 }
 
-/* 首頁三支柱分支線流動動畫 */
 @keyframes flowLeft {
   from {
     stroke-dashoffset: 50;
@@ -388,4 +312,19 @@ body {
 .hud-flow-path {
   stroke-dasharray: 6 6;
   animation: flowLeft 1.5s linear infinite;
+}
+
+@keyframes imageGlowPulse {
+  0% { filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.4)) drop-shadow(0 0 8px rgba(0, 163, 224, 0.3)); }
+  50% { filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.7)) drop-shadow(0 0 20px rgba(0, 163, 224, 0.6)); }
+  100% { filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.4)) drop-shadow(0 0 8px rgba(0, 163, 224, 0.3)); }
+}
+
+.image-glow { animation: imageGlowPulse 3s ease-in-out infinite; }
+
+.blueprint-active svg .hud-main-shape-group *, 
+.blueprint-active svg > g * {
+  stroke: #ffffff !important;
+  stroke-opacity: 1 !important;
+  opacity: 1 !important;
 }

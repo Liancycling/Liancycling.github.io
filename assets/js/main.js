@@ -269,9 +269,6 @@ function initHomepageCarousels() {
 // Helper to generate tech HUD overlay group
 function getCyberHudGroup(productCode, productName, options = {}) {
   const scaleText = options.scale || 'SCALE 1:1';
-  const widthText = options.width || '50cm';
-  const heightText = options.height || '50cm';
-  const angleText = options.angle || '0_DEG_FRONT';
   const targetCx = options.targetCx || 50;
   const targetCy = options.targetCy || 50;
   const targetR = options.targetR || 10;
@@ -279,33 +276,19 @@ function getCyberHudGroup(productCode, productName, options = {}) {
   return `
     <g class="hud-overlay-group">
       <!-- Corner brackets -->
-      <path d="M 6 14 V 6 H 14 M 94 14 V 6 H 86 M 6 86 V 94 H 14 M 94 86 V 94 H 86" stroke="currentColor" stroke-width="0.8" stroke-opacity="0.3"/>
+      <path d="M 8 14 V 8 H 14 M 92 14 V 8 H 86 M 8 86 V 92 H 14 M 92 86 V 92 H 86" stroke="currentColor" stroke-width="0.8" stroke-opacity="0.3"/>
       
       <!-- Centered Target Lock concentric circles with inline transform-origin -->
       <circle class="hud-spin-cw" cx="${targetCx}" cy="${targetCy}" r="${targetR}" stroke="currentColor" stroke-opacity="0.25" stroke-width="0.8" stroke-dasharray="2 3" style="transform-origin: ${targetCx}px ${targetCy}px;"/>
       <circle class="hud-spin-ccw" cx="${targetCx}" cy="${targetCy}" r="${targetR + 3}" stroke="#00f0ff" stroke-opacity="0.2" stroke-width="0.6" stroke-dasharray="1 2" style="transform-origin: ${targetCx}px ${targetCy}px;"/>
       
-      <!-- Center target ticks -->
-      <path d="M ${targetCx} ${targetCy - targetR - 6} V ${targetCy - targetR - 3} M ${targetCx} ${targetCy + targetR + 3} V ${targetCy + targetR + 6} M ${targetCx - targetR - 6} ${targetCy} H ${targetCx - targetR - 3} M ${targetCx + targetR + 3} ${targetCy} H ${targetCx + targetR + 6}" stroke="currentColor" stroke-width="0.6" stroke-opacity="0.3"/>
-      
       <!-- Blinkers -->
-      <circle cx="8" cy="8" r="1.2" fill="#ff0055" class="hud-blink"/>
-      <circle cx="92" cy="92" r="1.2" fill="#00f0ff" class="hud-blink" style="animation-delay: 0.8s;"/>
+      <circle cx="10" cy="10" r="1" fill="#ff0055" class="hud-blink"/>
+      <circle cx="90" cy="90" r="1" fill="#00f0ff" class="hud-blink" style="animation-delay: 0.8s;"/>
       
-      <!-- Waveform decoration -->
-      <path d="M 75 8 h 15 M 78 11 h 12 M 82 14 h 8 M 80 17 h 10" stroke="#00f0ff" stroke-width="0.6" stroke-opacity="0.3"/>
-      <path d="M 77 8 h 2 M 82 11 h 3 M 85 14 h 1 M 81 17 h 2" stroke="#ff0055" stroke-width="0.8" stroke-opacity="0.5"/>
-      
-      <!-- Technical Monospace Labels -->
-      <text x="10" y="14" font-family="monospace" font-size="3.2" fill="currentColor">DALAB.SYS // ${productCode}</text>
-      <text x="10" y="86" font-family="monospace" font-size="2.8" fill="currentColor">ANGLE: ${angleText}</text>
-      <text x="74" y="86" font-family="monospace" font-size="2.8" fill="#00f0ff">${scaleText}</text>
-      <text x="6" y="44" font-family="monospace" font-size="2.6" fill="currentColor" transform="rotate(-90 6 44)">H_DIM: ${heightText}</text>
-      <text x="44" y="94" font-family="monospace" font-size="2.8" fill="currentColor">W_DIM: ${widthText}</text>
-      
-      <!-- Terminal bootloader readout! -->
-      <text x="10" y="19" font-family="monospace" font-size="2.4" fill="#00f0ff" fill-opacity="0.8" class="hud-flicker">SYS_STATUS: ACTIVE [100%]</text>
-      <text x="10" y="23" font-family="monospace" font-size="2.2" fill="currentColor" fill-opacity="0.6">GRID_LOCK: ENFORCED</text>
+      <!-- Technical Monospace Labels (Simplified) -->
+      <text x="12" y="13" font-family="monospace" font-size="3" fill="currentColor">SYS // ${productCode}</text>
+      <text x="74" y="90" font-family="monospace" font-size="2.6" fill="#00f0ff">${scaleText}</text>
     </g>
   `;
 }
@@ -319,60 +302,34 @@ function buildStructuredSvg(icon, sizeClass, baseElements, hudOpts) {
     shapes.push('<path d="M0 0" stroke="none" fill="none"/>');
   }
   
-  // Child 1: Grid helper
-  const gridHelper = `<path d="M10 50h80M50 10v80" stroke="currentColor" stroke-opacity="0.08" stroke-dasharray="2 2"/>`;
+  // Dummy empty groups to satisfy the 8+1 child layout requirement for line drawing animation
+  const emptyGroup = '<g></g>';
   
-  // Child 7: Brand Logo
-  let logoGroup = '';
-  if (icon === 'truck') {
-    logoGroup = `
-      <g>
-        <path d="M 33 37 Q 35 36 37 36 L 47 37 Q 49 37.5 50 39 L 51 49 Q 51.5 51 50 53 L 40 55 Q 38 55.5 36 55 L 32 45 Q 31 43 33 37 Z" stroke-width="1.2" fill="#0b0f19" stroke-linejoin="round"/>
-        <g transform="translate(41.5, 46.5) scale(0.5) translate(-43.5, -46)">
-          <path d="M 41.5 39 Q 43 38 44.5 39 L 47.5 41.5 Q 48.5 43 48.5 44.5 L 48.5 47.5 Q 48.5 49 47.5 50.5 L 44.5 53 Q 43 54 41.5 53 L 38.5 50.5 Q 37.5 49 37.5 47.5 L 37.5 44.5 Q 37.5 43 38.5 41.5 Z M 43 42 A 1.8 4 0 1 0 43 50 A 1.8 4 0 1 0 43 42 Z M 46.46 48 A 1.8 4 120 1 0 39.54 44 A 1.8 4 120 1 0 46.46 48 Z M 39.54 48 A 1.8 4 240 1 0 46.46 44 A 1.8 4 240 1 0 39.54 48 Z" stroke-width="1.5" stroke-linejoin="round" fill="none"/>
-        </g>
-      </g>
-    `;
-  } else {
-    const logoX = hudOpts.logoCx || hudOpts.targetCx || 50;
-    const logoY = hudOpts.logoCy || hudOpts.targetCy || 50;
-    const logoS = hudOpts.logoScale || 0.4;
-    logoGroup = `
-      <g transform="translate(${logoX}, ${logoY}) scale(${logoS}) translate(-43.5, -46)">
-        <path d="M 41.5 39 Q 43 38 44.5 39 L 47.5 41.5 Q 48.5 43 48.5 44.5 L 48.5 47.5 Q 48.5 49 47.5 50.5 L 44.5 53 Q 43 54 41.5 53 L 38.5 50.5 Q 37.5 49 37.5 47.5 L 37.5 44.5 Q 37.5 43 38.5 41.5 Z M 43 42 A 1.8 4 0 1 0 43 50 A 1.8 4 0 1 0 43 42 Z M 46.46 48 A 1.8 4 120 1 0 39.54 44 A 1.8 4 120 1 0 46.46 48 Z M 39.54 48 A 1.8 4 240 1 0 46.46 44 A 1.8 4 240 1 0 39.54 48 Z" stroke-width="1.5" stroke-linejoin="round" fill="none"/>
-      </g>
-    `;
-  }
-  
-  // Child 8: HUD overlays
-  const hudGroup = getCyberHudGroup(hudOpts.code, hudOpts.name, hudOpts);
-  
-  // Child 9: Interactive cursor crosshair
-  const crosshairGroup = `
-    <g id="hud-crosshair" stroke="#00f0ff" stroke-width="0.4" stroke-opacity="0" style="pointer-events: none;">
-      <line id="hud-x-line" x1="0" y1="-10" x2="100" y2="-10" />
-      <line id="hud-y-line" x1="-10" y1="0" x2="-10" y2="100" />
-      <text id="hud-coord-text" font-family="monospace" font-size="2.2" fill="#00f0ff" fill-opacity="0.8" x="0" y="0"></text>
+  return `<svg class="${sizeClass} transition-all duration-500 group-hover:scale-110 text-white" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="1.5">
+    <g stroke="#ffffff" stroke-width="2" class="hud-main-shape-group">
+      ${shapes[0]}
+      ${shapes[1]}
+      ${shapes[2]}
+      ${shapes[3]}
+      ${shapes[4]}
     </g>
-  `;
-  
-  return `<svg class="${sizeClass} transition-all duration-500 group-hover:scale-150 group-hover:text-dvNeon text-white/30" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="1.5">
-    ${gridHelper}
-    ${shapes[0]}
-    ${shapes[1]}
-    ${shapes[2]}
-    ${shapes[3]}
-    ${shapes[4]}
-    ${logoGroup}
-    ${hudGroup}
-    ${crosshairGroup}
+    <!-- Interactive HUD Crosshair Tracking lines and labels -->
+    <g id="hud-crosshair" stroke="#00f0ff" stroke-width="0.6" stroke-opacity="0" style="transition: stroke-opacity 0.2s;">
+      <line id="hud-x-line" x1="0" y1="0" x2="100" y2="0"/>
+      <line id="hud-y-line" x1="0" y1="0" x2="0" y2="100"/>
+      <text id="hud-coord-text" x="0" y="0" fill="#00f0ff" font-family="monospace" font-size="3.2" text-anchor="start"></text>
+    </g>
+    ${emptyGroup}
+    ${emptyGroup}
+    ${emptyGroup}
+    ${emptyGroup}
   </svg>`;
 }
 
 // ========== 客製化 SVG 設計圖示生成庫 (高細節工程製圖/藍圖風格) ==========
 function getProductSvg(icon, sizeClass = "w-10 h-10") {
   const hudOptionsMap = {
-    'baseball': { code: 'BASEBALL_B01', name: '客製棒球', width: '7.2cm', height: '7.2cm', scale: 'SCALE 1:1', angle: '3D_ROT_35', targetCx: 50, targetCy: 50, targetR: 12, logoScale: 0.4 },
+    'baseball': { code: 'BASEBALL_B01', name: '客製棒球', width: '7.2cm', height: '7.2cm', scale: 'SCALE 1:1', angle: '3D_ROT_35', targetCx: 25, targetCy: 25, targetR: 12, logoScale: 0.4 },
     'jersey': { code: 'JERSEY_J02', name: '全昇華排汗球衣', width: '56cm', height: '72cm', scale: 'SCALE 1:10', angle: 'FRONT_VIEW', targetCx: 50, targetCy: 42, targetR: 8, logoScale: 0.35 },
     'hat': { code: 'BASEBALL_CAP_H03', name: '客製棒球帽', width: '28cm', height: '12.5cm', scale: 'SCALE 1:1.5', angle: '45_DEG_L', targetCx: 43, targetCy: 46, targetR: 10, logoScale: 0.55 },
     'towel': { code: 'TOWEL_T04', name: '運動應援毛巾', width: '100cm', height: '35cm', scale: 'SCALE 1:5', angle: 'FLAT_VIEW', targetCx: 50, targetCy: 50, targetR: 10, logoScale: 0.5 },
@@ -398,143 +355,134 @@ function getProductSvg(icon, sizeClass = "w-10 h-10") {
 
   const rawShapes = {
     'baseball': [
-      `<circle cx="50" cy="50" r="30" stroke-width="2"/>`,
-      `<path d="M27 37c9 4 13 9 13 13s-4 9-13 13" stroke-width="1.5"/>`,
-      `<path d="M73 37c-9 4-13 9-13 13s4 9 13 13" stroke-width="1.5"/>`,
-      `<path d="M31 39l1.5-2M34 43l1.5-1.5M36 47l1.2-1M36 53l-1.2-1M34 57l-1.5-1.5M31 61l-1.5-2" stroke-width="1" stroke-opacity="0.6"/>`,
-      `<path d="M69 39l-1.5-2M66 43l-1.5-1.5M64 47l-1.2-1M64 53l1.2-1M66 57l1.5-1.5M69 61l1.5-2" stroke-width="1" stroke-opacity="0.6"/>`
+      `<g transform="scale(2)" stroke="#ffffff" stroke-width="0.8">
+        <path d="M89.862,125.614c-.022.209-.068.411-.094.619-.085.65-.174,1.3-.308,1.933-.04.189-.1.371-.144.558-.153.647-.313,1.291-.516,1.917-.044.138-.1.27-.149.407-.229.67-.474,1.332-.757,1.975-.037.083-.081.162-.118.245-.313.69-.649,1.368-1.022,2.023-.02.036-.044.07-.064.105-.4.7-.83,1.374-1.293,2.025l-.008.011a25.313,25.313,0,0,1-3.266,3.748c-.463.436-.933.865-1.428,1.265a25.189,25.189,0,0,1-2.835,1.963c-.227.137-.448.283-.679.413-.361.2-.737.383-1.109.568-.31.154-.619.31-.937.451-.351.156-.71.3-1.069.438s-.727.277-1.1.4q-.511.173-1.032.324c-.416.12-.837.226-1.262.324-.322.075-.642.152-.968.214-.5.094-1,.165-1.5.229-.271.035-.539.081-.813.107-.788.075-1.584.121-2.391.121s-1.627-.046-2.426-.122c-.3-.029-.583-.082-.876-.12-.492-.065-.985-.131-1.468-.224-.363-.071-.718-.162-1.076-.249-.393-.094-.786-.189-1.172-.3s-.79-.25-1.18-.387c-.322-.112-.644-.227-.96-.351q-.635-.251-1.251-.536-.388-.178-.768-.37c-.443-.223-.88-.454-1.307-.7-.195-.113-.385-.232-.577-.35-.462-.285-.919-.576-1.361-.889-.122-.086-.238-.179-.358-.268-.49-.361-.974-.73-1.436-1.124-.49-.419-.974-.845-1.43-1.3a25.053,25.053,0,0,1-5.337-7.866c-.013-.031-.031-.06-.044-.091-.284-.668-.528-1.357-.754-2.053-.027-.084-.065-.164-.091-.249-.2-.648-.362-1.313-.511-1.982-.032-.141-.078-.276-.108-.419-.132-.643-.219-1.3-.3-1.963-.022-.176-.062-.347-.08-.524a25.34,25.34,0,0,1,0-5.119c.018-.177.058-.348.08-.524.081-.66.168-1.319.3-1.963.029-.142.076-.277.108-.419.149-.669.309-1.335.511-1.982.026-.085.064-.165.091-.249.226-.7.47-1.385.754-2.053.013-.031.031-.06.044-.091a25.05,25.05,0,0,1,5.337-7.866c.456-.455.94-.881,1.43-1.3.462-.395.946-.763,1.436-1.124.12-.088.236-.181.358-.268.441-.313.9-.6,1.361-.889.192-.118.382-.237.577-.35.427-.248.865-.479,1.307-.7q.381-.191.768-.37.617-.284,1.251-.536c.316-.125.638-.239.96-.351.39-.136.781-.27,1.18-.386s.779-.207,1.172-.3c.357-.086.713-.178,1.076-.248.483-.093.975-.159,1.468-.224.292-.039.58-.092.876-.12C63.373,98.046,64.181,98,65,98s1.634.045,2.436.123c.312.03.616.087.925.129.477.064.954.126,1.422.217.393.077.776.177,1.162.272.363.089.728.174,1.084.279.439.13.87.279,1.3.431.28.1.56.2.835.306.473.188.938.392,1.4.607.207.1.413.195.616.3.5.251.99.517,1.47.8.139.082.276.167.413.251.52.321,1.03.654,1.524,1.011.073.053.143.108.216.161.538.4,1.064.81,1.568,1.248s.974.86,1.43,1.322a25.124,25.124,0,0,1,4.235,5.731l.012.024q.559,1.042,1.022,2.14c.034.08.057.165.09.246.27.663.522,1.337.736,2.027.061.2.1.405.156.605.165.584.329,1.168.451,1.768.077.379.117.771.176,1.156.068.435.153.865.2,1.307a25.044,25.044,0,0,1-.009,5.155Zm-40.02-18.533a21.939,21.939,0,0,0,0,31.838c.268-.245.527-.508.779-.781l-1.439-.958c-.244-.162-.237-.508.015-.773a.748.748,0,0,1,.9-.185l1.375.915a18.841,18.841,0,0,0,1.406-2.108l-1.56-.283a.5.5,0,0,1-.315-.712.725.725,0,0,1,.742-.52l1.78.323a21.977,21.977,0,0,0,1.053-2.5l-1.266.091c-.3.021-.518-.252-.5-.609a.706.706,0,0,1,.576-.686l1.6-.115a24.978,24.978,0,0,0,.6-2.628l-1.25.09c-.3.021-.518-.251-.5-.609a.706.706,0,0,1,.576-.686l1.377-.1c.091-.787.15-1.589.171-2.4l-1.448.486a.525.525,0,0,1-.644-.465.688.688,0,0,1,.372-.806l1.72-.577c-.021-.814-.093-1.607-.189-2.388l-1.379.311c-.285.064-.525-.225-.536-.647a.855.855,0,0,1,.5-.879l1.193-.269c-.14-.767-.3-1.522-.5-2.253l-1.458.5a.521.521,0,0,1-.65-.46.706.706,0,0,1,.389-.814l1.363-.465a22.133,22.133,0,0,0-.969-2.451l-.7.678a.71.71,0,0,1-.958-.087.637.637,0,0,1-.1-.914l1.061-1.025c-.261-.459-.535-.9-.825-1.324l-1.02,1.021a.676.676,0,0,1-.935-.088.659.659,0,0,1-.1-.924l1.173-1.174A15.22,15.22,0,0,0,49.842,107.081ZM65,101a21.894,21.894,0,0,0-13.764,4.852,17.629,17.629,0,0,1,1.44,1.513l1.93-.375a.71.71,0,0,1,.743.516.519.519,0,0,1-.329.724l-1.47.286a21.179,21.179,0,0,1,1.442,2.321l1.772-.344a.71.71,0,0,1,.743.516.519.519,0,0,1-.329.725l-1.578.306a24.4,24.4,0,0,1,1.108,2.884l1.653-.239a.919.919,0,0,1,.88.631c.152.4,0,.758-.329.806l-1.783.258c.195.759.352,1.54.483,2.333l1.661.1a.691.691,0,0,1,.579.683.531.531,0,0,1-.513.618l-1.543-.092c.088.759.153,1.528.172,2.315l1.67.56a.688.688,0,0,1,.372.806.525.525,0,0,1-.644.465l-1.4-.47c-.023.895-.093,1.773-.2,2.636a.39.39,0,0,1,.079.027l1.778,1.162a.677.677,0,0,1,.141.871.536.536,0,0,1-.747.29l-1.476-.964a26.292,26.292,0,0,1-.623,2.657l1.675,1.095a.677.677,0,0,1,.141.871.536.536,0,0,1-.747.29l-1.466-.958a23.7,23.7,0,0,1-1.21,2.856l1.371,1a.876.876,0,0,1,.153,1.045c-.18.385-.541.54-.806.348l-1.445-1.051a21.34,21.34,0,0,1-1.409,2.106l1.211.792a.677.677,0,0,1,.141.871.536.536,0,0,1-.747.29l-1.434-.938a16,16,0,0,1-1.114,1.161,21.919,21.919,0,0,0,27.088.329,18.2,18.2,0,0,1-1.507-1.741l-1.407.274a.709.709,0,0,1-.741-.516A.52.52,0,0,1,75,137.77l1-.195a22,22,0,0,1-1.329-2.342l-1.411.275a.709.709,0,0,1-.741-.516.52.52,0,0,1,.328-.724l1.263-.246a25.356,25.356,0,0,1-1.016-2.913l-1.428.207a.917.917,0,0,1-.877-.631c-.152-.4,0-.758.328-.806l1.6-.232c-.176-.771-.315-1.563-.429-2.367l-1.529-.091a.691.691,0,0,1-.577-.683.531.531,0,0,1,.512-.618l1.442.086c-.071-.764-.121-1.536-.125-2.326l-1.615-.543a.689.689,0,0,1-.371-.806.524.524,0,0,1,.642-.465l1.393.469c.037-.891.119-1.765.235-2.623a.4.4,0,0,1-.115-.039L70.4,118.477a.679.679,0,0,1-.141-.871.534.534,0,0,1,.745-.29l1.522,1a26.912,26.912,0,0,1,.645-2.641l-1.745-1.144a.679.679,0,0,1-.141-.871.534.534,0,0,1,.745-.29l1.547,1.014a23.942,23.942,0,0,1,1.222-2.838l-1.467-1.07a.878.878,0,0,1-.152-1.045c.18-.384.54-.54.8-.348l1.55,1.131a21.155,21.155,0,0,1,1.424-2.1l-1.335-.875a.679.679,0,0,1-.141-.871.534.534,0,0,1,.745-.29L77.8,107.1a15.547,15.547,0,0,1,1.114-1.141A21.9,21.9,0,0,0,65,101Zm15.268,6.181c-.266.236-.523.49-.774.755l1.325.884c.243.162.237.508-.015.773a.745.745,0,0,1-.9.185l-1.275-.851a18.449,18.449,0,0,0-1.4,2.061l1.461.266a.5.5,0,0,1,.314.712.723.723,0,0,1-.74.52l-1.695-.309a22.076,22.076,0,0,0-1.071,2.482l1.2-.087c.3-.021.517.251.495.609a.705.705,0,0,1-.575.686l-1.549.111a25.608,25.608,0,0,0-.635,2.63l1.238-.089c.3-.021.517.251.495.609a.705.705,0,0,1-.575.686l-1.382.1c-.1.791-.175,1.6-.21,2.42l1.492-.5a.524.524,0,0,1,.642.465.689.689,0,0,1-.371.806l-1.807.608c.006.813.062,1.606.141,2.388l1.513-.342c.284-.064.523.225.534.647a.856.856,0,0,1-.494.879l-1.362.308c.123.779.269,1.546.452,2.289l1.675-.573a.519.519,0,0,1,.648.46.706.706,0,0,1-.388.814l-1.608.549a23.064,23.064,0,0,0,.95,2.622l.964-.934a.707.707,0,0,1,.955.087.638.638,0,0,1,.1.914l-1.352,1.311c.251.472.515.928.794,1.363l1.34-1.345a.673.673,0,0,1,.932.088.66.66,0,0,1,.1.924l-1.526,1.532a15.546,15.546,0,0,0,1.4,1.612,21.937,21.937,0,0,0,.535-32.124Z" transform="translate(-40 -98)"/>
+      </g>`
     ],
     'jersey': [
-      `<path d="M30 25h12c1 0 2 .5 2.5 1.5l3.5 6 3.5-6c.5-1 1.5-1.5 2.5-1.5h12l14 8-6 12-8-3v33H36V41l-8 3-6-12 14-8z" stroke-width="2" stroke-linejoin="round"/>`,
-      `<path d="M42 25l8 12 8-12" stroke-width="1.5"/>`,
-      `<path d="M36 41c2 1 4 0 5-2M64 41c-2 1-4 0-5-2" stroke-width="1"/>`,
-      `<path d="M36 71h28" stroke-dasharray="2 2" stroke-width="1"/>`
+      `<!-- Main vest body contour -->
+       <path d="M 31 10 L 38 10 Q 38 23, 50 23 Q 62 23, 62 10 L 69 10 Q 71 27, 81 30 L 81 90 L 19 90 L 19 30 Q 29 27, 31 10 Z" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>`,
+      `<!-- V-Neck neckline border trim -->
+       <path d="M 38 10 C 38 21, 62 21, 62 10 M 41 10 H 59" stroke-width="2" stroke-linecap="round"/>`,
+      `<!-- Side panels cutting lines -->
+       <path d="M 26 30 L 26 90 M 74 30 L 74 90" stroke-width="2" stroke-linecap="round"/>`,
+      `<!-- Center circular cross target badge -->
+       <circle cx="50" cy="42" r="13" stroke-width="2.5" fill="none"/>
+       <circle cx="50" cy="42" r="10" stroke-width="1.8" fill="none"/>
+       <path d="M 46 38 L 54 46 M 54 38 L 46 46" stroke-width="2" stroke-linecap="round"/>`,
+      `<!-- Lower tag decoration -->
+       <rect x="33" y="78" width="12" height="8" stroke-width="1.8" fill="none"/>
+       <rect x="35" y="81" width="8" height="2" stroke-width="1.2" fill="none"/>`
     ],
     'hat': [
-      `<path d="M 25 58 C 25 35, 33 22, 48 22 C 63 22, 75 35, 75 58 C 65 60, 35 60, 25 58 Z" stroke-width="2" stroke-linejoin="round"/>`,
-      `<path d="M 25 58 C 14 62, 8 68, 12 73 C 17 77, 35 77, 50 74 C 60 72, 65 65, 65 58 C 50 61, 35 61, 25 58 Z" stroke-width="2" stroke-linejoin="round"/>`,
-      `<circle cx="48" cy="22" r="2.8" stroke-width="1.5" fill="#0b0f19"/>`,
-      `<path d="M 48 22 C 46 35, 44 48, 42 60 M 48 22 C 38 31, 31 44, 29 59 M 48 22 C 54 31, 58 44, 61 59 M 48 22 C 63 31, 68 44, 73 58 M 75 56 L 80 47 M 82 29 A 9 9 0 1 1 82 47 A 9 9 0 1 1 82 29 M 75 35 H 80 V 38 H 75 Z M 79 36 H 87 V 39 H 79 Z" stroke-width="1"/>`,
-      `<path d="M 25.5 59.5 C 16 63, 11 68.5, 14 72 C 18.5 75.5, 34 75, 48 72 C 57 70.5, 62 64.5, 62 59.5 M 81 37.5 A 0.5 0.5 0 1 1 81 36.5 A 0.5 0.5 0 1 1 81 37.5 M 83 37.5 A 0.5 0.5 0 1 1 83 36.5 A 0.5 0.5 0 1 1 83 37.5 M 85 37.5 A 0.5 0.5 0 1 1 85 36.5 A 0.5 0.5 0 1 1 85 37.5" stroke-width="0.8" stroke-dasharray="2 1.5"/>`
+      `<path d="M 25 58 C 25 35, 33 22, 48 22 C 63 22, 75 35, 75 58 C 65 60, 35 60, 25 58 Z" stroke-width="2.5" stroke-linejoin="round"/>`,
+      `<path d="M 25 58 C 14 62, 8 68, 12 73 C 17 77, 35 77, 50 74 C 60 72, 65 65, 65 58 C 50 61, 35 61, 25 58 Z" stroke-width="2.5" stroke-linejoin="round"/>`,
+      `<circle cx="48" cy="22" r="2.8" stroke-width="1.5" fill="#ffffff"/>`,
+      `<path d="M 48 22 C 46 35, 44 48, 42 60 M 48 22 C 38 31, 31 44, 29 59 M 48 22 C 54 31, 58 44, 61 59 M 48 22 C 63 31, 68 44, 73 58" stroke-width="1.5"/>`
     ],
     'towel': [
-      `<rect x="18" y="32" width="64" height="36" rx="2" stroke-width="2"/>`,
-      `<rect x="22" y="36" width="56" height="28" stroke-dasharray="2 2" stroke-width="1"/>`,
-      `<path d="M18 34h-4M18 38h-4M18 42h-4M18 46h-4M18 50h-4M18 54h-4M18 58h-4M18 62h-4M18 66h-4" stroke-width="1"/>`,
-      `<path d="M82 34h4M82 38h4M82 42h4M82 46h4M82 50h4M82 54h4M82 58h4M82 62h4M82 66h4" stroke-width="1"/>`
+      `<rect x="18" y="32" width="64" height="36" rx="2" stroke-width="2.5"/>`,
+      `<rect x="22" y="36" width="56" height="28" stroke-dasharray="2 2" stroke-width="1.2"/>`
     ],
     'tote': [
-      `<path d="M28 42h44l-4 34H32L28 42z" stroke-width="2" stroke-linejoin="round"/>`,
-      `<path d="M38 42c0-14 6-18 12-18s12 4 12 18" stroke-width="1.5"/>`,
-      `<path d="M38 42c-2-8 2-10 12-10s14 2 12 10" stroke-width="1.2" stroke-dasharray="2 2"/>`,
-      `<path d="M34 70h32" stroke-dasharray="2 2" stroke-width="1"/>`
+      `<path d="M28 42h44l-4 34H32L28 42z" stroke-width="2.5" stroke-linejoin="round"/>`,
+      `<path d="M38 42c0-14 6-18 12-18s12 4 12 18" stroke-width="2"/>`
     ],
     'user': [
-      `<path d="M30 25h12c1 0 2 .5 2.5 1.5l3.5 6 3.5-6c.5-1 1.5-1.5 2.5-1.5h12l14 8-6 12-8-3v33H36V41l-8 3-6-12 14-8z" stroke-width="2" stroke-linejoin="round"/>`,
-      `<path d="M26 33l5-1.5M69 31.5l5 1.5M36 71h28" stroke-dasharray="2 2" stroke-width="1"/>`,
-      `<path d="M42 25c0 4 16 4 16 0" stroke-width="1.5"/>`,
-      `<path d="M36 41c2 1 4 0 5-2M64 41c-2 1-4 0-5-2" stroke-width="1"/>`,
-      `<path d="M15 25v49M12 25h6M12 74h6" stroke-width="1"/>`,
-      `<path d="M30 83h40M30 80v6M70 80v6" stroke-width="1"/>`
+      `<g transform="scale(0.21)" stroke="#ffffff" stroke-width="6" fill="none"><path d="M449.962,173.343L373.338,56.434c-0.521-0.796-1.26-1.427-2.128-1.817c0,0-108.317-49.534-113.373-47.804l-0.604,0.205 c-20.534,6.962-43.152,6.962-63.698-0.004l-0.593-0.201c-5.054-1.73-113.374,47.804-113.374,47.804 c-0.868,0.391-1.606,1.021-2.128,1.817L0.818,173.343c-1.286,1.962-1.035,4.553,0.602,6.231c1.3,1.334,32.496,32.807,89.373,45.624 c2.037,0.453,4.146-0.397,5.287-2.146l14.618-22.415l1.472,226.004c0.015,2.312,1.612,4.312,3.863,4.837 c35.771,8.355,72.564,12.533,109.357,12.533c36.793,0,73.586-4.178,109.357-12.533c2.25-0.525,3.848-2.525,3.863-4.837 l1.472-226.004l14.618,22.415c1.141,1.748,3.251,2.605,5.287,2.146c56.877-12.817,88.073-44.29,89.373-45.624 C450.997,177.896,451.247,175.305,449.962,173.343z M372.299,73.091l57.714,88.058c-14.914,10.884-41.974,28.08-77.646,40.02 l-11.193-17.162C358.297,156.778,368.417,99.246,372.299,73.091z M174.936,24.448c4.307,13.438,16.556,29.459,50.454,29.459 c33.897,0,46.147-16.021,50.454-29.459c0.174-0.542,0.307-1.09,0.414-1.639l5.578,2.513c-0.086,0.318-0.176,0.636-0.278,0.951 c-9.386,29.258-39.216,33.627-56.163,33.627c-16.951,0-46.788-4.368-56.174-33.63c-0.101-0.314-0.191-0.63-0.277-0.947l5.578-2.513 C174.629,23.357,174.762,23.905,174.936,24.448z M185.488,17.226c0.419-0.411,1.404-1.193,2.826-1.193 c0.426,0,0.891,0.07,1.392,0.241l0.63,0.215c22.605,7.663,47.503,7.663,70.098,0.004l0.642-0.219 c2.171-0.741,3.672,0.417,4.217,0.952c0.541,0.53,1.725,1.999,1.029,4.169c-4.787,14.938-18.559,22.512-40.931,22.512 c-22.373,0-36.145-7.574-40.932-22.512C183.763,19.225,184.947,17.756,185.488,17.226z M109.606,184.006l-11.193,17.162 c-35.672-11.94-62.732-29.136-77.646-40.02l57.714-88.058C82.363,99.246,92.483,156.778,109.606,184.006z M89.62,214.652 c-42.411-10.338-69.562-31.8-78.124-39.356l3.781-5.77c17.296,12.609,43.516,28.592,77.499,40.286L89.62,214.652z M328.636,422.619 c-67.635,15.191-138.855,15.191-206.492,0l-1.554-238.667c-0.002-0.315-0.086-0.698-0.201-1.08 c-0.285-0.938-0.748-1.804-1.299-2.616c-19.039-28.074-29.739-100.95-32.032-118.045l72.689-32.746 c4.906,15.168,19.949,40.434,65.649,40.434c45.692,0,60.733-25.268,65.638-40.434l72.689,32.746 c-2.294,17.095-12.994,89.971-32.032,118.045c-0.55,0.811-1.014,1.677-1.299,2.616c-0.116,0.382-0.199,0.765-0.201,1.08 L328.636,422.619z M361.16,214.652l-3.157-4.84c33.984-11.693,60.204-27.676,77.5-40.286l3.781,5.769 C430.717,182.855,403.568,204.315,361.16,214.652z"/></g>`
     ],
     'dribbble': [
-      `<circle cx="50" cy="50" r="32" stroke-width="2"/>`,
-      `<path d="M50 18v64M18 50h64" stroke-width="1.5"/>`,
-      `<path d="M27.5 27.5c12 12 12 33 0 45M72.5 27.5c-12 12-12 33 0 45" stroke-width="1.5"/>`,
-      `<circle cx="50" cy="50" r="2" fill="currentColor"/>`,
-      `<path d="M12 18h76M12 18v6M88 18v6" stroke-width="1"/>`
+      `<circle cx="50" cy="50" r="32" stroke-width="3"/>`,
+      `<path d="M50 18v64M18 50h64" stroke-width="2"/>`,
+      `<path d="M27.5 27.5c12 12 12 33 0 45M72.5 27.5c-12 12-12 33 0 45" stroke-width="2"/>`
     ],
     'activity': [
-      `<path d="M32 25h11c.5 0 1 .3 1.2.8l5.8 9 5.8-9c.2-.5.7-.8 1.2-.8h11l15 6-12 24-4-2v21H34V51l-4 2-12-24 15-6z" stroke-width="2" stroke-linejoin="round"/>`,
-      `<path d="M21 34l-3 6M79 34l3 6M34 71h32" stroke-dasharray="2 2" stroke-width="1"/>`,
-      `<path d="M42 25c0 4 16 4 16 0" stroke-width="1.5"/>`,
-      `<path d="M34 51c4 2 6-1 7-4M66 51c-4 2-6-1-7-4" stroke-width="1"/>`,
-      `<path d="M12 25v48M9 25h6M9 73h6" stroke-width="1"/>`
+      `<path d="M32 25h11c.5 0 1 .3 1.2.8l5.8 9 5.8-9c.2-.5.7-.8 1.2-.8h11l15 6-12 24-4-2v21H34V51l-4 2-12-24 15-6z" stroke-width="2.5" stroke-linejoin="round"/>`,
+      `<path d="M42 25c0 4 16 4 16 0" stroke-width="2"/>`,
+      `<path d="M34 51c4 2 6-1 7-4M66 51c-4 2-6-1-7-4" stroke-width="1.5"/>`
     ],
     'wind': [
-      `<path d="M 25 58 C 25 35, 33 22, 48 22 C 63 22, 75 35, 75 58 C 65 60, 35 60, 25 58 Z" stroke-width="2" stroke-linejoin="round"/>`,
-      `<path d="M 25 58 C 14 62, 8 68, 12 73 C 17 77, 35 77, 50 74 C 60 72, 65 65, 65 58 C 50 61, 35 61, 25 58 Z" stroke-width="2" stroke-linejoin="round"/>`,
-      `<circle cx="48" cy="22" r="2.8" stroke-width="1.5" fill="#0b0f19"/>`,
-      `<path d="M 48 22 C 46 35, 44 48, 42 60 M 48 22 C 38 31, 31 44, 29 59 M 48 22 C 54 31, 58 44, 61 59 M 48 22 C 63 31, 68 44, 73 58 M 75 56 L 80 47 M 82 29 A 9 9 0 1 1 82 47 A 9 9 0 1 1 82 29 M 75 35 H 80 V 38 H 75 Z M 79 36 H 87 V 39 H 79 Z M 54 28 C 58 31, 62 34, 66 37 M 56 35 C 60 38, 64 41, 68 44 M 58 42 C 62 45, 66 48, 70 51 M 60 49 C 64 52, 68 55, 72 57 M 58 26 C 56 32, 54 38, 52 44 M 64 29 C 62 36, 60 43, 58 50 M 70 33 C 68 41, 66 49, 64 56" stroke-width="0.8" stroke-opacity="0.5"/>`,
-      `<path d="M 25.5 59.5 C 16 63, 11 68.5, 14 72 C 18.5 75.5, 34 75, 48 72 C 57 70.5, 62 64.5, 62 59.5 M 81 37.5 A 0.5 0.5 0 1 1 81 36.5 A 0.5 0.5 0 1 1 81 37.5 M 83 37.5 A 0.5 0.5 0 1 1 83 36.5 A 0.5 0.5 0 1 1 83 37.5 M 85 37.5 A 0.5 0.5 0 1 1 85 36.5 A 0.5 0.5 0 1 1 85 37.5" stroke-width="0.8" stroke-dasharray="2 1.5"/>`
+      `<path d="M 25 58 C 25 35, 33 22, 48 22 C 63 22, 75 35, 75 58 C 65 60, 35 60, 25 58 Z" stroke-width="2.5" stroke-linejoin="round"/>`,
+      `<path d="M 25 58 C 14 62, 8 68, 12 73 C 17 77, 35 77, 50 74 C 60 72, 65 65, 65 58 C 50 61, 35 61, 25 58 Z" stroke-width="2.5" stroke-linejoin="round"/>`,
+      `<circle cx="48" cy="22" r="2.8" stroke-width="1.5" fill="#ffffff"/>`,
+      `<path d="M 48 22 C 46 35, 44 48, 42 60 M 48 22 C 38 31, 31 44, 29 59 M 48 22 C 54 31, 58 44, 61 59 M 48 22 C 63 31, 68 44, 73 58" stroke-width="1.5"/>`
     ],
     'gift': [
-      `<rect x="18" y="32" width="64" height="36" rx="2" stroke-width="2"/>`,
-      `<rect x="22" y="36" width="56" height="28" stroke-dasharray="2 2" stroke-width="1"/>`,
-      `<path d="M18 34h-4M18 38h-4M18 42h-4M18 46h-4M18 50h-4M18 54h-4M18 58h-4M18 62h-4M18 66h-4" stroke-width="1"/>`,
-      `<path d="M82 34h4M82 38h4M82 42h4M82 46h4M82 50h4M82 54h4M82 58h4M82 62h4M82 66h4" stroke-width="1"/>`,
-      `<path d="M30 44h40M30 50h40M30 56h40" stroke-width="1" stroke-opacity="0.4"/>`
+      `<rect x="18" y="32" width="64" height="36" rx="2" stroke-width="2.5"/>`,
+      `<rect x="22" y="36" width="56" height="28" stroke-dasharray="2 2" stroke-width="1.2"/>`
     ],
     'briefcase': [
-      `<rect x="30" y="44" width="40" height="36" rx="6" stroke-width="2"/>`,
-      `<path d="M30 44c0 12 6 16 20 16s20-4 20-16" stroke-width="1.5" stroke-linejoin="round"/>`,
-      `<path d="M30 48c-8-12-8-24 20-28s32 10 20 28" stroke-width="1.5" stroke-dasharray="3 3"/>`,
-      `<rect x="47" y="55" width="6" height="8" rx="1" stroke-width="1.5"/>`,
-      `<path d="M34 74h32" stroke-dasharray="2 2" stroke-width="1"/>`
+      `<rect x="30" y="44" width="40" height="36" rx="6" stroke-width="2.5"/>`,
+      `<path d="M30 44c0 12 6 16 20 16s20-4 20-16" stroke-width="2" stroke-linejoin="round"/>`,
+      `<path d="M30 48c-8-12-8-24 20-28s32 10 20 28" stroke-width="2" stroke-dasharray="3 3"/>`,
+      `<rect x="47" y="55" width="6" height="8" rx="1" stroke-width="2"/>`
     ],
     'heart': [
-      `<path d="M32 25h11c.5 0 1 .3 1.2.8l5.8 9 5.8-9c.2-.5.7-.8 1.2-.8h11l15 6-12 24-4-2v21H34V51l-4 2-12-24 15-6z" stroke-width="2" stroke-linejoin="round"/>`,
-      `<path d="M42 25c0 4 16 4 16 0" stroke-width="1.5"/>`,
-      `<path d="M20 32l-2 5M80 32l2 5M34 71h32" stroke-dasharray="2 2" stroke-width="1"/>`,
-      `<path d="M34 51c4 2 6-1 7-4M66 51c-4 2-6-1-7-4" stroke-width="1"/>`
+      `<path d="M32 25h11c.5 0 1 .3 1.2.8l5.8 9 5.8-9c.2-.5.7-.8 1.2-.8h11l15 6-12 24-4-2v21H34V51l-4 2-12-24 15-6z" stroke-width="2.5" stroke-linejoin="round"/>`,
+      `<path d="M42 25c0 4 16 4 16 0" stroke-width="2"/>`,
+      `<path d="M34 51c4 2 6-1 7-4M66 51c-4 2-6-1-7-4" stroke-width="1.5"/>`
     ],
     'volleyball': [
-      `<circle cx="50" cy="50" r="32" stroke-width="2"/>`,
-      `<path d="M34 22c10 4 18 14 18 28s-4 22-14 28" stroke-width="1.5"/>`,
-      `<path d="M66 22c-10 4-18 14-18 28s4 22 14 28" stroke-width="1.5"/>`,
-      `<path d="M22 34c8 10 20 14 30 14s22-8 26-16" stroke-width="1.5"/>`,
-      `<path d="M22 66c8-10 20-14 30-14s22 8 26 16" stroke-width="1.5"/>`,
-      `<path d="M50 18v8M50 74v8M18 50h8M74 50h8" stroke-width="1" stroke-opacity="0.5"/>`
+      `<circle cx="50" cy="50" r="32" stroke-width="3"/>`,
+      `<path d="M34 22c10 4 18 14 18 28s-4 22-14 28" stroke-width="2"/>`,
+      `<path d="M66 22c-10 4-18 14-18 28s4 22 14 28" stroke-width="2"/>`,
+      `<path d="M22 34c8 10 20 14 30 14s22-8 26-16" stroke-width="2"/>`,
+      `<path d="M22 66c8-10 20-14 30-14s22 8 26 16" stroke-width="2"/>`
     ],
     'shield': [
-      `<path d="M32 28h11l1.5-6h11l1.5 6h11l13 7-10 22-4-2v20H34V53l-4 2-10-22 12-7z" stroke-width="2" stroke-linejoin="round"/>`,
-      `<path d="M43 28c0-8 4-10 7-10s7 2 7 10" stroke-width="1.5"/>`,
-      `<path d="M50 22v51" stroke-width="1.5"/>`,
-      `<path d="M48 28h4M48 34h4M48 40h4M48 46h4M48 52h4M48 58h4M48 64h4" stroke-width="1" stroke-dasharray="1 1"/>`,
-      `<path d="M38 58h8v10h-8zM54 58h8v10h-8z" stroke-width="1"/>`
+      `<path d="M32 28h11l1.5-6h11l1.5 6h11l13 7-10 22-4-2v20H34V53l-4 2-10-22 12-7z" stroke-width="2.5" stroke-linejoin="round"/>`,
+      `<path d="M43 28c0-8 4-10 7-10s7 2 7 10" stroke-width="2"/>`,
+      `<path d="M50 22v51" stroke-width="2"/>`
     ],
     'truck': [
-      `<path d="M 25 58 C 25 35, 33 22, 48 22 C 63 22, 75 35, 75 58 C 65 60, 35 60, 25 58 Z" stroke-width="2" stroke-linejoin="round"/>`,
-      `<path d="M 25 58 C 14 62, 8 68, 12 73 C 17 77, 35 77, 50 74 C 60 72, 65 65, 65 58 C 50 61, 35 61, 25 58 Z" stroke-width="2" stroke-linejoin="round"/>`,
-      `<circle cx="48" cy="22" r="2.8" stroke-width="1.5" fill="#0b0f19"/>`,
-      `<path d="M 48 22 C 46 35, 44 48, 42 60 M 48 22 C 38 31, 31 44, 29 59 M 48 22 C 54 31, 58 44, 61 59 M 48 22 C 63 31, 68 44, 73 58 M 75 56 L 80 47 M 82 29 A 9 9 0 1 1 82 47 A 9 9 0 1 1 82 29 M 75 35 H 80 V 38 H 75 Z M 79 36 H 87 V 39 H 79 Z M 54 28 H 72 M 56 34 H 74 M 58 40 H 75 M 60 47 H 75 M 62 54 H 75 M 54 24 V 58 M 60 25 V 58 M 66 27 V 58 M 72 30 V 58" stroke-width="0.8" stroke-opacity="0.5"/>`,
-      `<path d="M 25.5 59.5 C 16 63, 11 68.5, 14 72 C 18.5 75.5, 34 75, 48 72 C 57 70.5, 62 64.5, 62 59.5 M 81 37.5 A 0.5 0.5 0 1 1 81 36.5 A 0.5 0.5 0 1 1 81 37.5 M 83 37.5 A 0.5 0.5 0 1 1 83 36.5 A 0.5 0.5 0 1 1 83 37.5 M 85 37.5 A 0.5 0.5 0 1 1 85 36.5 A 0.5 0.5 0 1 1 85 37.5" stroke-width="0.8" stroke-dasharray="2 1.5"/>`
+      `<path d="M 25 58 C 25 35, 33 22, 48 22 C 63 22, 75 35, 75 58 C 65 60, 35 60, 25 58 Z" stroke-width="2.5" stroke-linejoin="round"/>`,
+      `<path d="M 25 58 C 14 62, 8 68, 12 73 C 17 77, 35 77, 50 74 C 60 72, 65 65, 65 58 C 50 61, 35 61, 25 58 Z" stroke-width="2.5" stroke-linejoin="round"/>`,
+      `<circle cx="48" cy="22" r="2.8" stroke-width="1.5" fill="#ffffff"/>`,
+      `<path d="M 48 22 C 46 35, 44 48, 42 60 M 48 22 C 38 31, 31 44, 29 59 M 48 22 C 54 31, 58 44, 61 59 M 48 22 C 63 31, 68 44, 73 58" stroke-width="1.5"/>`
     ],
     'droplets': [
-      `<rect x="22" y="26" width="56" height="12" rx="2" stroke-width="2"/>`,
-      `<rect x="22" y="38" width="56" height="14" rx="2" stroke-width="2"/>`,
-      `<rect x="22" y="52" width="56" height="18" rx="2" stroke-width="2"/>`,
-      `<path d="M28 32h44M28 45h44M28 61h44" stroke-dasharray="2 2" stroke-width="1"/>`,
-      `<path d="M84 26v44M81 26h6M81 70h6" stroke-width="1"/>`
+      `<rect x="22" y="26" width="56" height="12" rx="2" stroke-width="2.5"/>`,
+      `<rect x="22" y="38" width="56" height="14" rx="2" stroke-width="2.5"/>`,
+      `<rect x="22" y="52" width="56" height="18" rx="2" stroke-width="2.5"/>`
     ],
     'archive': [
-      `<path d="M30 30c0-6 8-8 20-8s20 2 20 8v44c0 6-6 10-20 10s-20-4-20-10V30z" stroke-width="2"/>`,
-      `<rect x="36" y="48" width="28" height="26" rx="4" stroke-width="1.5"/>`,
-      `<path d="M36 56h28" stroke-dasharray="2 2" stroke-width="1"/>`,
-      `<path d="M42 22v-4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v4" stroke-width="1.5"/>`,
-      `<path d="M26 36c-4 6-4 18 0 24M74 36c4 6 4 18 0 24" stroke-width="1" stroke-dasharray="2 2"/>`
+      `<path d="M30 30c0-6 8-8 20-8s20 2 20 8v44c0 6-6 10-20 10s-20-4-20-10V30z" stroke-width="2.5"/>`,
+      `<rect x="36" y="48" width="28" height="26" rx="4" stroke-width="2"/>`,
+      `<path d="M42 22v-4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v4" stroke-width="2"/>`
     ],
     'zap': [
-      `<path d="M24 28h52v8l-6 28h-10l-2-12-2 12H40L30 64l-6-28v-8z" stroke-width="2" stroke-linejoin="round"/>`,
-      `<path d="M24 33h52M24 38h52" stroke-width="1" stroke-opacity="0.5"/>`,
-      `<path d="M47 38v8M53 38v8" stroke-width="1.5"/>`,
-      `<path d="M30 60h10M60 60h10" stroke-dasharray="2 2" stroke-width="1"/>`
+      `<path d="M24 28h52v8l-6 28h-10l-2-12-2 12H40L30 64l-6-28v-8z" stroke-width="2.5" stroke-linejoin="round"/>`,
+      `<path d="M47 38v8M53 38v8" stroke-width="2"/>`
     ],
     'award': [
-      `<circle cx="50" cy="50" r="32" stroke-width="2"/>`,
-      `<path d="M50 42l8 6-3 10h-10l-3-10z" stroke-width="1.5"/>`,
-      `<path d="M50 42V30M58 48l10-4M55 58l6 8M45 58l-6 8M42 48l-10-4" stroke-width="1.5"/>`,
-      `<path d="M38 28c8-6 16-6 24 0M68 44c6 8 4 18-2 22M61 66c-8 6-14 6-22 0M32 44c-6 8-4 18 2 22" stroke-width="1" stroke-dasharray="2 2"/>`
+      `<circle cx="50" cy="50" r="32" stroke-width="3"/>`,
+      `<path d="M50 42l8 6-3 10h-10l-3-10z" stroke-width="2"/>`,
+      `<path d="M50 42V30M58 48l10-4M55 58l6 8M45 58l-6 8M42 48l-10-4" stroke-width="2"/>`
     ],
     'check-circle': [
-      `<rect x="15" y="15" width="70" height="70" stroke-dasharray="4 4" stroke-opacity="0.2"/>`,
-      `<path d="M26 44h10l3-5 3 5h10v18H26V44z" stroke-width="1.5"/>`,
-      `<path d="M31 44c0 1.5 1.5 3 3 3s3-1.5 3-3"/>`,
-      `<path d="M56 46c0-10 8-16 16-16s16 6 16 16H56z" stroke-width="1.5"/>`,
-      `<path d="M56 46c-6 0-8 4-8 4s8 2 16 0" stroke-width="1.5"/>`,
-      `<circle cx="54" cy="64" r="14" stroke-width="1.5"/>`,
-      `<path d="M46 64h16M54 50v28" stroke-dasharray="2 2" stroke-width="1"/>`
-    ]
+      `<!-- Top-Left: Jersey -->
+       <g transform="translate(15, 10) scale(0.55)">
+         <path d="M30 25h12c1 0 2 .5 2.5 1.5l3.5 6 3.5-6c.5-1 1.5-1.5 2.5-1.5h12l14 8-6 12-8-3v33H36V41l-8 3-6-12 14-8z" stroke-width="2.5" stroke-linejoin="round"/>
+         <path d="M42 25l8 12 8-12" stroke-width="2"/>
+       </g>`,
+      `<!-- Top-Right: Hat -->
+       <g transform="translate(52, 12) scale(0.6)">
+         <path d="M 25 58 C 25 35, 33 22, 48 22 C 63 22, 75 35, 75 58 C 65 60, 35 60, 25 58 Z" stroke-width="2.5" stroke-linejoin="round"/>
+         <path d="M 25 58 C 14 62, 8 68, 12 73 C 17 77, 35 77, 50 74 C 60 72, 65 65, 65 58 C 50 61, 35 61, 25 58 Z" stroke-width="2.5" stroke-linejoin="round"/>
+         <circle cx="48" cy="22" r="2" stroke-width="1" fill="#ffffff"/>
+       </g>`,
+      `<!-- Bottom-Left: Shorts -->
+       <g transform="translate(14, 52) scale(0.58)">
+         <path d="M24 28h52v8l-6 28h-10l-2-12-2 12H40L30 64l-6-28v-8z" stroke-width="2.5" stroke-linejoin="round"/>
+         <path d="M47 38v8M53 38v8" stroke-width="2"/>
+       </g>`,
+      `<!-- Bottom-Right: Basketball -->
+       <g transform="translate(54, 50) scale(0.55)">
+         <circle cx="50" cy="50" r="30" stroke-width="3"/>
+         <path d="M50 20v60M20 50h60" stroke-width="2"/>
+         <path d="M28.5 28.5c11 11 11 31 0 43M71.5 28.5c-11 11-11 31 0 43" stroke-width="2"/>
+       </g>`
+    ],
   };
 
   const baseElements = rawShapes[icon];
