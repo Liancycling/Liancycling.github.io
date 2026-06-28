@@ -1,2 +1,0 @@
-This is a test upload file created on 06/29 to verify GitHub push permissions for Antigravity AI agent.
-Connection is active and credential keychain is verified!
