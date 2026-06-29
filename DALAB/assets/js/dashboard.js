@@ -733,6 +733,9 @@ function showDashboard(order, userName) {
   }
 
   renderFileList(order.files);
+
+  // 初始化 AI 智慧助理互動
+  initAiAssistant(order);
 }
 
 
@@ -765,3 +768,123 @@ function renderFileList(files) {
 
   if (window.lucide) lucide.createIcons();
 }
+
+// ─────────────────────────────────────────────────────
+// 🧬 DALAB AI 智慧物流助理實作與工具對話邏輯 (對接 Gemini 規格)
+// ─────────────────────────────────────────────────────
+function initAiAssistant(currentOrder) {
+  const sendBtn = document.getElementById('send-ai-btn');
+  const userInput = document.getElementById('ai-user-input');
+  const quickMyOrderBtn = document.getElementById('quick-my-order-btn');
+
+  if (sendBtn && userInput) {
+    sendBtn.onclick = () => handleAiSubmit();
+    userInput.onkeypress = (e) => {
+      if (e.key === 'Enter') handleAiSubmit();
+    };
+  }
+
+  if (quickMyOrderBtn) {
+    quickMyOrderBtn.onclick = () => {
+      triggerQuickAi(`幫我查詢本筆訂單 ${currentOrder.orderId} 的狀態與最新配送物流`);
+    };
+  }
+
+  // 1. 本地查單號第三方物流 API 模擬 (如使用者規格 runLogisticsAgent & checkLogisticsStatus)
+  async function checkLogisticsStatus(args) {
+    appendChatLog("[系統呼叫]", `正在向物流 API 查詢單號: ${args.trackingId}`, "system");
+    await new Promise(r => setTimeout(r, 800)); // 模擬 API 動態延遲
+    
+    // 如果單號符合目前的使用者訂單單號
+    if (currentOrder && currentOrder.logistics && (args.trackingId.includes(currentOrder.logistics.trackingNumber) || currentOrder.orderId.includes(args.trackingId))) {
+      return {
+        status: currentOrder.logistics.status,
+        carrier: currentOrder.logistics.carrier,
+        trackingId: currentOrder.logistics.trackingNumber,
+        estimatedDelivery: currentOrder.estimatedDelivery
+      };
+    }
+
+    // 預設測試單號 SF987654321 或其他單號模擬
+    return {
+      status: "運輸中",
+      currentLocation: "台北分撥中心",
+      estimatedDelivery: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+      carrier: "順豐速運",
+      trackingId: args.trackingId
+    };
+  }
+
+  // 2. 模擬 Gemini-2.5-Flash 工具呼叫與對話 (等同前台 API 流程)
+  async function runLogisticsAgentSimulate(userPrompt) {
+    appendChatLog("[會員]", userPrompt, "user");
+    
+    // 解析 prompt 中是否包含單號
+    const trackingMatch = userPrompt.match(/(SF\d+|9\d{9}|\d{8,12})/i);
+    const orderMatch = userPrompt.match(/DL-\d{4}-\d{4}/i);
+    
+    await new Promise(r => setTimeout(r, 600)); // AI 思考延遲
+
+    if (trackingMatch || orderMatch || userPrompt.includes("查") || userPrompt.includes("單號") || userPrompt.includes("包裹")) {
+      const trackingId = trackingMatch ? trackingMatch[0] : (orderMatch ? orderMatch[0] : (currentOrder.logistics.trackingNumber || "SF987654321"));
+      
+      // 觸發 Function Call 系統訊息
+      const apiResponseData = await checkLogisticsStatus({ trackingId });
+      
+      await new Promise(r => setTimeout(r, 500));
+      
+      // 模擬 AI 整理成親切的話語回覆
+      let reply = "";
+      if (apiResponseData.trackingId === currentOrder.logistics.trackingNumber) {
+        reply = `好的！我為您查詢到目前本筆訂單的大貨狀態為：【${apiResponseData.status}】，物流商為【${apiResponseData.carrier}】，預計送達日期是 ${apiResponseData.estimatedDelivery}。請隨時留意您的收件電話。`;
+      } else {
+        reply = `我已經使用 [checkLogisticsStatus] 幫您查詢了單號【${apiResponseData.trackingId}】。目前狀態為：【${apiResponseData.status}】，包裹最新位置在【${apiResponseData.currentLocation}】，預計會在 ${apiResponseData.estimatedDelivery} 送達。`;
+      }
+      
+      appendChatLog("[AI 助理]", reply, "ai");
+    } else {
+      // 一般問候與閒聊
+      const greetings = [
+        "您好！我是您的 DALAB AI 智慧物流助理。您可以輸入物流單號（例如：SF987654321）或詢問訂單狀態，我會即時為您向物流 API 進行查詢！",
+        "哈囉！需要我幫您查詢包裹動態或是生產工作天嗎？請隨時告訴我。",
+        "嗨！有什麼我可以幫忙的？您可以直接貼上您的快遞託運單號進行查詢。"
+      ];
+      const randomReply = greetings[Math.floor(Math.random() * greetings.length)];
+      appendChatLog("[AI 助理]", randomReply, "ai");
+    }
+  }
+
+  async function handleAiSubmit() {
+    const prompt = userInput.value.trim();
+    if (!prompt) return;
+    userInput.value = '';
+    await runLogisticsAgentSimulate(prompt);
+  }
+
+  // 暴露快速觸發接口到全域 window
+  window.triggerQuickAi = async function(promptText) {
+    const chatBox = document.getElementById('ai-chat-box');
+    if (chatBox) chatBox.innerHTML = ''; // 清空方便展示
+    await runLogisticsAgentSimulate(promptText);
+  };
+}
+
+function appendChatLog(sender, text, type) {
+  const chatBox = document.getElementById('ai-chat-box');
+  if (!chatBox) return;
+
+  const msgDiv = document.createElement('div');
+  msgDiv.className = "text-left";
+  
+  if (type === "system") {
+    msgDiv.innerHTML = `<span class="text-blue-400 font-bold">${sender}</span> <span class="text-blue-300 italic">${text}</span>`;
+  } else if (type === "user") {
+    msgDiv.innerHTML = `<span class="text-white/60 font-bold">${sender}</span> <span class="text-white font-mono">${text}</span>`;
+  } else if (type === "ai") {
+    msgDiv.innerHTML = `<span class="text-dvNeon font-bold">${sender}</span> <span class="text-gray-300 font-sans">${text}</span>`;
+  }
+
+  chatBox.appendChild(msgDiv);
+  chatBox.scrollTop = chatBox.scrollHeight;
+}
+
