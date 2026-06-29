@@ -332,6 +332,24 @@ function initDashboard() {
       });
     }
 
+    // 忘記密碼處理
+    const forgotPwdLink = document.getElementById('forgot-password-link');
+    if (forgotPwdLink) {
+      forgotPwdLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        const email = prompt("請輸入您的註冊信箱以發送密碼重設信件：");
+        if (email) {
+          auth.sendPasswordResetEmail(email.trim())
+            .then(() => {
+              alert("✉️ 密碼重設郵件已成功發送！請檢查您的收件匣。");
+            })
+            .catch(err => {
+              alert("發送重設信件失敗：" + err.message);
+            });
+        }
+      });
+    }
+
   } else {
     // Demo / LocalStorage 模式
     const savedUser = localStorage.getItem('dalab_mock_user');
@@ -381,6 +399,18 @@ function initDashboard() {
         }
 
         showDashboard(MOCK_ORDER, name || email);
+      });
+    }
+
+    // Demo 模式 - 忘記密碼處理
+    const forgotPwdLink = document.getElementById('forgot-password-link');
+    if (forgotPwdLink) {
+      forgotPwdLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        const email = prompt("【模擬模式】請輸入您的註冊信箱：");
+        if (email) {
+          alert(`✉️ 【模擬模式】密碼重設郵件已成功模擬發送至 ${email}！`);
+        }
       });
     }
   }
