@@ -193,46 +193,46 @@
           </div>
         </div>
 
-        <!-- 橫向進度 Timeline (RWD) -->
-        <div class="mt-8 pt-4 border-t border-white/5">
-          <div class="flex flex-col md:flex-row items-center justify-between gap-6 md:gap-2">
+        <!-- 橫向進度 Timeline (手機版最佳化：在小螢幕時改為好點選的橫向捲動或簡潔排列，防止文字擠壓) -->
+        <div class="mt-8 pt-4 border-t border-white/5 overflow-x-auto">
+          <div class="flex flex-row items-center justify-between min-w-[640px] md:min-w-0 pb-2">
             
             <!-- Step 1: 詢價 -->
-            <div id="step-design" class="flex flex-col items-center flex-1 text-center cursor-pointer group/step">
+            <div id="step-design" class="flex flex-col items-center flex-1 text-center cursor-pointer group/step shrink-0">
               <div class="step-circle w-10 h-10 rounded-full bg-dvNeon text-black flex items-center justify-center font-bold">1</div>
-              <span class="step-label text-xs font-bold text-white mt-2">詢價/建立訂單</span>
+              <span class="step-label text-xs font-bold text-white mt-2 whitespace-nowrap">1. 詢價/建立訂單</span>
             </div>
             
-            <div id="connector-design" class="hidden md:block h-1 bg-white/10 flex-grow max-w-[80px]"></div>
+            <div id="connector-design" class="h-1 bg-white/10 flex-grow max-w-[80px] shrink-0 mx-2"></div>
 
             <!-- Step 2: 審稿 -->
-            <div id="step-design_review" class="flex flex-col items-center flex-1 text-center cursor-pointer group/step">
+            <div id="step-design_review" class="flex flex-col items-center flex-1 text-center cursor-pointer group/step shrink-0">
               <div class="step-circle w-10 h-10 rounded-full bg-white/10 text-gray-500 flex items-center justify-center font-bold">2</div>
-              <span class="step-label text-xs font-bold text-gray-500 mt-2">設計/合稿校對</span>
+              <span class="step-label text-xs font-bold text-gray-500 mt-2 whitespace-nowrap">2. 設計/合稿校對</span>
             </div>
 
-            <div id="connector-design_review" class="hidden md:block h-1 bg-white/10 flex-grow max-w-[80px]"></div>
+            <div id="connector-design_review" class="h-1 bg-white/10 flex-grow max-w-[80px] shrink-0 mx-2"></div>
 
             <!-- Step 3: 生產 -->
-            <div id="step-production" class="flex flex-col items-center flex-1 text-center cursor-pointer group/step">
+            <div id="step-production" class="flex flex-col items-center flex-1 text-center cursor-pointer group/step shrink-0">
               <div class="step-circle w-10 h-10 rounded-full bg-white/10 text-gray-500 flex items-center justify-center font-bold">3</div>
-              <span class="step-label text-xs font-bold text-gray-500 mt-2">工廠排單生產</span>
+              <span class="step-label text-xs font-bold text-gray-500 mt-2 whitespace-nowrap">3. 工廠排單生產</span>
             </div>
 
-            <div id="connector-production" class="hidden md:block h-1 bg-white/10 flex-grow max-w-[80px]"></div>
+            <div id="connector-production" class="h-1 bg-white/10 flex-grow max-w-[80px] shrink-0 mx-2"></div>
 
             <!-- Step 4: 物流 -->
-            <div id="step-shipping" class="flex flex-col items-center flex-1 text-center cursor-pointer group/step">
+            <div id="step-shipping" class="flex flex-col items-center flex-1 text-center cursor-pointer group/step shrink-0">
               <div class="step-circle w-10 h-10 rounded-full bg-white/10 text-gray-500 flex items-center justify-center font-bold">4</div>
-              <span class="step-label text-xs font-bold text-gray-500 mt-2">物流快遞配送</span>
+              <span class="step-label text-xs font-bold text-gray-500 mt-2 whitespace-nowrap">4. 物流快遞配送</span>
             </div>
 
-            <div id="connector-shipping" class="hidden md:block h-1 bg-white/10 flex-grow max-w-[80px]"></div>
+            <div id="connector-shipping" class="h-1 bg-white/10 flex-grow max-w-[80px] shrink-0 mx-2"></div>
 
             <!-- Step 5: 結案 -->
-            <div id="step-done" class="flex flex-col items-center flex-1 text-center cursor-pointer group/step">
+            <div id="step-done" class="flex flex-col items-center flex-1 text-center cursor-pointer group/step shrink-0">
               <div class="step-circle w-10 h-10 rounded-full bg-white/10 text-gray-500 flex items-center justify-center font-bold">5</div>
-              <span class="step-label text-xs font-bold text-gray-500 mt-2">順利收貨結案</span>
+              <span class="step-label text-xs font-bold text-gray-500 mt-2 whitespace-nowrap">5. 順利收貨結案</span>
             </div>
 
           </div>
