@@ -159,7 +159,6 @@ function initDashboard() {
       };
 
       if (isFirebaseInitialized && auth.currentUser) {
-        // 更新到 Firestore
         const user = auth.currentUser;
         db.collection("orders").where("ownerUid", "==", user.uid).get()
           .then(qs => {
@@ -174,11 +173,78 @@ function initDashboard() {
             }
           });
       } else {
-        // 模擬模式更新
         MOCK_ORDER.files.push(newFile);
         alert('【模擬模式】檔案連結提交成功！您可以從下方清單檢視您的歷史連結。');
         renderFileList(MOCK_ORDER.files);
         linkInput.value = '';
+      }
+    });
+  }
+
+  // 會員資料設定面板開關與表單監聽
+  const toggleSettingsBtn = document.getElementById('toggle-settings-btn');
+  const cancelSettingsBtn = document.getElementById('cancel-settings-btn');
+  const settingsPanel = document.getElementById('settings-panel');
+  const settingsForm = document.getElementById('settings-form');
+
+  if (toggleSettingsBtn && settingsPanel) {
+    toggleSettingsBtn.addEventListener('click', () => {
+      settingsPanel.classList.toggle('hidden');
+      // 自動載入目前的會員基本資料
+      if (isFirebaseInitialized && auth.currentUser) {
+        const user = auth.currentUser;
+        db.collection("users").doc(user.uid).get().then(doc => {
+          if (doc.exists) {
+            const data = doc.data();
+            document.getElementById('setting-name').value = data.name || "";
+            document.getElementById('setting-phone').value = data.phone || "";
+            document.getElementById('setting-address').value = data.address || "";
+          }
+        });
+      } else {
+        // 模擬載入
+        const savedUser = JSON.parse(localStorage.getItem('dalab_mock_user') || '{"name":"DV 嘉賓聯絡人"}');
+        document.getElementById('setting-name').value = savedUser.name || "";
+        document.getElementById('setting-phone').value = savedUser.phone || "0912-345-678";
+        document.getElementById('setting-address').value = savedUser.address || "新北市新莊區中正路68號10F";
+      }
+    });
+  }
+
+  if (cancelSettingsBtn && settingsPanel) {
+    cancelSettingsBtn.addEventListener('click', () => {
+      settingsPanel.classList.add('hidden');
+    });
+  }
+
+  if (settingsForm) {
+    settingsForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = document.getElementById('setting-name').value;
+      const phone = document.getElementById('setting-phone').value;
+      const address = document.getElementById('setting-address').value;
+
+      if (isFirebaseInitialized && auth.currentUser) {
+        const user = auth.currentUser;
+        db.collection("users").doc(user.uid).set({
+          name: name,
+          phone: phone,
+          address: address,
+          updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        }, { merge: true }).then(() => {
+          alert('會員個人資料設定更新成功！');
+          document.getElementById('user-display-name').textContent = name;
+          settingsPanel.classList.add('hidden');
+        }).catch(err => {
+          alert('寫入設定失敗: ' + err.message);
+        });
+      } else {
+        // 模擬模式儲存
+        const mockUser = { email: "guest@davillage.com.tw", name: name, phone: phone, address: address };
+        localStorage.setItem('dalab_mock_user', JSON.stringify(mockUser));
+        alert('【模擬模式】會員設定更新成功！');
+        document.getElementById('user-display-name').textContent = name;
+        settingsPanel.classList.add('hidden');
       }
     });
   }
