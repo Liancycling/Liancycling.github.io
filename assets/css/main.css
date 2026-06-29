@@ -1,0 +1,330 @@
+@charset "UTF-8";
+
+/* 導航欄樣式 */
+#main-nav {
+  @apply border-b border-white/10 sticky top-0 z-50 backdrop-blur-sm;
+  background: linear-gradient(120deg, rgba(0, 163, 224, 0.4) 10%, #000000 60%);
+  background-size: 200% 200%;
+  animation: gradientShift 10s ease infinite;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.6);
+  transition: transform 0.3s ease, opacity 0.3s ease, background-color 0.3s ease;
+}
+
+/* 導航欄連結 */
+.nav-link {
+  @apply relative transition-colors duration-200;
+}
+
+.nav-link::after {
+  content: "";
+  @apply absolute left-0 right-full bottom-[-6px] h-[2px];
+  background: linear-gradient(90deg, var(--dv-neon), var(--dv-dark-neon));
+  transition: right 0.28s cubic-bezier(0.2, 0.9, 0.2, 1);
+}
+
+.nav-link:hover::after {
+  right: 0;
+}
+
+/* 導航欄按鈕 */
+.nav-cta {
+  @apply transition-all duration-150 will-change-transform;
+}
+
+.nav-cta:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 10px 30px rgba(163, 204, 0, 0.12);
+}
+
+/* 行動端選單 */
+#mobile-menu.open {
+  animation: slideDown 0.28s ease forwards;
+}
+
+.menu-btn.open {
+  @apply transition-transform duration-200 rotate-90;
+}
+
+/* 頁面淡入淡出 */
+.view-section {
+  display: none;
+}
+
+.view-section.active {
+  display: block;
+  animation: slideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* 商品卡片樣式 */
+.product-card {
+  @apply bg-dvGray p-5 hover:border-dvNeon border border-white/5 transition cursor-pointer;
+}
+
+.product-card .badge {
+  @apply absolute top-2 left-2 bg-dvNeon text-black px-2 py-1 text-[10px] font-bold tracking-tighter;
+}
+
+/* 熱門商品卡片 */
+.hot-item-card {
+  @apply bg-dvGray p-6 text-center hover:border-dvNeon border border-transparent cursor-pointer transition;
+}
+
+/* 影片背景 */
+.video-container {
+  position: relative;
+  width: 100%;
+  height: 460px;
+  overflow: hidden;
+  background: #000;
+}
+.video-container video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.video-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  z-index: 1;
+}
+.video-content {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 步驟展開卡片 */
+.step-card {
+  cursor: pointer;
+  transition: 0.3s;
+  border-radius: 8px;
+  min-height: 120px;
+}
+.step-card:hover {
+  border-color: #ccff00;
+  background: rgba(28,28,28,0.8);
+}
+.step-number {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(204,255,0,0.1);
+  border: 1px solid rgba(204,255,0,0.3);
+  border-radius: 4px;
+  font-weight: bold;
+  font-size: 18px;
+  color: #ccff00;
+}
+.step-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+}
+.step-card.active .step-content {
+  max-height: 120px;
+}
+.arrow-icon {
+  transition: 0.3s;
+  width: 24px;
+  height: 24px;
+}
+.step-card.active .arrow-icon {
+  transform: rotate(180deg);
+}
+
+#mobile-menu {
+  transition: all 0.3s ease;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.carousel-card-animate {
+  animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* 科技設計網格 */
+.blueprint-grid {
+  background-color: #0b0f19 !important;
+  background-size: 20px 20px;
+  background-image: 
+    linear-gradient(to right, rgba(204, 255, 0, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(204, 255, 0, 0.04) 1px, transparent 1px) !important;
+}
+
+@keyframes pageFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+body {
+  animation: pageFadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.video-container {
+  position: relative;
+  width: 100%;
+  height: 460px;
+  overflow: hidden;
+  background: #080b11 !important;
+}
+
+.video-container::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(204, 255, 0, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(204, 255, 0, 0.03) 1px, transparent 1px) !important;
+  z-index: 0;
+}
+
+.video-container::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 50%, rgba(204, 255, 0, 0.08) 0%, transparent 70%) !important;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* SVG 動態線條動畫 */
+@keyframes svgLineDraw {
+  from {
+    stroke-dashoffset: 1000;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.blueprint-active svg path,
+.blueprint-active svg circle,
+.blueprint-active svg rect,
+.blueprint-active svg ellipse {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: svgLineDraw 2.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.blueprint-active svg > :nth-child(1) {
+  animation-duration: 0.6s;
+  animation-delay: 0s;
+  stroke-opacity: 0.08;
+}
+
+.blueprint-active svg > :nth-child(2) {
+  animation-duration: 1.6s;
+  animation-delay: 0.3s;
+}
+
+#hud-crosshair,
+#hud-crosshair line,
+#hud-crosshair text {
+  stroke-dasharray: none !important;
+  stroke-dashoffset: 0 !important;
+  animation: none !important;
+  transition: opacity 0.2s ease;
+}
+
+/* 雷達掃描紅外線 */
+.hud-scanner-line {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(204, 255, 0, 0.4), rgba(204, 255, 0, 0.8), rgba(204, 255, 0, 0.4), transparent);
+  box-shadow: 0 0 10px rgba(204, 255, 0, 0.8);
+  z-index: 10;
+  pointer-events: none;
+  animation: scanningLaser 4s ease-in-out infinite;
+  opacity: 0.7;
+}
+
+@keyframes scanningLaser {
+  0% { top: 0%; opacity: 0; }
+  10% { opacity: 0.8; }
+  90% { opacity: 0.8; }
+  100% { top: 100%; opacity: 0; }
+}
+
+@keyframes spinCW {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes spinCCW {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+.hud-spin-cw {
+  animation: spinCW 16s linear infinite !important;
+}
+.hud-spin-ccw {
+  animation: spinCCW 10s linear infinite !important;
+}
+
+.hud-blink {
+  animation: hudPulse 1.6s infinite !important;
+}
+
+@keyframes hudFlicker {
+  0%, 100% { opacity: 0.8; }
+  91% { opacity: 0.8; }
+  92% { opacity: 0.3; }
+  93% { opacity: 0.9; }
+  94% { opacity: 0.2; }
+  95% { opacity: 0.8; }
+}
+.hud-flicker {
+  animation: hudFlicker 5s infinite !important;
+}
+
+@keyframes flowLeft {
+  from {
+    stroke-dashoffset: 50;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+.hud-flow-path {
+  stroke-dasharray: 6 6;
+  animation: flowLeft 1.5s linear infinite;
+}
+
+@keyframes imageGlowPulse {
+  0% { filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.4)) drop-shadow(0 0 8px rgba(0, 163, 224, 0.3)); }
+  50% { filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.7)) drop-shadow(0 0 20px rgba(0, 163, 224, 0.6)); }
+  100% { filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.4)) drop-shadow(0 0 8px rgba(0, 163, 224, 0.3)); }
+}
+
+.image-glow { animation: imageGlowPulse 3s ease-in-out infinite; }
+
+.blueprint-active svg .hud-main-shape-group *, 
+.blueprint-active svg > g * {
+  stroke: #ffffff !important;
+  stroke-opacity: 1 !important;
+  opacity: 1 !important;
+}
