@@ -11,6 +11,9 @@ const MOCK_ORDER = {
   workingDays: 14,
   estimatedDelivery: "2026-07-12",
   status: "production",
+  styleModelId: "DV-TSHIRT-008",
+  designDraftUrl: "assets/img/feather_tech.png",
+  designDraftName: "極地黑拼貼撞色T-Shirt設計圖",
   logistics: {
     carrier: "黑貓宅急便",
     trackingNumber: "9087123456",
@@ -307,6 +310,9 @@ function initDashboard() {
             workingDays: 14,
             estimatedDelivery: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
             status: "design",
+            styleModelId: "待指定 (請提交草圖)",
+            designDraftUrl: "",
+            designDraftName: "尚未上傳正式設計圖",
             logistics: {
               carrier: "黑貓宅急便",
               trackingNumber: "待出貨時填寫",
@@ -623,26 +629,108 @@ function showDashboard(order, userName) {
   document.getElementById('logistics-number').textContent = order.logistics.trackingNumber;
   document.getElementById('logistics-status').textContent = order.logistics.status;
 
-  // 渲染訂單進度條
+  // 渲染款式編號與設計圖
+  const styleEl = document.getElementById('order-style-id');
+  if (styleEl) {
+    styleEl.textContent = order.styleModelId || "未指定 (請聯絡客服)";
+  }
+
+  const draftPreview = document.getElementById('design-draft-preview');
+  const draftPlaceholder = document.getElementById('design-draft-placeholder');
+  const draftName = document.getElementById('design-draft-name');
+
+  if (order.designDraftUrl) {
+    if (draftPreview) {
+      draftPreview.src = order.designDraftUrl;
+      draftPreview.classList.remove('hidden');
+    }
+    if (draftPlaceholder) {
+      draftPlaceholder.classList.add('hidden');
+    }
+    if (draftName) {
+      draftName.textContent = order.designDraftName || "設計模擬效果圖";
+    }
+  } else {
+    if (draftPreview) draftPreview.classList.add('hidden');
+    if (draftPlaceholder) draftPlaceholder.classList.remove('hidden');
+    if (draftName) draftName.textContent = "尚未上傳正式設計圖";
+  }
+
+  // 步驟文字內容字典
+  const stepDetails = {
+    "design": {
+      title: "第一步：詢價與建立訂單 (Inquiry & Setup)",
+      desc: "【目前進度說明】：我們已收到您的詢價單與客製需求，系統已為您建立了專屬的訂單追蹤碼。設計專員正在整理您的客製細節，將於 1-2 工作天內透過信箱或 LINE 聯繫您，確認下一步的設計細部細節。"
+    },
+    "design_review": {
+      title: "第二步：設計與合稿校對 (Design Review)",
+      desc: "【目前進度說明】：設計師已完成款式模擬圖。請在此頁面下方提交您的雲端檔案或連結以核對圖樣細節。我們會多次校正至您滿意並簽署「設計確認書」，隨後將正式進入工廠排單量產。"
+    },
+    "production": {
+      title: "第三步：工廠排產與製造 (Factory Production)",
+      desc: "【目前進度說明】：訂單已經排程進入生產線。包含面料裁剪、全彩昇華印刷、精細刺繡等工序正在嚴格品管中進行。此階段約需要 10-14 個工作天，敬請耐心等候。"
+    },
+    "shipping": {
+      title: "第四步：物流快遞配送 (Logistics & Shipping)",
+      desc: "【目前進度說明】：您的專屬客製商品已通過出廠品檢，妥善包裝完成！目前包裹已交付黑貓宅急便或專屬快遞安排出貨。您可以在左下方「物流狀態」中檢視快遞單號，隨時追蹤您的包裹路徑。"
+    },
+    "done": {
+      title: "第五步：順利收貨結案 (Completed)",
+      desc: "【目前進度說明】：包裹已順利送達您指定的收件地址。感謝您選擇 DALAB 客製化實驗室！我們重視您的滿意度，若商品有任何問題，請於收到貨後 7 日內與客服聯繫；若無誤將自動結案。期待下次為您服務！"
+    }
+  };
+
+  // 渲染訂單進度條與點擊監聽
   const steps = ["design", "design_review", "production", "shipping", "done"];
   const currentStepIndex = steps.indexOf(order.status);
+
+  // 預設顯示當前進度的詳細內容
+  const currentStatus = order.status || "design";
+  updateStepDetailPanel(currentStatus);
 
   steps.forEach((step, idx) => {
     const el = document.getElementById(`step-${step}`);
     if (el) {
+      // 點擊事件
+      el.onclick = () => {
+        updateStepDetailPanel(step);
+        // 清除其他步驟的高亮，為當前點擊的步驟加上發光框
+        steps.forEach(s => {
+          const stepEl = document.getElementById(`step-${s}`);
+          if (stepEl) {
+            stepEl.querySelector('.step-circle').classList.remove('ring-4', 'ring-dvNeon/50');
+          }
+        });
+        el.querySelector('.step-circle').classList.add('ring-4', 'ring-dvNeon/50');
+      };
+
       if (idx <= currentStepIndex) {
-        el.querySelector('.step-circle').className = "step-circle w-10 h-10 rounded-full bg-dvNeon text-black flex items-center justify-center font-bold shadow-[0_0_15px_rgba(204,255,0,0.4)]";
+        el.querySelector('.step-circle').className = "step-circle w-10 h-10 rounded-full bg-dvNeon text-black flex items-center justify-center font-bold shadow-[0_0_15px_rgba(204,255,0,0.4)] transition-all";
         el.querySelector('.step-label').className = "step-label text-sm font-bold text-dvNeon mt-2";
         if (idx < currentStepIndex) {
           const connector = document.getElementById(`connector-${step}`);
           if (connector) connector.className = "step-connector flex-grow h-1 bg-dvNeon";
         }
       } else {
-        el.querySelector('.step-circle').className = "step-circle w-10 h-10 rounded-full bg-white/10 text-gray-500 flex items-center justify-center font-bold border border-white/10";
+        el.querySelector('.step-circle').className = "step-circle w-10 h-10 rounded-full bg-white/10 text-gray-500 flex items-center justify-center font-bold border border-white/10 transition-all";
         el.querySelector('.step-label').className = "step-label text-sm font-bold text-gray-500 mt-2";
       }
     }
   });
+
+  // 特別高亮當前狀態步驟
+  const currentStepEl = document.getElementById(`step-${currentStatus}`);
+  if (currentStepEl) {
+    currentStepEl.querySelector('.step-circle').classList.add('ring-4', 'ring-dvNeon/50');
+  }
+
+  function updateStepDetailPanel(stepKey) {
+    const info = stepDetails[stepKey];
+    if (info) {
+      document.getElementById('step-detail-title').textContent = info.title;
+      document.getElementById('step-detail-desc').textContent = info.desc;
+    }
+  }
 
   renderFileList(order.files);
 }

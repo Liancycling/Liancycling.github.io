@@ -161,18 +161,35 @@
         <h3 class="text-sm font-bold text-white mb-6 flex items-center gap-2"><i data-lucide="clock" class="text-dvNeon w-4 h-4"></i>1. 訂單基本資訊與生產進度</h3>
         
         <!-- 進度數據格子 -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+          <div class="bg-dvBlack/40 border border-white/5 p-4 rounded-lg">
+            <span class="block text-[10px] font-mono text-gray-500 uppercase">STYLE_MODEL_ID // 款式與款式編號</span>
+            <span id="order-style-id" class="text-base font-bold text-dvNeon mt-1 block">---</span>
+          </div>
           <div class="bg-dvBlack/40 border border-white/5 p-4 rounded-lg">
             <span class="block text-[10px] font-mono text-gray-500 uppercase">ORDER_DATE // 發單日期</span>
-            <span id="order-date" class="text-lg font-bold text-white mt-1 block">---</span>
+            <span id="order-date" class="text-base font-bold text-white mt-1 block">---</span>
           </div>
           <div class="bg-dvBlack/40 border border-white/5 p-4 rounded-lg">
             <span class="block text-[10px] font-mono text-gray-500 uppercase">WORKING_DAYS // 生產工作天</span>
-            <span id="working-days" class="text-lg font-bold text-white mt-1 block">---</span>
+            <span id="working-days" class="text-base font-bold text-white mt-1 block">---</span>
           </div>
           <div class="bg-dvBlack/40 border border-white/5 p-4 rounded-lg">
             <span class="block text-[10px] font-mono text-gray-500 uppercase">ESTIMATED_DELIVERY // 預計交付時間</span>
-            <span id="delivery-date" class="text-lg font-bold text-dvNeon mt-1 block">---</span>
+            <span id="delivery-date" class="text-base font-bold text-white mt-1 block">---</span>
+          </div>
+        </div>
+
+        <!-- 設計圖稿呈現區 -->
+        <div id="design-draft-box" class="bg-dvBlack/50 border border-white/5 p-4 rounded-lg mb-8 flex flex-col md:flex-row gap-6 items-center">
+          <div class="w-full md:w-32 h-32 bg-dvGray rounded border border-white/10 flex items-center justify-center relative overflow-hidden blueprint-grid shrink-0">
+            <img id="design-draft-preview" src="" class="hidden w-full h-full object-contain" alt="設計圖稿預覽">
+            <i id="design-draft-placeholder" data-lucide="image" class="w-12 h-12 text-white/20"></i>
+          </div>
+          <div class="text-left flex-grow">
+            <span class="block text-[10px] font-mono text-dvNeon uppercase">DESIGN_DRAFT // 設計圖稿與模擬效果圖</span>
+            <h4 id="design-draft-name" class="text-sm font-bold text-white mt-1">尚未上傳正式設計圖</h4>
+            <p class="text-xs text-gray-400 mt-1 leading-relaxed">設計圖稿一經雙方確認即作為打樣與工廠量產之唯一標準基準。您可以點擊「帳號設定」旁的檔案提交區更新您的設計連結。</p>
           </div>
         </div>
 
@@ -181,7 +198,7 @@
           <div class="flex flex-col md:flex-row items-center justify-between gap-6 md:gap-2">
             
             <!-- Step 1: 詢價 -->
-            <div id="step-design" class="flex flex-col items-center flex-1 text-center">
+            <div id="step-design" class="flex flex-col items-center flex-1 text-center cursor-pointer group/step">
               <div class="step-circle w-10 h-10 rounded-full bg-dvNeon text-black flex items-center justify-center font-bold">1</div>
               <span class="step-label text-xs font-bold text-white mt-2">詢價/建立訂單</span>
             </div>
@@ -189,7 +206,7 @@
             <div id="connector-design" class="hidden md:block h-1 bg-white/10 flex-grow max-w-[80px]"></div>
 
             <!-- Step 2: 審稿 -->
-            <div id="step-design_review" class="flex flex-col items-center flex-1 text-center">
+            <div id="step-design_review" class="flex flex-col items-center flex-1 text-center cursor-pointer group/step">
               <div class="step-circle w-10 h-10 rounded-full bg-white/10 text-gray-500 flex items-center justify-center font-bold">2</div>
               <span class="step-label text-xs font-bold text-gray-500 mt-2">設計/合稿校對</span>
             </div>
@@ -197,7 +214,7 @@
             <div id="connector-design_review" class="hidden md:block h-1 bg-white/10 flex-grow max-w-[80px]"></div>
 
             <!-- Step 3: 生產 -->
-            <div id="step-production" class="flex flex-col items-center flex-1 text-center">
+            <div id="step-production" class="flex flex-col items-center flex-1 text-center cursor-pointer group/step">
               <div class="step-circle w-10 h-10 rounded-full bg-white/10 text-gray-500 flex items-center justify-center font-bold">3</div>
               <span class="step-label text-xs font-bold text-gray-500 mt-2">工廠排單生產</span>
             </div>
@@ -205,7 +222,7 @@
             <div id="connector-production" class="hidden md:block h-1 bg-white/10 flex-grow max-w-[80px]"></div>
 
             <!-- Step 4: 物流 -->
-            <div id="step-shipping" class="flex flex-col items-center flex-1 text-center">
+            <div id="step-shipping" class="flex flex-col items-center flex-1 text-center cursor-pointer group/step">
               <div class="step-circle w-10 h-10 rounded-full bg-white/10 text-gray-500 flex items-center justify-center font-bold">4</div>
               <span class="step-label text-xs font-bold text-gray-500 mt-2">物流快遞配送</span>
             </div>
@@ -213,13 +230,21 @@
             <div id="connector-shipping" class="hidden md:block h-1 bg-white/10 flex-grow max-w-[80px]"></div>
 
             <!-- Step 5: 結案 -->
-            <div id="step-done" class="flex flex-col items-center flex-1 text-center">
+            <div id="step-done" class="flex flex-col items-center flex-1 text-center cursor-pointer group/step">
               <div class="step-circle w-10 h-10 rounded-full bg-white/10 text-gray-500 flex items-center justify-center font-bold">5</div>
               <span class="step-label text-xs font-bold text-gray-500 mt-2">順利收貨結案</span>
             </div>
 
           </div>
         </div>
+
+        <!-- 點擊步驟動態顯示的詳細資訊說明 -->
+        <div id="step-detail-panel" class="mt-6 p-4 bg-white/5 border border-white/10 rounded-lg text-left transition duration-300">
+          <span class="block text-[9px] font-mono text-dvNeon uppercase tracking-widest">&gt;&gt; STEP_DETAIL_INFORMATION // 步驟進度說明 (點擊上方圓圈切換)</span>
+          <h4 id="step-detail-title" class="text-sm font-bold text-white mt-1">---</h4>
+          <p id="step-detail-desc" class="text-xs text-gray-300 mt-2 leading-relaxed">---</p>
+        </div>
+
       </div>
 
       <!-- 物流與檔案區塊兩欄排版 -->
