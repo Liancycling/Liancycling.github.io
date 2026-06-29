@@ -1,0 +1,162 @@
+/* 全域重置與基礎設定 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* 自定義字體 */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&family=Oswald:wght@500;700&display=swap');
+
+/* Tailwind 主題擴展 (需配合 Tailwind CDN 使用) */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .content-auto {
+    content-visibility: auto;
+  }
+  .skew-x-neg-10 {
+    transform: skewX(-10deg);
+  }
+  .neon-glow {
+    transition: box-shadow 0.2s ease;
+  }
+  .neon-glow:hover {
+    box-shadow: 0 0 15px rgb(9, 13, 247);
+  }
+}
+
+.google-form-container {
+  height: 1000px; /* 電腦版高度 */
+}
+@media (max-width: 768px) {
+  .google-form-container {
+    height: 1100px; /* 手機版高度 */
+  }
+}
+
+
+/* 全域變數 */
+:root {
+  --dv-black: #000000;
+  --dv-gray: #111111;
+  --dv-neon: #00A3E0;        /* DV AQUA BLUE 主色 */
+  --dv-dark-neon: #0082B3;   /* 深 Aqua Blue */
+  --dv-stone-grey: #B9BDBD;  /* 輔助石墨灰 */
+  --dv-sand: #CABDA6;        /* 輔助沙色 */
+  --dv-olive: #798648;       /* 輔助橄欖綠 */
+  --white-alpha-10: rgba(255, 255, 255, 0.1);
+  --white-alpha-20: rgba(255, 255, 255, 0.2);
+}
+
+/* 基礎樣式 */
+body {
+  @apply text-white font-sans min-h-screen flex flex-col;
+  font-family: 'Noto Sans TC', sans-serif;
+  background-image: url('../img/homepage_background.jpg') !important;
+  background-size: cover !important;
+  background-position: top center !important;
+  background-attachment: fixed !important;
+  background-repeat: no-repeat !important;
+  background-color: #0a0a0a !important;
+}
+
+body.bg-dvBlack {
+  background-color: #0a0a0a !important;
+}
+
+/* 讓主視覺區塊透明以露出背景圖 */
+#view-home > div:first-child {
+  background-color: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* 讓其他內容區塊具有半透明磨砂玻璃質感，既可隱約看見背景，又保證文字可讀性 */
+main {
+  background-color: transparent !important;
+}
+
+:not(body).bg-dvBlack {
+  background-color: rgba(10, 10, 10, 0.85) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+}
+
+
+.font-display {
+  font-family: 'Oswald', sans-serif;
+}
+
+/* 隱藏捲軸 */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* 網格背景 */
+.bg-grid {
+  background-image: radial-gradient(circle, #333 1px, transparent 1px);
+  background-size: 30px 30px;
+}
+
+/* 裁切樣式 */
+.clip-path-slant {
+  clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+}
+
+/* 動畫定義 */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes neonPulse {
+  0% {
+    box-shadow: 0 0 0 rgba(204, 255, 0, 0.0);
+  }
+  50% {
+    box-shadow: 0 0 18px rgba(204, 255, 0, 0.12);
+  }
+  100% {
+    box-shadow: 0 0 0 rgba(204, 255, 0, 0.0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.neon-pulse {
+  animation: neonPulse 2.6s ease-in-out infinite;
+}
