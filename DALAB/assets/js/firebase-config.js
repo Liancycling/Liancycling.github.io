@@ -1,31 +1,33 @@
 // Firebase SDK 配置與初始化
-// 貼心提醒：此 config 項目可安全地放在前端，但實際安全規則需要在 Firebase 控制台設置好。
+// ⚠️ 安全提醒：此 config 可安全地放在前端，但請在 Firebase Console 設置好 Auth/Firestore 安全規則。
 
 const firebaseConfig = {
-  // 請在此填入您的 Firebase 專案設定網頁應用程式配置項目 (Web App Config)
-  apiKey: "YOUR_API_KEY",
+  apiKey: "AIzaSyB3ldt87CpJLI92m_AQUo2eZT4zQznSM54",
   authDomain: "dalab-ae4d7.firebaseapp.com",
   projectId: "dalab-ae4d7",
   storageBucket: "dalab-ae4d7.appspot.com",
   messagingSenderId: "1030780337201",
-  appId: "YOUR_APP_ID"
+  appId: "1:1030780337201:web:2f96e29cc1714b17002910"
 };
 
-// 檢測是否已配置真實金鑰，否則在 dashboard.html 中自動走展示/本地 LocalStorage 模擬模式
+// 初始化 Firebase
 let isFirebaseInitialized = false;
 let auth = null;
 let db = null;
 
-if (typeof firebase !== 'undefined' && firebaseConfig.apiKey !== "YOUR_API_KEY") {
+if (typeof firebase !== 'undefined') {
   try {
-    firebase.initializeApp(firebaseConfig);
+    // 避免重複初始化
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
     auth = firebase.auth();
     db = firebase.firestore();
     isFirebaseInitialized = true;
-    console.log("Firebase App initialized successfully.");
+    console.log("✅ Firebase 初始化成功 (dalab-ae4d7)");
   } catch (e) {
-    console.error("Failed to initialize Firebase:", e);
+    console.error("❌ Firebase 初始化失敗:", e);
   }
 } else {
-  console.log("Using Mock/LocalStorage mode for local testing. Define Firebase config when deploying to production.");
+  console.warn("⚠️ Firebase SDK 未載入，切換至 Demo/LocalStorage 模擬模式。");
 }
