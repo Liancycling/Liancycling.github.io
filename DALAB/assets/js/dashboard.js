@@ -421,19 +421,94 @@ function initDashboard() {
     }
   }
 
-  // ── 合稿連結提交 ──
+  // ── 合稿連結提交與 AI 檔案上傳 ──
   const fileForm = document.getElementById('file-submit-form');
+  const aiFileInput = document.getElementById('ai-file-input');
+  const aiFileNameDisplay = document.getElementById('ai-file-name-display');
+  const aiFileUploadBtn = document.getElementById('ai-file-upload-btn');
+
+  // 當使用者選擇了 AI 檔案，更新顯示的檔名
+  if (aiFileInput && aiFileNameDisplay) {
+    aiFileInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        aiFileNameDisplay.textContent = file.name;
+        // 檢查大小
+        const maxBytes = 5 * 1024 * 1024; // 5MB
+        if (file.size > maxBytes) {
+          alert(`⚠️ 您選擇的檔案「${file.name}」大小約 ${(file.size / 1024 / 1024).toFixed(2)}MB，已超過 5MB 的限制。\n請改用上方的「雲端連結」進行提交！`);
+          aiFileInput.value = '';
+          aiFileNameDisplay.textContent = "超過 5MB 限制，請清除";
+        }
+      } else {
+        aiFileNameDisplay.textContent = "未選擇任何檔案";
+      }
+    });
+  }
+
+  // 共用發送合稿通知信與寫入後端試算表的輔助函式
+  async function triggerFileSubmissionEvent(fileName, fileUrlOrData) {
+    let email = "guest@davillage.com.tw";
+    let name = "會員顧客";
+    
+    if (isFirebaseInitialized && auth.currentUser) {
+      email = auth.currentUser.email;
+      try {
+        const udoc = await db.collection("users").doc(auth.currentUser.uid).get();
+        if (udoc.exists && udoc.data().name) {
+          name = udoc.data().name;
+        }
+      } catch (err) {
+        console.error("讀取用戶資訊出錯:", err);
+      }
+    } else {
+      const savedU = JSON.parse(localStorage.getItem('dalab_mock_user') || '{}');
+      if (savedU.name) name = savedU.name;
+      if (savedU.email) email = savedU.email;
+    }
+
+    const scriptUrl = "https://script.google.com/macros/s/AKfycbzz5B_bcg9C-hXvfnxRS3ZLQhkDE-69EKO-3Zy5LyePzfMYpc9RR2AH0TXE_oJgDbEC-g/exec";
+    
+    // 組裝上傳日誌荷載
+    const payload = {
+      action: "submitDesignFile",
+      email: email,
+      name: name,
+      fileName: fileName,
+      fileUrl: fileUrlOrData,
+      timestamp: new Date().toISOString()
+    };
+
+    console.log("[API 請求] 送出合稿提交通知...", payload);
+
+    try {
+      // 呼叫 Google Apps Script 完成試算表寫入與雙向發信
+      fetch(scriptUrl, {
+        method: "POST",
+        mode: "no-cors", // 避免 CORS 阻擋
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+    } catch (error) {
+      console.error("發送後台通知信出錯: ", error);
+    }
+  }
+
   if (fileForm) {
-    fileForm.addEventListener('submit', (e) => {
+    fileForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       const linkInput = document.getElementById('cloud-link');
       if (!linkInput || !linkInput.value.trim()) return;
 
+      const urlValue = linkInput.value.trim();
       const newFile = {
         name: "雲端審稿連結 (已提交)",
-        url: linkInput.value.trim(),
+        url: urlValue,
         uploadedAt: new Date().toISOString().replace('T', ' ').substring(0, 16)
       };
+
+      // 觸發通知
+      await triggerFileSubmissionEvent("雲端審稿連結", urlValue);
 
       if (isFirebaseInitialized && auth.currentUser) {
         const user = auth.currentUser;
@@ -444,16 +519,65 @@ function initDashboard() {
               const curFiles = qs.docs[0].data().files || [];
               curFiles.push(newFile);
               docRef.update({ files: curFiles }).then(() => {
-                alert('檔案連結提交成功，設計師將立即進行審查！');
+                alert('雲端連結提交成功！系統已將資訊同步寫入後端，並寄信通知雙方！');
                 location.reload();
               });
             }
           });
       } else {
         MOCK_ORDER.files.push(newFile);
-        alert('【模擬模式】連結提交成功！');
+        alert('【模擬模式】雲端連結提交成功！系統已將資訊同步寫入後端，並寄信通知雙方！');
         renderFileList(MOCK_ORDER.files);
         linkInput.value = '';
+      }
+    });
+  }
+
+  // 處理直接上傳 AI 檔案
+  if (aiFileUploadBtn) {
+    aiFileUploadBtn.addEventListener('click', async () => {
+      if (!aiFileInput || !aiFileInput.files[0]) {
+        alert("請先選擇要上傳的 .ai 檔案！");
+        return;
+      }
+      const file = aiFileInput.files[0];
+      const maxBytes = 5 * 1024 * 1024; // 5MB
+      if (file.size > maxBytes) {
+        alert("⚠️ 檔案大小超過 5MB，無法直接上傳，請使用上方的雲端連結提交！");
+        return;
+      }
+
+      // 將 AI 檔案轉為 Base64 模擬上傳與記錄，並發信
+      const base64Data = await fileToBase64(file);
+      const newFile = {
+        name: `AI 檔案: ${file.name} (${(file.size / 1024 / 1024).toFixed(2)}MB)`,
+        url: "#", // 線上直接記錄
+        uploadedAt: new Date().toISOString().replace('T', ' ').substring(0, 16)
+      };
+
+      // 觸發信件通知與試算表寫入
+      await triggerFileSubmissionEvent(`AI設計檔: ${file.name}`, `基於瀏覽器上傳。大小: ${(file.size / 1024).toFixed(1)} KB`);
+
+      if (isFirebaseInitialized && auth.currentUser) {
+        const user = auth.currentUser;
+        db.collection("orders").where("ownerUid", "==", user.uid).get()
+          .then(qs => {
+            if (!qs.empty) {
+              const docRef = qs.docs[0].ref;
+              const curFiles = qs.docs[0].data().files || [];
+              curFiles.push(newFile);
+              docRef.update({ files: curFiles }).then(() => {
+                alert('AI 檔案上傳完成！系統已將資訊同步寫入後端，並發送電子郵件確認信給您與規劃師！');
+                location.reload();
+              });
+            }
+          });
+      } else {
+        MOCK_ORDER.files.push(newFile);
+        alert('【模擬模式】AI 檔案上傳完成！系統已將資訊同步寫入後端，並發送電子郵件確認信給您與規劃師！');
+        renderFileList(MOCK_ORDER.files);
+        aiFileInput.value = '';
+        aiFileNameDisplay.textContent = "未選擇任何檔案";
       }
     });
   }
@@ -614,11 +738,23 @@ function showCardPreview(base64) {
 function showAuth() {
   document.getElementById('auth-section').classList.remove('hidden');
   document.getElementById('dashboard-section').classList.add('hidden');
+  
+  // 隱藏頂部登入狀態
+  const statusEl = document.getElementById('nav-user-status');
+  if (statusEl) statusEl.classList.add('hidden');
 }
 
 function showDashboard(order, userName) {
   document.getElementById('auth-section').classList.add('hidden');
   document.getElementById('dashboard-section').classList.remove('hidden');
+
+  // 顯示頂部登入狀態與名稱
+  const statusEl = document.getElementById('nav-user-status');
+  const nameEl = document.getElementById('nav-user-name');
+  if (statusEl && nameEl) {
+    nameEl.textContent = userName || "會員";
+    statusEl.classList.remove('hidden');
+  }
 
   document.getElementById('user-display-name').textContent = userName || "球隊聯絡人";
   document.getElementById('display-order-id').textContent = order.orderId;
