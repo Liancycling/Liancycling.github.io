@@ -447,7 +447,7 @@ function initDashboard() {
   }
 
   // 共用發送合稿通知信與寫入後端試算表的輔助函式
-  async function triggerFileSubmissionEvent(fileName, fileUrlOrData) {
+  async function triggerFileSubmissionEvent(fileName, fileUrlOrData, originalFileName = "") {
     let email = "guest@davillage.com.tw";
     let name = "會員顧客";
     
@@ -476,10 +476,11 @@ function initDashboard() {
       name: name,
       fileName: fileName,
       fileUrl: fileUrlOrData,
+      originalFileName: originalFileName,
       timestamp: new Date().toISOString()
     };
 
-    console.log("[API 請求] 送出合稿提交通知...", payload);
+    console.log("[API 請求] 送出合稿提交通知...", payload.fileName);
 
     try {
       // 呼叫 Google Apps Script 完成試算表寫入與雙向發信
@@ -547,16 +548,17 @@ function initDashboard() {
         return;
       }
 
-      // 將 AI 檔案轉為 Base64 模擬上傳與記錄，並發信
+      // 將 AI 檔案轉為 Base64 並上傳到 Google Drive
       const base64Data = await fileToBase64(file);
       const newFile = {
         name: `AI 檔案: ${file.name} (${(file.size / 1024 / 1024).toFixed(2)}MB)`,
-        url: "#", // 線上直接記錄
+        url: "已上傳至 Google Drive 資料夾",
         uploadedAt: new Date().toISOString().replace('T', ' ').substring(0, 16)
       };
 
-      // 觸發信件通知與試算表寫入
-      await triggerFileSubmissionEvent(`AI設計檔: ${file.name}`, `基於瀏覽器上傳。大小: ${(file.size / 1024).toFixed(1)} KB`);
+      // 觸發信件通知、試算表寫入與 Google Drive 寫檔
+      // 傳遞檔案的檔名與 base64 string
+      await triggerFileSubmissionEvent(`AI設計檔: ${file.name}`, base64Data, file.name);
 
       if (isFirebaseInitialized && auth.currentUser) {
         const user = auth.currentUser;
