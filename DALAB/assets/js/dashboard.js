@@ -434,11 +434,11 @@ function initDashboard() {
       if (file) {
         aiFileNameDisplay.textContent = file.name;
         // 檢查大小
-        const maxBytes = 5 * 1024 * 1024; // 5MB
+        const maxBytes = 50 * 1024 * 1024; // 50MB
         if (file.size > maxBytes) {
-          alert(`⚠️ 您選擇的檔案「${file.name}」大小約 ${(file.size / 1024 / 1024).toFixed(2)}MB，已超過 5MB 的限制。\n請改用上方的「雲端連結」進行提交！`);
+          alert(`⚠️ 您選擇的檔案「${file.name}」大小約 ${(file.size / 1024 / 1024).toFixed(2)}MB，已超過 50MB 的限制。\n請改用上方的「雲端連結」進行提交！`);
           aiFileInput.value = '';
-          aiFileNameDisplay.textContent = "超過 5MB 限制，請清除";
+          aiFileNameDisplay.textContent = "超過 50MB 限制，請清除";
         }
       } else {
         aiFileNameDisplay.textContent = "未選擇任何檔案";
@@ -542,9 +542,9 @@ function initDashboard() {
         return;
       }
       const file = aiFileInput.files[0];
-      const maxBytes = 5 * 1024 * 1024; // 5MB
+      const maxBytes = 50 * 1024 * 1024; // 50MB
       if (file.size > maxBytes) {
-        alert("⚠️ 檔案大小超過 5MB，無法直接上傳，請使用上方的雲端連結提交！");
+        alert("⚠️ 檔案大小超過 50MB，無法直接上傳，請使用上方的雲端連結提交！");
         return;
       }
 
