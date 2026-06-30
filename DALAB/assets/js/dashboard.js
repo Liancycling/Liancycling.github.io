@@ -44,7 +44,7 @@ function generateTempPassword() {
 // 工具函數：呼叫 Google Apps Script 發送歡迎信
 // 請將 SCRIPT_URL 替換為您自己的 Google Apps Script Web App URL
 // ─────────────────────────────────────────────────────
-const APPS_SCRIPT_URL = "https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec";
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwnrO3EQNiOp9UhZwM0ok2u4W_i9aToBiDuss5IAAQyGskQwxtyZlnA3S27Gkj0PiGh/exec";
 
 async function sendWelcomeEmail(toEmail, toName, tempPassword) {
   // 如果尚未設定 Apps Script，僅在 Console 顯示 (demo 模式)
@@ -467,7 +467,7 @@ function initDashboard() {
       if (savedU.email) email = savedU.email;
     }
 
-    const scriptUrl = "https://script.google.com/macros/s/AKfycbzz5B_bcg9C-hXvfnxRS3ZLQhkDE-69EKO-3Zy5LyePzfMYpc9RR2AH0TXE_oJgDbEC-g/exec";
+    const scriptUrl = "https://script.google.com/macros/s/AKfycbwnrO3EQNiOp9UhZwM0ok2u4W_i9aToBiDuss5IAAQyGskQwxtyZlnA3S27Gkj0PiGh/exec";
     
     // 組裝上傳日誌荷載
     const payload = {
